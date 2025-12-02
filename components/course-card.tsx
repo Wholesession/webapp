@@ -1,22 +1,9 @@
 "use client";
 
+import { Course } from "@/lib/courses";
 import Image from "next/image";
 import { Star } from "lucide-react";
 import Link from "next/link";
-
-export interface Instructor {
-    name: string;
-    role: string;
-    image: string;
-}
-
-export interface Course {
-    title: string;
-    rating: number;
-    startDate: string;
-    instructors: Instructor[];
-    rank?: number;
-}
 
 interface CourseCardProps {
     course: Course;
@@ -24,7 +11,7 @@ interface CourseCardProps {
 
 export function CourseCard({ course }: CourseCardProps) {
     return (
-        <Link href={`/course/${course.title}`} className="flex flex-col justify-between rounded-xl bg-white p-6 ring-[1px] ring-gray-100 h-full">
+        <Link href={`/course/${course.slug}`} className="flex flex-col justify-between rounded-xl bg-white p-6 ring-[1px] ring-gray-100 h-full">
             <div>
                 <h3 className="text-xl font-serif font-medium text-gray-900 line-clamp-2">
                     {course.title}
@@ -69,11 +56,11 @@ export function CourseCard({ course }: CourseCardProps) {
                         </div>
                     ))}
                 </div>
-                {course.rank && (
+                {/* {course.rank && (
                     <span className="text-4xl font-bold text-gray-200 select-none">
                         {course.rank}
                     </span>
-                )}
+                )} */}
             </div>
         </Link>
     );

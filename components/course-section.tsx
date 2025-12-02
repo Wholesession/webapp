@@ -1,7 +1,8 @@
 "use client";
 
+import { Course } from "@/lib/courses";
+import { CourseCard } from "./course-card";
 import Link from "next/link";
-import { Course, CourseCard } from "@/components/course-card";
 import { ChevronRight } from "lucide-react";
 
 interface CourseSectionProps {

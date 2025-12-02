@@ -3,24 +3,14 @@ import { Twitter, Linkedin, Instagram, Github } from "lucide-react";
 
 const footerLinks = {
     Explore: [
-        { name: "AI", href: "#" },
-        { name: "Product Management", href: "#" },
+        { name: "Product", href: "#" },
         { name: "Engineering", href: "#" },
         { name: "Design", href: "#" },
-        { name: "Leadership", href: "#" },
     ],
     Company: [
         { name: "About Us", href: "#" },
         { name: "Careers", href: "#" },
         { name: "Blog", href: "#" },
-        { name: "Press", href: "#" },
-        { name: "Partners", href: "#" },
-    ],
-    Resources: [
-        { name: "Lightning Lessons", href: "#" },
-        { name: "Become an Instructor", href: "#" },
-        { name: "Success Stories", href: "#" },
-        { name: "Newsletter", href: "#" },
     ],
     Support: [
         { name: "Help Center", href: "#" },
@@ -84,11 +74,11 @@ export function Footer() {
                     <p className="text-xs text-gray-500">
                         &copy; {new Date().getFullYear()} Wholesession Inc. All rights reserved.
                     </p>
-                    <div className="flex gap-6">
+                    {/* <div className="flex gap-6">
                         <p className="text-xs text-gray-500">
                             Made with ❤️ in Lagos, Nigeria
                         </p>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </footer>
