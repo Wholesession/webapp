@@ -24,7 +24,7 @@ export function Syllabus({ course }: SyllabusProps) {
                     </p>
                 </div>
 
-                <div className="space-y-4">
+                <div className="space-y-4 cursor-pointer">
                     {course.syllabus.map((module, index) => (
                         <div
                             key={index}
@@ -32,7 +32,7 @@ export function Syllabus({ course }: SyllabusProps) {
                         >
                             <button
                                 onClick={() => setOpenModule(openModule === index ? null : index)}
-                                className="flex w-full items-center justify-between p-6 text-left hover:bg-gray-50 transition-colors"
+                                className="flex w-full items-center justify-between p-6 text-left hover:bg-gray-50 transition-colors cursor-pointer"
                             >
                                 <div className="flex items-center gap-4">
                                     <span className="flex h-8 w-8 items-center justify-center rounded-full bg-black text-sm font-medium text-white">
@@ -65,7 +65,7 @@ export function Syllabus({ course }: SyllabusProps) {
                                             <ul className="space-y-3">
                                                 {module.topics.map((topic, i) => (
                                                     <li key={i} className="flex items-center gap-3 text-gray-600">
-                                                        <div className="h-1.5 w-1.5 rounded-full bg-purple-500" />
+                                                        <div className="h-1.5 w-1.5 rounded-full bg-[#372772]" />
                                                         {topic}
                                                     </li>
                                                 ))}

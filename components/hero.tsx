@@ -4,12 +4,12 @@ import { motion } from "framer-motion";
 
 export function Hero() {
     return (
-        <section className="relative flex min-h-[600px] items-center bg-[#0a0c1b] pt-32 pb-16 overflow-hidden">
+        <section className="relative flex min-h-[600px] items-center bg-[#372772] pt-32 pb-16 overflow-hidden">
             {/* Background Vertical Lines */}
             <div className="absolute inset-0 z-0 pointer-events-none">
                 <div className="h-full w-full"
                     style={{
-                        backgroundImage: "linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px)",
+                        backgroundImage: "linear-gradient(to right, rgba(161, 163, 163, 0.3) 1px, transparent 1px)",
                         backgroundSize: "40px 100%"
                     }}
                 />

@@ -20,8 +20,8 @@ export function Outcomes({ outcomes }: OutcomesProps) {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
                     {outcomes.map((outcome, index) => (
                         <div key={index} className="flex gap-4 p-6 rounded-xl bg-purple-50/50 border border-purple-100">
-                            <CheckCircle2 className="h-6 w-6 text-purple-600 shrink-0" />
-                            <p className="text-lg text-gray-800 font-medium">{outcome}</p>
+                            <CheckCircle2 className="h-6 w-6 text-[#372772] shrink-0" />
+                            <p className="text-lg text-black font-medium">{outcome}</p>
                         </div>
                     ))}
                 </div>

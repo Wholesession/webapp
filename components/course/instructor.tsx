@@ -35,7 +35,7 @@ export function Instructor({ instructors }: InstructorProps) {
                         </div>
 
                         <div>
-                            <h2 className="text-sm font-bold tracking-wide text-purple-600 uppercase mb-2">
+                            <h2 className="text-sm font-bold tracking-wide text-[#372772] uppercase mb-2">
                                 Meet your Instructor
                             </h2>
                             <h3 className="text-3xl font-serif font-medium text-gray-900 mb-6">

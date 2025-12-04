@@ -11,7 +11,7 @@ const categories = [
 
 export function FocusAreas() {
     return (
-        <section className="bg-[#0a0c1b] py-24">
+        <section className="bg-[#372772] py-24">
             <div className="mx-auto max-w-[1150px] px-4 sm:px-6 lg:px-8">
                 <h2 className="text-3xl font-serif text-white mb-12">
                     Unlock your full potential

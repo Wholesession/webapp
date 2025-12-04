@@ -10,7 +10,7 @@ interface CourseHeroProps {
 
 export function CourseHero({ course }: CourseHeroProps) {
     return (
-        <section className="relative bg-[#0a0c1b] pt-34 pb-20 text-white overflow-hidden">
+        <section className="relative bg-[#372772] pt-34 pb-20 text-white overflow-hidden">
             {/* Background Pattern */}
             <div className="absolute inset-0 z-0 opacity-20">
                 <div className="h-full w-full"
@@ -38,11 +38,11 @@ export function CourseHero({ course }: CourseHeroProps) {
 
                         <div className="flex flex-col sm:flex-row gap-4 mb-10">
                             <Link href={`/checkout/${course.slug}`} className="w-full block">
-                                <Button size="lg" className="bg-white text-black hover:bg-gray-200 text-base px-8 h-12 cursor-pointer w-full">
+                                <Button size="lg" className="bg-white text-black hover:bg-gray-200 font-bold text-base px-8 h-12 cursor-pointer w-full">
                                     Enroll Now - ₦{course.price.toLocaleString()}
                                 </Button>
                             </Link>
-                            <Button size="lg" variant="outline" className="border-white/20 text-white hover:bg-white/10 h-12 cursor-pointer">
+                            <Button size="lg" variant="outline" className="bg-[##0a0c1b] border-white/20 text-white hover:bg-white/10 h-12 cursor-pointer">
                                 <Play className="mr-2 h-4 w-4" /> Watch Trailer
                             </Button>
                         </div>

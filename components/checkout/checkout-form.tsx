@@ -55,7 +55,7 @@ export function CheckoutForm({ course }: CheckoutFormProps) {
             <Button
                 type="submit"
                 size="lg"
-                className="w-full h-14 text-lg bg-black hover:bg-gray-800 text-white cursor-pointer"
+                className="w-full h-14 text-lg bg-[#372772] hover:bg-[#372772]/90 text-white cursor-pointer"
                 disabled={isLoading}
             >
                 {isLoading ? (
