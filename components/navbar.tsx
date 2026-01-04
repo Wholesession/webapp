@@ -28,7 +28,7 @@ export function Navbar() {
                     </Link>
 
                     {/* Search Bar */}
-                    <div className="hidden md:flex flex-1 max-w-md">
+                    {/* <div className="hidden md:flex flex-1 max-w-md">
                         <div className="relative w-full">
                             <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                                 <Search className="h-4 w-4 text-gray-400" aria-hidden="true" />
@@ -39,21 +39,21 @@ export function Navbar() {
                                 placeholder="What do you want to learn?"
                             />
                         </div>
-                    </div>
+                    </div> */}
 
                     {/* Right Links */}
                     <div className="flex items-center gap-6">
-                        {/* <Link
-                            href="#"
-                            className="hidden text-sm font-medium text-gray-300 hover:text-white md:block"
-                        >
-                            Apply to teach
-                        </Link> */}
                         <Link
                             href="#"
-                            className="text-sm font-medium text-white hover:text-gray-300"
+                            className="hidden text-[1rem] font-medium text-gray-300 hover:text-white md:block"
                         >
-                            Explore Courses
+                            Apply to teach
+                        </Link>
+                        <Link
+                            href="#"
+                            className="text-[1rem] font-medium text-white hover:text-gray-300"
+                        >
+                            Learn more
                         </Link>
                     </div>
                 </div>
@@ -70,7 +70,7 @@ export function Navbar() {
                             <Link
                                 key={category}
                                 href="#"
-                                className="flex items-center gap-1 text-sm font-medium text-gray-300 hover:text-white whitespace-nowrap"
+                                className="flex items-center gap-1 text-[1rem] font-medium text-gray-300 hover:text-white whitespace-nowrap"
                             >
                                 {category} <ChevronDown className="h-3 w-3" />
                             </Link>

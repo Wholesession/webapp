@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Twitter, Linkedin, Instagram, Github } from "lucide-react";
+import {FaTwitter, FaTiktok, FaLinkedin, FaInstagram} from "react-icons/fa"
 import Image from "next/image";
 
 const footerLinks = {
@@ -10,14 +10,11 @@ const footerLinks = {
     ],
     Company: [
         { name: "About Us", href: "#" },
-        { name: "Careers", href: "#" },
         { name: "Blog", href: "#" },
     ],
     Support: [
-        { name: "Help Center", href: "#" },
         { name: "Terms of Service", href: "#" },
         { name: "Privacy Policy", href: "#" },
-        { name: "Cookie Policy", href: "#" },
     ],
 };
 
@@ -30,22 +27,22 @@ export function Footer() {
                         <Link href="/" className="text-2xl font-serif text-white tracking-tight">
                              <Image src="/ws.svg" alt="Logo" width={40} height={0} className="w-[180px] h-[unset]"/>
                         </Link>
-                        <p className="mt-4 text-sm text-gray-400 max-w-xs">
+                        <p className="mt-4 text-[1rem] text-gray-400 max-w-xs">
                             Cohort-based learning for the next generation of tech leaders.
                             Master your craft with guidance from the industry's best.
                         </p>
                         <div className="flex gap-4 mt-6">
-                            <Link href="#" className="text-gray-400 hover:text-white transition-colors">
-                                <Twitter className="h-5 w-5" />
+                            <Link href="https://x.com/usewholesession" className="text-gray-400 hover:text-white transition-colors">
+                                <FaTwitter className="h-5 w-5 text-[1rem]" />
+                            </Link>
+                            <Link href="https://www.linkedin.com/company/wholesession" className="text-gray-400 hover:text-white transition-colors">
+                                <FaLinkedin className="h-5 w-5 text-[1rem]" />
                             </Link>
                             <Link href="#" className="text-gray-400 hover:text-white transition-colors">
-                                <Linkedin className="h-5 w-5" />
+                                <FaInstagram className="h-5 w-5 text-[1rem]" />
                             </Link>
                             <Link href="#" className="text-gray-400 hover:text-white transition-colors">
-                                <Instagram className="h-5 w-5" />
-                            </Link>
-                            <Link href="#" className="text-gray-400 hover:text-white transition-colors">
-                                <Github className="h-5 w-5" />
+                                <FaTiktok className="h-5 w-5 text-[1rem]" />
                             </Link>
                         </div>
                     </div>
@@ -60,7 +57,7 @@ export function Footer() {
                                     <li key={link.name}>
                                         <Link
                                             href={link.href}
-                                            className="text-sm text-gray-400 hover:text-white transition-colors"
+                                            className="text-[1rem] text-gray-400 hover:text-white transition-colors"
                                         >
                                             {link.name}
                                         </Link>
@@ -72,14 +69,14 @@ export function Footer() {
                 </div>
 
                 <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-                    <p className="text-xs text-gray-500">
-                        &copy; {new Date().getFullYear()} Wholesession Inc. All rights reserved.
+                    <p className="text-[.857rem] text-gray-500">
+                        &copy; {new Date().getFullYear()} Wholesession Technologies LLC. All rights reserved.
                     </p>
-                    {/* <div className="flex gap-6">
-                        <p className="text-xs text-gray-500">
-                            Made with ❤️ in Lagos, Nigeria
+                    <div className="flex gap-6">
+                        <p className="text-[.857rem] text-gray-500">
+                            Contact support: support@wholesession.com
                         </p>
-                    </div> */}
+                    </div>
                 </div>
             </div>
         </footer>
