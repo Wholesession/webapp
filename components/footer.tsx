@@ -21,7 +21,7 @@ const footerLinks = {
 export function Footer() {
     return (
         <footer className="bg-[#372772] border-t border-white/10 pt-16 pb-8">
-            <div className="mx-auto max-w-[1150px] px-4 sm:px-6 lg:px-8">
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="grid grid-cols-2 gap-8 md:grid-cols-4 lg:grid-cols-5 mb-12">
                     <div className="col-span-2 lg:col-span-2">
                         <Link href="/" className="text-2xl font-serif text-white tracking-tight">

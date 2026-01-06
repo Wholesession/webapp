@@ -1,81 +1,106 @@
-import { Button } from "@/components/ui/button";
+"use client";
+
 import { Course } from "@/lib/courses";
-import { Play, Calendar, Users, Clock } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
+import { Star, Flame } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
 
 interface CourseHeroProps {
     course: Course;
 }
 
 export function CourseHero({ course }: CourseHeroProps) {
+    const primaryInstructor = course.instructors[0];
+
     return (
-        <section className="relative bg-[#372772] pt-34 pb-20 text-white overflow-hidden">
-            {/* Background Pattern */}
-            <div className="absolute inset-0 z-0 opacity-20">
-                <div className="h-full w-full"
-                    style={{
-                        backgroundImage: "linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px)",
-                        backgroundSize: "40px 100%"
-                    }}
-                />
+        <section className="bg-white relative overflow-hidden border-b border-gray-100">
+            <div className="container mx-auto">
+            <div className="absolute right-0 top-0 bottom-0 w-1/2 hidden lg:block pointer-events-none opacity-50">
+                <svg width="100%" height="100%" viewBox="0 0 400 400" preserveAspectRatio="none">
+                    <defs>
+                        <pattern id="grid-pattern" width="40" height="100%" patternUnits="userSpaceOnUse">
+                            <line x1="0" y1="0" x2="0" y2="100%" stroke="#e5e7eb" strokeWidth="1" />
+                        </pattern>
+                        <linearGradient id="fade-mask" x1="0" y1="0" x2="1" y2="0">
+                            <stop offset="0%" stopColor="white" stopOpacity="1" />
+                            <stop offset="100%" stopColor="white" stopOpacity="0" />
+                        </linearGradient>
+                    </defs>
+                    <rect width="100%" height="100%" fill="url(#grid-pattern)" mask="url(#fade-mask)" />
+                </svg>
             </div>
 
-            <div className="relative z-10 mx-auto max-w-[1150px] px-4 sm:px-6 lg:px-8">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div className="container mx-auto px-4 lg:px-8 relative z-10">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
                     {/* Left Content */}
-                    <div>
-                        <div className="inline-flex items-center rounded-full border border-purple-500/30 bg-purple-500/10 px-3 py-1 text-sm font-medium text-purple-300 mb-6">
-                            <span className="flex h-2 w-2 rounded-full bg-purple-400 mr-2 animate-pulse"></span>
-                            Live Cohort-Based Course
-                        </div>
-                        <h1 className="font-serif text-4xl font-medium tracking-tight sm:text-5xl mb-6">
+                    <motion.div
+                        className="lg:col-span-7"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5 }}
+                    >
+                        <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif text-[#0a0c1b] tracking-tight mb-6 leading-[1.1]">
                             {course.title}
                         </h1>
-                        <p className="text-xl text-gray-300 mb-8 leading-relaxed">
-                            {course.subtitle}
-                        </p>
 
-                        <div className="flex flex-col sm:flex-row gap-4 mb-10">
-                            <Link href={`/checkout/${course.slug}`} className="w-full block">
-                                <Button size="lg" className="bg-white text-black hover:bg-gray-200 font-bold text-base px-8 h-12 cursor-pointer w-full">
-                                    Enroll Now - ₦{course.price.toLocaleString()}
-                                </Button>
-                            </Link>
-                            <Button size="lg" variant="outline" className="bg-[##0a0c1b] border-white/20 text-white hover:bg-white/10 h-12 cursor-pointer">
-                                <Play className="mr-2 h-4 w-4" /> Watch Trailer
+                        {/* <div className="flex items-center gap-2 mb-8">
+                            <div className="flex text-[#F59E0B]">
+                                {[...Array(5)].map((_, i) => (
+                                    <Star key={i} className="w-5 h-5 fill-current" />
+                                ))}
+                            </div>
+                            <span className="text-gray-700 font-medium text-lg ml-2">{course.rating}</span>
+                            <span className="text-gray-400">({course.reviewsCount} reviews)</span>
+                        </div> */}
+
+                        <div className="flex flex-col md:items-start text-xl text-gray-700 mb-10 justify-between gap-1">
+                            <span className="font-serif font-semibold text-[#0a0c1b] text-base block">{primaryInstructor.name}</span>
+                            <span className="text-gray-500 font-light block text-base">{primaryInstructor.role} @ {primaryInstructor.company}</span>
+                            <span className="text-black block text-base bg-orange-50 px-2 py-1 rounded-[4px] font-semibold">{primaryInstructor.experience}</span>
+                        </div>
+
+                        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
+                            <Button
+                                variant="outline"
+                                size="lg"
+                                className="bg-gray-50 border-gray-200 text-gray-900 hover:bg-gray-100 rounded-lg px-8 py-6 text-sm font-bold cursor-pointer h-auto"
+                                onClick={() => document.getElementById('syllabus')?.scrollIntoView({ behavior: 'smooth' })}
+                            >
+                                View Syllabus
                             </Button>
-                        </div>
 
-                        <div className="flex flex-wrap gap-6 text-sm text-gray-400 border-t border-white/10 pt-6">
-                            <div className="flex items-center gap-2">
-                                <Calendar className="h-4 w-4 text-purple-400" />
-                                <span>Starts {course.startDate}</span>
-                            </div>
-                            <div className="flex items-center gap-2">
-                                <Clock className="h-4 w-4 text-purple-400" />
-                                <span>{course.duration}</span>
-                            </div>
-                            <div className="flex items-center gap-2">
-                                <Users className="h-4 w-4 text-purple-400" />
-                                <span>Limited to {course.cohortSize} students</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Right Content (Video/Image Placeholder) */}
-                    <div className="relative aspect-video rounded-2xl overflow-hidden bg-gray-800 border border-white/10 shadow-2xl">
-                        {/* Placeholder for Video */}
-                        <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-purple-900/20 to-black">
-                            <div className="text-center">
-                                <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-white/10 backdrop-blur-sm ring-1 ring-white/20 mb-4 cursor-pointer hover:scale-110 transition-transform">
-                                    <Play className="h-6 w-6 text-white ml-1" />
+                            <div className="flex items-center gap-3 bg-orange-50 px-4 py-3 rounded-lg border border-orange-100">
+                                <div className="p-1.5 bg-orange-100 rounded-full">
+                                    <Flame className="w-5 h-5 text-orange-500" />
                                 </div>
-                                <p className="text-sm font-medium text-gray-400">Watch Intro Video</p>
+                                <div className="text-sm">
+                                    <p className="font-bold text-gray-900">This course is popular.</p>
+                                    <p className="text-gray-500">20 people enrolled last week.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </motion.div>
+
+                    {/* Right Image - Instructor Cutout Style */}
+                    <div className="lg:col-span-5 relative h-[500px] hidden lg:block">
+                        <div className="absolute bottom-0 right-0 w-full h-full flex items-end justify-center">
+                            {/* We use a mask for a softer bottom edge if needed, otherwise just the image */}
+                            <div className="relative w-full h-[90%] grayscale hover:grayscale-0 transition-all duration-500">
+                                <Image
+                                    src={primaryInstructor.image}
+                                    alt={primaryInstructor.name}
+                                    fill
+                                    className="object-cover object-top drop-shadow-2xl mask-image-b-gradient"
+                                    style={{
+                                        maskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)'
+                                    }}
+                                />
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
             </div>
         </section>
     );

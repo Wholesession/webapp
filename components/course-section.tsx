@@ -13,7 +13,7 @@ interface CourseSectionProps {
 export function CourseSection({ title, courses }: CourseSectionProps) {
     return (
         <section className="py-12 bg-gray-50">
-            <div className="mx-auto max-w-[1150px] px-4 sm:px-6 lg:px-8">
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between mb-8">
                     <h2 className="text-3xl font-serif font-medium text-[#0a0c1b]">
                         {title}

@@ -12,7 +12,7 @@ const categories = [
 export function FocusAreas() {
     return (
         <section className="bg-[#372772] py-24">
-            <div className="mx-auto max-w-[1150px] px-4 sm:px-6 lg:px-8">
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 <h2 className="text-3xl font-serif text-white mb-12">
                     Unlock your full potential
                 </h2>
@@ -24,7 +24,6 @@ export function FocusAreas() {
                             href={`/category/${category.name.toLowerCase()}`}
                             className="group relative overflow-hidden rounded-2xl bg-white/5 aspect-square ring-1 ring-white/10 hover:ring-white/20 transition-all"
                         >
-                            {/* Background Pattern */}
                             <div className="absolute inset-0 opacity-[0.03] group-hover:opacity-[0.07] transition-opacity duration-500">
                                 <div
                                     className="h-full w-full"
@@ -40,12 +39,9 @@ export function FocusAreas() {
                                 </span>
                             </div>
 
-                            {/* Bottom Gradient Line */}
                             <div
                                 className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r ${category.color} opacity-80 group-hover:h-2 transition-all duration-300`}
                             />
-
-                            {/* Subtle background gradient/glow */}
                             <div
                                 className={`absolute -bottom-10 -right-10 w-32 h-32 bg-gradient-to-br ${category.color} opacity-0 blur-2xl group-hover:opacity-20 transition-opacity duration-500`}
                             />

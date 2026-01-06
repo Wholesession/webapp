@@ -1,75 +1,96 @@
 "use client";
 
 import { Course } from "@/lib/courses";
-import { ChevronDown } from "lucide-react";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { ChevronDown, ChevronUp, FileCode, Video, BookOpen } from "lucide-react";
 
 interface SyllabusProps {
     course: Course;
 }
 
 export function Syllabus({ course }: SyllabusProps) {
-    const [openModule, setOpenModule] = useState<number | null>(0);
+    const [openIndex, setOpenIndex] = useState<number | null>(0);
+
+    if (!course.syllabus || course.syllabus.length === 0) return null;
 
     return (
-        <section className="py-24 bg-white">
-            <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-                <div className="text-center mb-16">
-                    <h2 className="text-3xl font-serif font-medium text-gray-900 mb-4">
-                        Course Curriculum
+        <section className="bg-white" id="syllabus">
+            <div>
+                <div className="mb-16">
+                    <h2 className="text-3xl md:text-4xl font-serif text-[#0a0c1b] mb-4">
+                        Curriculum Breakdown
                     </h2>
                     <p className="text-lg text-gray-600">
-                        A {course.duration} comprehensive journey to mastery.
+                        {course.duration} of intense, hands-on practice breakdown
                     </p>
                 </div>
 
-                <div className="space-y-4 cursor-pointer">
+                <div className="space-y-4">
                     {course.syllabus.map((module, index) => (
                         <div
                             key={index}
-                            className="border border-gray-200 rounded-xl overflow-hidden bg-gray-50/50"
+                            className={`border rounded-xl transition-all duration-300 ${openIndex === index
+                                ? "border-gray-200 bg-gray-50/50 shadow-sm"
+                                : "border-gray-200"
+                                }`}
                         >
                             <button
-                                onClick={() => setOpenModule(openModule === index ? null : index)}
-                                className="flex w-full items-center justify-between p-6 text-left hover:bg-gray-50 transition-colors cursor-pointer"
+                                onClick={() => setOpenIndex(openIndex === index ? null : index)}
+                                className="flex w-full items-center justify-between p-6 text-left cursor-pointer"
                             >
                                 <div className="flex items-center gap-4">
-                                    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-black text-sm font-medium text-white">
+                                    <span className={`flex items-center justify-center w-8 h-8 rounded-full text-sm font-medium ${openIndex === index ? "bg-gray-700 text-white" : "bg-gray-100 text-gray-500"
+                                        }`}>
                                         {index + 1}
                                     </span>
                                     <div>
-                                        <h3 className="text-lg font-medium text-gray-900">
+                                        <h3 className={`text-lg font-semibold ${openIndex === index ? "text-[#0a0c1b]" : "text-gray-700"}`}>
                                             {module.title}
                                         </h3>
-                                        <p className="text-sm text-gray-500 mt-1">
-                                            {module.description}
-                                        </p>
+                                        <p className="text-sm text-gray-500 mt-1">{module.description}</p>
                                     </div>
                                 </div>
-                                <ChevronDown
-                                    className={`h-5 w-5 text-gray-400 transition-transform ${openModule === index ? "rotate-180" : ""
-                                        }`}
-                                />
+                                {openIndex === index ? (
+                                    <ChevronUp className="h-5 w-5 text-[#0a0c1b]" />
+                                ) : (
+                                    <ChevronDown className="h-5 w-5 text-[#0a0c1b]" />
+                                )}
                             </button>
 
                             <AnimatePresence>
-                                {openModule === index && (
+                                {openIndex === index && (
                                     <motion.div
                                         initial={{ height: 0, opacity: 0 }}
                                         animate={{ height: "auto", opacity: 1 }}
                                         exit={{ height: 0, opacity: 0 }}
-                                        transition={{ duration: 0.2 }}
+                                        transition={{ duration: 0.3 }}
                                     >
-                                        <div className="border-t border-gray-200 px-6 py-6 pl-[4.5rem]">
-                                            <ul className="space-y-3">
-                                                {module.topics.map((topic, i) => (
-                                                    <li key={i} className="flex items-center gap-3 text-gray-600">
-                                                        <div className="h-1.5 w-1.5 rounded-full bg-[#372772]" />
-                                                        {topic}
-                                                    </li>
-                                                ))}
-                                            </ul>
+                                        <div className="px-6 pb-6 pl-20">
+                                            <div className="border-l-2 border-gray-100 pl-6 space-y-4">
+                                                <div>
+                                                    <h4 className="text-sm font-semibold text-gray-900 uppercase tracking-wide mb-3">Topics Covered</h4>
+                                                    <ul className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                                                        {module.topics.map((topic, i) => (
+                                                            <li key={i} className="flex items-center gap-2 text-gray-600 text-sm">
+                                                                <div className="w-1.5 h-1.5 rounded-full bg-gray-700" />
+                                                                {topic}
+                                                            </li>
+                                                        ))}
+                                                    </ul>
+                                                </div>
+
+                                                {/* <div className="flex gap-4 pt-4 border-t border-gray-100">
+                                                    <div className="flex items-center gap-2 text-xs font-medium text-gray-500">
+                                                        <Video className="w-4 h-4 text-gray-400" />
+                                                        2.5h Video
+                                                    </div>
+                                                    <div className="flex items-center gap-2 text-xs font-medium text-gray-500">
+                                                        <FileCode className="w-4 h-4 text-gray-400" />
+                                                        1 Lab
+                                                    </div>
+                                                </div> */}
+                                            </div>
                                         </div>
                                     </motion.div>
                                 )}

@@ -12,12 +12,27 @@ export interface Instructor {
     image: string;
     linkedin?: string;
     twitter?: string;
+    github?: string;
+    experience?: string;
+    prevCompanies?: string[]; // Top 3/4 previous companies
+    achievements?: string[]; // Key achievements/credentials
+}
+
+export interface Schedule {
+    startDate: string;
+    days: string[];
+    time: string; // e.g., "5:00 PM—6:00 PM (GMT+1)"
+    sessions: {
+        date: string;
+        time: string;
+    }[];
 }
 
 export interface Course {
     slug: string;
     title: string;
     subtitle: string;
+    tagline?: string; // One sentence tagline
     category: "Engineering" | "Product" | "Design" | "AI";
     price: number;
     startDate: string;
@@ -26,396 +41,191 @@ export interface Course {
     rating: number;
     reviewsCount: number;
     instructors: Instructor[];
-    description: string;
-    outcomes: string[];
+    description: string; // Course Overview
+    outcomes: string[]; // What students will be able to DO
     syllabus: Module[];
     videoUrl?: string;
+    included: string[];
+    // New fields
+    tools?: string[];
+    materials?: string[];
+    prerequisites?: string[];
+    targetAudience?: string[];
+    logistics?: {
+        homework: boolean;
+        capstone: boolean;
+        teachingStyle: string;
+        frequency?: string; // e.g. "Every 2-3 days" for slack
+    };
+    schedule?: Schedule;
+    faq?: FAQItem[];
+}
+
+export interface FAQItem {
+    question: string;
+    answer: string;
 }
 
 export const courses: Course[] = [
     {
         slug: "building-production-microservices",
-        title: "Building Production Microservices",
-        subtitle: "Learn how to  design and build scalable microservices for production, using modern tools and best practices.",
+        title: "Building Production-Grade Microservices",
+        subtitle: "Learn how to design, build, and run scalable microservices from a senior engineer who has done it in real production fintech systems.",
+        tagline: "🚀Learn how to build backend systems & architecture for real-world scale",
         category: "Engineering",
         price: 250000,
-        startDate: "March 23, 2026",
-        duration: "6 Weeks",
+        startDate: "Feb 24, 2026",
+        duration: "8 Weeks",
         cohortSize: 30,
         rating: 4.9,
         reviewsCount: 214,
         instructors: [{
-            name: "Akinkumi Okunola",
-            role: "Senior Engineer, ALAT by Wema",
+            name: "Akinkunmi Okunola",
+            role: "Senior Software Engineer & Technical Lead",
             company: "ALAT by Wema",
-            bio: "Akinkumi is a Senior Engineer at ALAT by Wema, where he works on distributed systems that process payments across five African countries. He has over 8 years of experience designing fault-tolerant architectures.",
-            image: "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&crop&w=200&h=200&q=80"
+            bio: `I am a Senior Software Engineer and Technical Lead with over a decade of experience building, scaling, and maintaining production-grade backend systems, primarily in the fintech and financial services space.
+            
+My career has focused on designing resilient microservices architectures that handle high transaction volumes, strict security requirements, and real-world operational complexity. I have worked across multiple organizations including banks and payment companies, where I led the migration of legacy monolithic systems to modern, cloud-native microservices.
+
+My work spans system architecture, API design, message-driven systems, CI/CD automation, performance optimization, and incident response for mission-critical platforms. Beyond writing code, I enjoy mentoring engineers and helping them bridge the gap between theory and real-world engineering. I previously taught programming courses during my university years and have continued to guide engineers professionally through code reviews, architecture sessions, and hands-on project work. 
+
+This course is driven by my belief that backend engineers should not just know frameworks, but understand how to design systems that survive scale, failure, and change in production.`,
+            image: "/akinkumi.jpeg",
+            experience: "10+ years experience",
+            linkedin: "https://www.linkedin.com/in/akinkunmi-okunola/",
+            github: "https://www.github.com/akinkunmio",
+            prevCompanies: ["Interswitch", "Powersoft / Nextekk"],
+            achievements: [
+                "Led migration of large-scale fintech systems from monoliths to microservices serving millions of users",
+                "Designed and implemented highly available payment and wallet systems with 99.9% uptime",
+                "Built and optimized CI/CD pipelines and cloud-native architectures on AWS and Azure"
+            ]
         }],
-        description: "This course teaches you the fundamentals and advanced concepts behind building production-grade backend systems that can scale to millions of users. You'll learn distributed systems, microservices, caching, queues, observability, and high availability patterns.",
+        description: `**Building Production-Grade Microservices** focuses on what it actually takes to build backend systems that work reliably in production.
+
+Instead of toy examples, you will learn how real companies design microservices that scale, fail gracefully, and evolve over time. The course covers architecture, communication patterns, data consistency, security, observability, and deployment strategies used in high-traffic fintech and enterprise systems. You will understand not just **how** to build microservices, but **why** certain architectural decisions are made.
+
+**What makes this course unique is its strong emphasis on:**
+
+✔️Real-world trade-offs
+
+✔️Operational challenges
+
+✔️Production lessons learned from systems serving millions of users
+
+By the end, you will have built a complete microservices-based system and gained the confidence to work on real backend platforms.
+
+🔨**What you'll build**\n
+You will develop your own **capstone project**, a microservices-based system that handles real-world scale and complexity. By the end, you will present it on the demo day to a panel of judges.
+
+🧠**How it works**\n
+Each week follows a 2 hour session:
+- **Tuesdays: 6:00 PM - 8:00 PM**
+- **Thursdays: 6:00 PM - 8:00 PM**
+- **QnA Sessions**
+`,
         outcomes: [
-            "Design scalable service architectures",
-            "Implement microservices and event-driven systems",
-            "Build high-availability backends with caching & queues",
-            "Monitor and optimize production systems",
-            "Handle concurrency, load, and traffic spikes"
+            "Design and build production-ready microservices using best practices",
+            "Apply Domain-Driven Design (DDD) to real backend systems",
+            "Implement reliable inter-service communication (REST & messaging)",
+            "Build resilient systems using retries, circuit breakers, and observability",
+            "Deploy, monitor, and operate microservices in real-world environments"
         ],
+        tools: ["Docker", "Kubernetes", "AWS", "Azure", "Terraform", "Prometheus", "Grafana", "Redis", "Kafka"],
+        materials: ["Code repositories", "Slides", "Practice exercises", "Architecture templates"],
+        prerequisites: ["Basic programming knowledge (Java, C#, Node.js, or similar)", "Familiarity with REST APIs", "Basic understanding of databases (SQL or NoSQL)", "Comfortable using Git and command-line tools"],
+        targetAudience: ["Bootcamp graduates", "Mid-level professionals (3-5 years experience)", "Senior professionals (5+ years experience)", "Junior professionals (1-2 years experience)"],
+        logistics: {
+            homework: true,
+            capstone: true,
+            teachingStyle: "Mix of lecture and hands-on practice breakdown",
+            frequency: "Daily"
+        },
+        included: ["Live sessions from Akinkunmi", "Life-time access to the course materials", "Code along sessions", "Reading materials", "Community of peers", "Completion badge", "Eligible for refund through the second week"],
         syllabus: [
             {
-                title: "Week 1: Foundations of Scalable Architecture",
-                description: "Understanding core principles behind modern backend systems.",
-                topics: ["Monolith vs microservices", "Horizontal scaling", "Load balancing"]
+                title: "Week 1:  Introduction to Production Microservices",
+                description: "Understanding the principles behind production microservices.",
+                topics: ["Monolith vs microservices", "Real-world architectural challenges"]
             },
             {
-                title: "Week 2: Distributed Systems",
-                description: "How to design and reason about distributed behavior.",
-                topics: ["CAP theorem", "Consensus", "Service discovery"]
+                title: "Week 2: Service Design & Domain-Driven Design",
+                description: "Designing microservices that work well in production.",
+                topics: ["Bounded contexts", "Aggregate & domain modelling"]
             },
             {
-                title: "Week 3: Queues, Caching & Storage",
-                description: "Building high-performance applications.",
-                topics: ["Redis", "Kafka", "Database sharding", "Indexing"]
+                title: "Week 3: API Design & Communication",
+                description: "Learn how to design and reason about distributed behavior.",
+                topics: ["REST best practices", "Sync vs async communication"]
             },
             {
-                title: "Week 4: Observability & Production Engineering",
-                description: "Monitoring, tracing, and debugging real-world systems.",
-                topics: ["Prometheus", "Grafana", "OpenTelemetry"]
+                title: "Week 4: Data Management & Consistency",
+                description: "Learn how to manage and maintain data consistency in distributed systems.",
+                topics: ["Database-per-service", "Event-driven patterns"]
             },
             {
-                title: "Week 5: High Availability & Fault Tolerance",
-                description: "Designing for resilience in production.",
-                topics: ["Circuit breakers", "Retries", "Graceful degradation"]
+                title: "Week 5: Security & Authentication",
+                description: "Learn how to secure microservices and implement authentication.",
+                topics: ["JWT, OAuth concepts", "Securing service-to-service communication"]
             },
             {
-                title: "Week 6: Capstone Project",
-                description: "Build and deploy a scalable backend architecture.",
-                topics: ["Final Architecture Design", "Review", "Certification"]
+                title: "Week 6: Resilience & Observability",
+                description: "Learn how to make microservices resilient and observable.",
+                topics: ["Circuit breakers", "Retries", "Logging, metrics, and tracing"]
+            },
+            {
+                title: "Week 7: CI/CD & Deployment",
+                description: "Learn how to deploy and operate microservices in production.",
+                topics: ["Automated testing", "Deployment strategies"]
+            },
+            {
+                title: "Week 8: Capstone Project & Review",
+                description: "Learn how to deploy and operate microservices in production.",
+                topics: ["Final project demo", "Architectural review and feedback"]
+            }
+        ],
+        schedule: {
+            startDate: "Jan 12",
+            days: ["Mon, Jan 12", "Fri, Jan 16", "Fri, Jan 30"],
+            time: "5:00 PM—6:00 PM (GMT+1)",
+            sessions: [
+                { date: "Tues, Feb 24", time: "6:00 PM—8:00 PM (GMT+1)" },
+                { date: "Thurs, Feb 26", time: "6:00 PM—8:00 PM (GMT+1)" },
+                { date: "Tues, Mar 3", time: "6:00 PM—8:00 PM (GMT+1)" },
+                { date: "Thurs, Mar 5", time: "6:00 PM—8:00 PM (GMT+1)" },
+                { date: "Tues, Mar 10", time: "6:00 PM—8:00 PM (GMT+1)" },
+                { date: "Thurs, Mar 12", time: "6:00 PM—8:00 PM (GMT+1)" },
+                { date: "Tues, Mar 17", time: "6:00 PM—8:00 PM (GMT+1)" },
+                { date: "Thurs, Mar 19", time: "6:00 PM—8:00 PM (GMT+1)" },
+                { date: "Tues, Mar 24", time: "6:00 PM—8:00 PM (GMT+1)" },
+                { date: "Thurs, Mar 26", time: "6:00 PM—8:00 PM (GMT+1)" },
+                { date: "Tues, Mar 31", time: "6:00 PM—8:00 PM (GMT+1)" },
+                { date: "Thurs, Apr 2", time: "6:00 PM—8:00 PM (GMT+1)" },
+                { date: "Tues, Apr 7", time: "6:00 PM—8:00 PM (GMT+1)" },
+                { date: "Thurs, Apr 9", time: "6:00 PM—8:00 PM (GMT+1)" },
+                { date: "Tues, Apr 14", time: "6:00 PM—8:00 PM (GMT+1)" },
+                { date: "Thurs, Apr 16", time: "6:00 PM—8:00 PM (GMT+1)" },
+            ]
+        },
+        faq: [
+            {
+                question: "Who is this course for?",
+                answer: "This course is designed for backend engineers, full-stack developers, and technical leads who want to master microservices. It's ideal if you have some experience building monoliths and want to learn how to architect scalable, distributed systems for production environments."
+            },
+            {
+                question: "What are the prerequisites for this bootcamp?",
+                answer: "You should have a basic understanding of backend development and proficiency in at least one backend language (like Node.js, Go, Java, or C#). Familiarity with databases and basic command-line usage is also recommended."
+            },
+            {
+                question: "How much time commitment is expected each week?",
+                answer: "Expect to spend about 5-7 hours per week. This includes 4 hours of live sessions (2 hours on Tuesdays and Thursdays) plus 1-3 hours for projects and practice exercises."
+            },
+            {
+                question: "Will sessions be recorded?",
+                answer: "Yes, all live sessions are recorded and uploaded to the course portal within 24 hours. You will have lifetime access to these recordings."
             }
         ]
     },
-    {
-        slug: "backend-systems-and-architectures",
-        title: "Software Engineering: Backend Systems & Architecture.",
-        subtitle: "A practical engineering course on building production-grade backend systems using modern software architecture patterns and best practices.",
-        category: "Engineering",
-        price: 300000,
-        startDate: "March 20, 2026",
-        duration: "6 Weeks",
-        cohortSize: 30,
-        rating: 4.8,
-        reviewsCount: 162,
-        instructors: [{
-            name: "Olumide Abegunde",
-            role: "Senior Engineer, Moniepoint",
-            company: "Moniepoint",
-            bio: "Olumide Abegunde is a Senior Frontend Engineer at Moniepoint, one of Africa's top fintech company. He specializes in building production-grade backend systems using modern software architecture patterns and best practices.",
-            image: "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&crop&w=200&h=200&q=80"
-        }],
-        description: "Learn how to build fast, scalable, production-ready frontend applications using Next.js 14, App Router, React Server Components, and TailwindCSS. This course is project-intensive and focuses heavily on real-life engineering skills.",
-        outcomes: [
-            "Build SEO-optimized, production-grade Next.js apps",
-            "Design scalable UI architectures with components",
-            "Implement authentication, routing & caching",
-            "Optimize performance using RSC and Server Actions",
-            "Deploy effectively using Vercel & CI/CD pipelines"
-        ],
-        syllabus: [
-            {
-                title: "Week 1: Modern Next.js Architecture",
-                description: "Deep dive into the App Router and RSC paradigm.",
-                topics: ["App Router", "Layouts", "Server Components", "Streaming"]
-            },
-            {
-                title: "Week 2: State Management & Data Fetching",
-                description: "Building apps with robust state/data patterns.",
-                topics: ["React Query", "Server Actions", "Caching"]
-            },
-            {
-                title: "Week 3: UI Engineering",
-                description: "Building elegant interfaces at scale.",
-                topics: ["TailwindCSS", "Design systems", "Component patterns"]
-            },
-            {
-                title: "Week 4: Authentication, Security & Deployment",
-                description: "Ship real-world production-ready apps.",
-                topics: ["Clerk", "Rate limiting", "Vercel Deployment"]
-            },
-            {
-                title: "Week 5: Capstone Project",
-                description: "Build a full production-grade SaaS frontend.",
-                topics: ["Final Project", "Review", "Certification"]
-            }
-        ]
-    },         
-    {
-        slug: "vibe-coding-for-product-managers",
-        title: "Vibe Coding for Product Managers",
-        subtitle: "Learn how to quickly create prototypes with tools like Claude, Antigravity, and Figma.",
-        category: "Product",
-        price: 250000,
-        startDate: "soon",
-        duration: "Coming soon",
-        cohortSize: 20,
-        rating: 0,
-        reviewsCount: 0,
-        instructors: [{
-            name: "Coming soon",
-            role: "Coming soon",
-            company: "Coming soon",
-            bio: "Coming soon",
-            image: "null"
-        }],
-        description: "Learn how to create apps and prototypes with AI tools like Claude, Antigravity, and Figma.",
-        outcomes: [
-            "Build SEO-optimized, production-grade Next.js apps",
-            "Design scalable UI architectures with components",
-            "Implement authentication, routing & caching",
-            "Optimize performance using RSC and Server Actions",
-            "Deploy effectively using Vercel & CI/CD pipelines"
-        ],
-        syllabus: [
-            {
-                title: "Week 1: Modern Next.js Architecture",
-                description: "Deep dive into the App Router and RSC paradigm.",
-                topics: ["App Router", "Layouts", "Server Components", "Streaming"]
-            },
-            {
-                title: "Week 2: State Management & Data Fetching",
-                description: "Building apps with robust state/data patterns.",
-                topics: ["React Query", "Server Actions", "Caching"]
-            },
-            {
-                title: "Week 3: UI Engineering",
-                description: "Building elegant interfaces at scale.",
-                topics: ["TailwindCSS", "Design systems", "Component patterns"]
-            },
-            {
-                title: "Week 4: Authentication, Security & Deployment",
-                description: "Ship real-world production-ready apps.",
-                topics: ["Clerk", "Rate limiting", "Vercel Deployment"]
-            },
-            {
-                title: "Week 5: Capstone Project",
-                description: "Build a full production-grade SaaS frontend.",
-                topics: ["Final Project", "Review", "Certification"]
-            }
-        ]
-    },         
-    {
-        slug: "design-engineering",
-        title: "Design Engineering ",
-        subtitle: "Learn how to design and build products using Next.js and AI tools",
-        category: "Design",
-        price: 250000,
-        startDate: "soon",
-        duration: "6 Weeks",
-        cohortSize: 20,
-        rating: 0,
-        reviewsCount: 0,
-        instructors: [{
-            name: "Coming soon",
-            role: "Coming soon",
-            company: "Coming soon",
-            bio: "Coming soon",
-            image: "null"
-        }],
-        description: "Learn how to create apps and prototypes with AI tools like Claude, Antigravity, and Figma.",
-        outcomes: [
-            "Build SEO-optimized, production-grade Next.js apps",
-            "Design scalable UI architectures with components",
-            "Implement authentication, routing & caching",
-            "Optimize performance using RSC and Server Actions",
-            "Deploy effectively using Vercel & CI/CD pipelines"
-        ],
-        syllabus: [
-            {
-                title: "Week 1: Modern Next.js Architecture",
-                description: "Deep dive into the App Router and RSC paradigm.",
-                topics: ["App Router", "Layouts", "Server Components", "Streaming"]
-            },
-            {
-                title: "Week 2: State Management & Data Fetching",
-                description: "Building apps with robust state/data patterns.",
-                topics: ["React Query", "Server Actions", "Caching"]
-            },
-            {
-                title: "Week 3: UI Engineering",
-                description: "Building elegant interfaces at scale.",
-                topics: ["TailwindCSS", "Design systems", "Component patterns"]
-            },
-            {
-                title: "Week 4: Authentication, Security & Deployment",
-                description: "Ship real-world production-ready apps.",
-                topics: ["Clerk", "Rate limiting", "Vercel Deployment"]
-            },
-            {
-                title: "Week 5: Capstone Project",
-                description: "Build a full production-grade SaaS frontend.",
-                topics: ["Final Project", "Review", "Certification"]
-            }
-        ]
-    },         
-    {
-        slug: "ai-product-management",
-        title: "AI Product Management",
-        subtitle: "Master the art of AI product management. Learn how to build and ship AI-powered products responsibly.",
-        category: "Product",
-        price: 250000,
-        startDate: "soon",
-        duration: "6 Weeks",
-        cohortSize: 20,
-        rating: 0,
-        reviewsCount: 0,
-        instructors: [{
-            name: "Coming soon",
-            role: "Coming soon",
-            company: "Coming soon",
-            bio: "Coming soon",
-            image: "null"
-        }],
-        description: "Learn how to create apps and prototypes with AI tools like Claude, Antigravity, and Figma.",
-        outcomes: [
-            "Build SEO-optimized, production-grade Next.js apps",
-            "Design scalable UI architectures with components",
-            "Implement authentication, routing & caching",
-            "Optimize performance using RSC and Server Actions",
-            "Deploy effectively using Vercel & CI/CD pipelines"
-        ],
-        syllabus: [
-            {
-                title: "Week 1: Modern Next.js Architecture",
-                description: "Deep dive into the App Router and RSC paradigm.",
-                topics: ["App Router", "Layouts", "Server Components", "Streaming"]
-            },
-            {
-                title: "Week 2: State Management & Data Fetching",
-                description: "Building apps with robust state/data patterns.",
-                topics: ["React Query", "Server Actions", "Caching"]
-            },
-            {
-                title: "Week 3: UI Engineering",
-                description: "Building elegant interfaces at scale.",
-                topics: ["TailwindCSS", "Design systems", "Component patterns"]
-            },
-            {
-                title: "Week 4: Authentication, Security & Deployment",
-                description: "Ship real-world production-ready apps.",
-                topics: ["Clerk", "Rate limiting", "Vercel Deployment"]
-            },
-            {
-                title: "Week 5: Capstone Project",
-                description: "Build a full production-grade SaaS frontend.",
-                topics: ["Final Project", "Review", "Certification"]
-            }
-        ]
-    },         
-    {
-        slug: "zero-to-one-product-building",
-        title: "Zero to One Product Building",
-        subtitle: "Master the art of building and shipping products. Learn how to build and ship products users want.",
-        category: "Product",
-        price: 250000,
-        startDate: "soon",
-        duration: "6 Weeks",
-        cohortSize: 20,
-        rating: 0,
-        reviewsCount: 0,
-        instructors: [{
-            name: "Coming soon",
-            role: "Coming soon",
-            company: "Coming soon",
-            bio: "Coming soon",
-            image: "null"
-        }],
-        description: "Learn how to create apps and prototypes with AI tools like Claude, Antigravity, and Figma.",
-        outcomes: [
-            "Build SEO-optimized, production-grade Next.js apps",
-            "Design scalable UI architectures with components",
-            "Implement authentication, routing & caching",
-            "Optimize performance using RSC and Server Actions",
-            "Deploy effectively using Vercel & CI/CD pipelines"
-        ],
-        syllabus: [
-            {
-                title: "Week 1: Modern Next.js Architecture",
-                description: "Deep dive into the App Router and RSC paradigm.",
-                topics: ["App Router", "Layouts", "Server Components", "Streaming"]
-            },
-            {
-                title: "Week 2: State Management & Data Fetching",
-                description: "Building apps with robust state/data patterns.",
-                topics: ["React Query", "Server Actions", "Caching"]
-            },
-            {
-                title: "Week 3: UI Engineering",
-                description: "Building elegant interfaces at scale.",
-                topics: ["TailwindCSS", "Design systems", "Component patterns"]
-            },
-            {
-                title: "Week 4: Authentication, Security & Deployment",
-                description: "Ship real-world production-ready apps.",
-                topics: ["Clerk", "Rate limiting", "Vercel Deployment"]
-            },
-            {
-                title: "Week 5: Capstone Project",
-                description: "Build a full production-grade SaaS frontend.",
-                topics: ["Final Project", "Review", "Certification"]
-            }
-        ]
-    },         
-    {
-        slug: "react-native-in-production-architecture-performance-and-scale",
-        title: "React Native in Production: Architecture, Performance & Scale",
-        subtitle: "Build production-grade React Native apps with architecture, performance, and scale.",
-        category: "Engineering",
-        price: 300000,
-        startDate: "soon",
-        duration: "8 Weeks",
-        cohortSize: 20,
-        rating: 0,
-        reviewsCount: 0,
-        instructors: [{
-            name: "Coming soon",
-            role: "Coming soon",
-            company: "Coming soon",
-            bio: "Coming soon",
-            image: "null"
-        }],
-        description: "Learn how to create apps and prototypes with AI tools like Claude, Antigravity, and Figma.",
-        outcomes: [
-            "Build SEO-optimized, production-grade Next.js apps",
-            "Design scalable UI architectures with components",
-            "Implement authentication, routing & caching",
-            "Optimize performance using RSC and Server Actions",
-            "Deploy effectively using Vercel & CI/CD pipelines"
-        ],
-        syllabus: [
-            {
-                title: "Week 1: Modern Next.js Architecture",
-                description: "Deep dive into the App Router and RSC paradigm.",
-                topics: ["App Router", "Layouts", "Server Components", "Streaming"]
-            },
-            {
-                title: "Week 2: State Management & Data Fetching",
-                description: "Building apps with robust state/data patterns.",
-                topics: ["React Query", "Server Actions", "Caching"]
-            },
-            {
-                title: "Week 3: UI Engineering",
-                description: "Building elegant interfaces at scale.",
-                topics: ["TailwindCSS", "Design systems", "Component patterns"]
-            },
-            {
-                title: "Week 4: Authentication, Security & Deployment",
-                description: "Ship real-world production-ready apps.",
-                topics: ["Clerk", "Rate limiting", "Vercel Deployment"]
-            },
-            {
-                title: "Week 5: Capstone Project",
-                description: "Build a full production-grade SaaS frontend.",
-                topics: ["Final Project", "Review", "Certification"]
-            }
-        ]
-    },         
 ];
 
 export function getCourseBySlug(slug: string): Course | undefined {

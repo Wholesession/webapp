@@ -55,10 +55,10 @@ export function CourseCard({ course }: CourseCardProps) {
 
                 <div className="flex items-center gap-2 text-sm text-gray-500 font-medium mb-8">
                     {/* Replaced stars with generic 'badge' style or text as requested */}
-                    <span className="text-[#d97706] bg-[#fffbeb] px-2 py-0.5 rounded text-xs font-semibold">
+                    {/* <span className="text-[#d97706] bg-[#fffbeb] px-2 py-0.5 rounded text-xs font-semibold">
                         4.9 ★
-                    </span>
-                    <span>•</span>
+                    </span> */}
+                    {/* <span>•</span> */}
                     <span className="text-gray-700">Starts {course.startDate || "Soon"}</span>
                 </div>
             </div>

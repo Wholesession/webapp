@@ -5,7 +5,6 @@ import { motion } from "framer-motion";
 export function Hero() {
     return (
         <section className="relative flex min-h-[600px] items-center bg-[#372772] pt-32 pb-16 overflow-hidden">
-            {/* Background Vertical Lines */}
             <div className="absolute inset-0 z-0 pointer-events-none">
                 <div className="h-full w-full"
                     style={{
@@ -13,11 +12,10 @@ export function Hero() {
                         backgroundSize: "40px 100%"
                     }}
                 />
-                {/* Subtle gradient overlay to fade out lines at edges if needed, or add depth */}
                 <div className="absolute inset-0 bg-gradient-to-b from-[#0a0c1b]/50 via-transparent to-[#0a0c1b]" />
             </div>
 
-            <div className="relative z-10 mx-auto max-w-[1150px] px-4 sm:px-6 lg:px-8 w-full">
+            <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 w-full">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}

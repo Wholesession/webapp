@@ -26,13 +26,13 @@ const instructors = [
 
 export function Instructors() {
     return (
-        <section className="bg-black py-24 sm:py-32" id="instructors">
+        <section className="bg-[#0a0c1b] py-24 sm:py-32 border-t border-white/5" id="instructors">
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
                 <div className="mx-auto max-w-2xl text-center">
-                    <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
+                    <h2 className="text-3xl font-serif font-medium tracking-tight text-white sm:text-4xl">
                         Learn from the Best
                     </h2>
-                    <p className="mt-2 text-lg leading-8 text-gray-400">
+                    <p className="mt-4 text-lg leading-8 text-gray-400">
                         Our instructors don't just teach. They build systems used by millions.
                     </p>
                 </div>
@@ -49,7 +49,7 @@ export function Instructors() {
                             transition={{ delay: index * 0.1, duration: 0.5 }}
                         >
                             <div className="flex flex-col items-center gap-y-4">
-                                <div className="relative h-40 w-40 overflow-hidden rounded-full border-4 border-white/10">
+                                <div className="relative h-48 w-48 overflow-hidden rounded-full border-4 border-white/10 shadow-2xl">
                                     <Image
                                         className="h-full w-full object-cover"
                                         src={person.image}
@@ -58,11 +58,11 @@ export function Instructors() {
                                         height={200}
                                     />
                                 </div>
-                                <div className="text-center">
-                                    <h3 className="text-lg font-semibold leading-8 text-white">
+                                <div className="text-center mt-2">
+                                    <h3 className="text-xl font-semibold leading-8 text-white">
                                         {person.name}
                                     </h3>
-                                    <p className="text-base leading-7 text-purple-400">
+                                    <p className="text-base leading-7 text-purple-400 font-medium">
                                         {person.role}
                                     </p>
                                     <p className="text-sm leading-6 text-gray-500">
