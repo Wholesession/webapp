@@ -11,12 +11,12 @@ interface PricingCardProps {
 
 export function PricingCard({ course }: PricingCardProps) {
     return (
-        <div className="sticky top-24 bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden">
+        <div className="sticky top-24 bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden font-body">
             <div className="p-6 space-y-6">
                 {/* Header: Price & Rating */}
                 <div className="flex items-center justify-between">
                     <div>
-                        <span className="text-2xl font-bold text-gray-900">₦{(course.price).toLocaleString()}</span>
+                        <span className="text-2xl font-bold font-body text-gray-900">₦{(course.price).toLocaleString()}</span>
                         {/* <span className="text-sm text-gray-500 ml-1">USD</span> */}
                     </div>
                     {course.rating > 0 && (
@@ -36,7 +36,7 @@ export function PricingCard({ course }: PricingCardProps) {
 
                 {/* Cohort Info */}
                 <div>
-                    <h4 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Next Cohort</h4>
+                    <h4 className="text-xs font-bold font-body text-gray-400 uppercase tracking-wider mb-2">Next Cohort</h4>
                     <div className="flex items-center gap-2 flex-wrap">
                         <span className="text-gray-900 font-semibold">{course.startDate} — {course.duration}</span>
                         <span className="bg-yellow-100 text-yellow-800 text-xs font-medium px-2 py-0.5 rounded">
@@ -46,26 +46,26 @@ export function PricingCard({ course }: PricingCardProps) {
                 </div>
 
                 {/* Primary CTA */}
-                <Button className="w-full bg-[#372772] hover:bg-[#372772]/80 text-white text-lg font-semibold py-6 rounded-lg transition-colors cursor-pointer">
+                <Button className="w-full bg-[var(--brand-color)] hover:bg-[var(--brand-color)]/90 text-white text-lg font-semibold py-6 rounded-lg transition-colors cursor-pointer font-body">
                     Enroll
                 </Button>
 
                 {/* Email Capture */}
-                {/* <div className="space-y-2 pt-2">
+                {/* <div className="space-y-2 pt-2 font-body">
                     <label className="text-xs font-bold text-gray-500 uppercase tracking-wide">Get Course Updates</label>
                     <div className="flex gap-2">
                         <Input
                             placeholder="Your email"
                             className="bg-gray-50 border-gray-200 focus-visible:ring-gray-300"
                         />
-                        <Button size="icon" className="bg-[#372772] hover:bg-[#372772]/80 text-white shrink-0">
+                        <Button size="icon" className="bg-[var(--brand-color)] hover:bg-[var(--brand-color)]/90 text-white shrink-0">
                             <ArrowRight className="w-4 h-4" />
                         </Button>
                     </div>
                 </div> */}
 
                 {/* Secondary Links */}
-                {/* <div className="flex items-center justify-between text-sm font-medium pt-2">
+                {/* <div className="flex items-center justify-between text-sm font-medium pt-2 font-body">
                     <button className="text-gray-900 underline decoration-gray-300 underline-offset-4 hover:decoration-gray-900">
                         Get reimbursed
                     </button>

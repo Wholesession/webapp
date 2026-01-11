@@ -11,16 +11,20 @@ const footerLinks = {
     Company: [
         { name: "About Us", href: "#" },
         { name: "Blog", href: "#" },
+        { name: "For businesses", href: "#" },
+        { name: "Careers", href: "#" },
+        { name: "Contact", href: "#" },
     ],
     Support: [
         { name: "Terms of Service", href: "#" },
         { name: "Privacy Policy", href: "#" },
+        { name: "Apply to be a mentor", href: "#" },
     ],
 };
 
 export function Footer() {
     return (
-        <footer className="bg-[#372772] border-t border-white/10 pt-16 pb-8">
+        <footer className="border-t bg-[#000] border-white/10 pt-16 pb-8">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="grid grid-cols-2 gap-8 md:grid-cols-4 lg:grid-cols-5 mb-12">
                     <div className="col-span-2 lg:col-span-2">

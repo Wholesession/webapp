@@ -11,7 +11,7 @@ interface InstructorProps {
 
 export function Instructor({ instructors }: InstructorProps) {
     return (
-        <section className="py-24 bg-gray-50">
+        <section className="py-24 bg-gray-50 font-body">
             <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
                 {instructors.map((instructor, index) => (
                     <div key={index} className={`flex flex-col md:flex-row gap-12 items-center ${index > 0 ? "mt-24 pt-24 border-t border-gray-200" : ""}`}>
@@ -38,7 +38,7 @@ export function Instructor({ instructors }: InstructorProps) {
                             <h2 className="text-sm font-bold tracking-wide text-[#372772] uppercase mb-2">
                                 Meet your Instructor
                             </h2>
-                            <h3 className="text-3xl font-serif font-medium text-gray-900 mb-6">
+                            <h3 className="text-3xl font-body font-medium text-gray-900 mb-6">
                                 {instructor.name}
                             </h3>
                             <p className="text-lg text-gray-600 leading-relaxed mb-8">

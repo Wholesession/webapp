@@ -35,7 +35,7 @@ export default async function CoursePage({ params }: { params: Promise<{ slug: s
 
             <CourseHero course={course} />
 
-            <div className="container mx-auto px-4 lg:px-8 py-12 relative">
+            <div className="container mx-auto px-4 lg:px-8 py-12 relative font-body">
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
 
                     {/* Main Content Column */}
@@ -43,7 +43,7 @@ export default async function CoursePage({ params }: { params: Promise<{ slug: s
                         {/* Overview / Outcomes Section */}
                         <section>
                             <div className="mb-12">
-                                <h2 className="text-4xl font-serif text-[#0a0c1b] mb-6 font-normal">{course.tagline}</h2>
+                                <h2 className="text-4xl font-body text-[#0a0c1b] mb-6 font-normal">{course.tagline}</h2>
                                 <div className="prose prose-lg text-gray-700 max-w-none">
                                     <ReactMarkdown>
                                         {course.description}
@@ -52,12 +52,12 @@ export default async function CoursePage({ params }: { params: Promise<{ slug: s
                             </div>
 
                             <div className="rounded-2xl p-8 border border-[#eee]">
-                                <h3 className="text-4xl font-serif font-normal text-[#0a0c1b] mb-6">What you'll be able to do at the end of this course</h3>
+                                <h3 className="text-4xl font-body font-normal text-[#0a0c1b] mb-6">What you'll be able to do at the end of this course</h3>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     {course.outcomes.map((outcome, i) => (
                                         <div key={i} className="flex items-center gap-3 text-[1rem]">
                                             <CheckCircle2 className="w-5 h-5 text-[#0a0c1b] flex-shrink-0 mt-0.5" />
-                                            <span className="text-gray-700 prose prose-lg font-medium">{outcome}</span>
+                                            <span className="text-gray-700 prose prose-lg font-body">{outcome}</span>
                                         </div>
                                     ))}
                                 </div>

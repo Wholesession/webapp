@@ -15,9 +15,9 @@ export function FAQ({ course }: FAQProps) {
     if (!course.faq || course.faq.length === 0) return null;
 
     return (
-        <section className="bg-white">
+        <section className="bg-white font-body">
             <div>
-                <h2 className="text-3xl md:text-4xl font-serif text-[#0a0c1b] mb-12">
+                <h2 className="text-3xl md:text-4xl font-body text-[#0a0c1b] mb-12">
                     Frequently asked questions
                 </h2>
 
@@ -31,7 +31,7 @@ export function FAQ({ course }: FAQProps) {
                                 onClick={() => setOpenIndex(openIndex === index ? null : index)}
                                 className="flex w-full items-center justify-between p-6 text-left hover:bg-gray-50 transition-colors"
                             >
-                                <span className="text-lg font-medium text-[#0a0c1b] pr-8">
+                                <span className="text-lg font-body text-[#0a0c1b] pr-8">
                                     {item.question}
                                 </span>
                                 {openIndex === index ? (
@@ -49,7 +49,7 @@ export function FAQ({ course }: FAQProps) {
                                         exit={{ height: 0, opacity: 0 }}
                                         transition={{ duration: 0.2 }}
                                     >
-                                        <div className="px-6 pb-6 text-gray-600 leading-relaxed">
+                                        <div className="px-6 pb-6 text-gray-600 leading-relaxed font-body">
                                             {item.answer}
                                         </div>
                                     </motion.div>

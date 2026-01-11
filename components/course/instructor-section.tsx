@@ -10,10 +10,10 @@ interface InstructorsProps {
 
 export function Instructors({ course }: InstructorsProps) {
     return (
-        <section className="">
+        <section className="font-body">
             <div>
                 <div className="mb-16">
-                    <h2 className="text-3xl md:text-4xl font-serif text-[#0a0c1b]">
+                    <h2 className="text-3xl md:text-4xl font-body text-[#0a0c1b]">
                         Learn from {course.instructors[0].name}
                     </h2>
                 </div>
@@ -71,7 +71,7 @@ export function Instructors({ course }: InstructorsProps) {
                                             </h4>
                                             <div className="flex flex-wrap gap-3">
                                                 {instructor.prevCompanies.map((company, i) => (
-                                                    <span key={i} className="px-3 py-1 bg-gray-100 rounded text-sm text-gray-700 font-medium font-serif">
+                                                    <span key={i} className="px-3 py-1 bg-gray-100 rounded text-sm text-gray-700 font-medium">
                                                         {company}
                                                     </span>
                                                 ))}

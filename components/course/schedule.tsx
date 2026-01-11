@@ -11,9 +11,9 @@ export function Schedule({ course }: ScheduleProps) {
     if (!course.schedule) return null;
 
     return (
-        <section className="bg-white">
+        <section className="bg-white font-body">
             <div>
-                <h2 className="text-3xl md:text-4xl font-serif text-[#0a0c1b] mb-8">
+                <h2 className="text-3xl md:text-4xl font-body text-[#0a0c1b] mb-8">
                     Schedule
                 </h2>
 
@@ -25,7 +25,7 @@ export function Schedule({ course }: ScheduleProps) {
                                 <MessageSquare className="w-6 h-6 text-[#0a0c1b]" />
                             </div>
                             <div>
-                                <h3 className="text-xl font-bold text-[#0a0c1b]">Live sessions</h3>
+                                <h3 className="text-xl font-bold font-body text-[#0a0c1b]">Live sessions</h3>
                                 <p className="text-gray-600 font-medium">4 hrs / week</p>
                             </div>
                         </div>
@@ -53,7 +53,7 @@ export function Schedule({ course }: ScheduleProps) {
                             <FolderKanban className="w-6 h-6 text-[#0a0c1b]" />
                         </div>
                         <div>
-                            <h3 className="text-xl font-bold text-[#0a0c1b]">Projects</h3>
+                            <h3 className="text-xl font-bold font-body text-[#0a0c1b]">Projects</h3>
                             <p className="text-gray-600 font-medium">7 hrs / week</p>
                         </div>
                     </div>

@@ -6,54 +6,59 @@ import { Plus, Minus } from "lucide-react";
 
 const faqs = [
     {
-      question: "Who are Wholesession courses designed for?",
+      question: "What makes Wholesession different from other platforms?",
       answer:
-        "Wholesession is built for ambitious software engineers, product managers, marketers, designers, and technical leaders who want to level up into senior, staff, or lead roles. If you're tired of surface-level tutorials and want to learn how real systems are built in production, you're in the right place."
+        "Most platforms sell you pre-recorded videos you'll never finish. We run live, cohort-based courses taught by senior practitioners actively shipping at companies like ALAT, Moniepoint, Andela, and Interswitch. Small cohorts (30 max), real accountability, production-focused projects. You actually finish and build real skills."
     },
     {
-      question: "How are the courses taught?",
+        question: "Why not just use Udemy or Coursera?",
+        answer:
+          "Because you've tried that and didn't finish. Pre-recorded videos have 3% completion rates. We run live cohorts with weekly deadlines, peer accountability, and senior instructors giving real-time feedback. You actually finish and build real skills."
+      },
+    {
+      question: "Who teaches these courses?",
       answer:
-        "All courses are cohort-based and instructor-led. You learn in small groups through live sessions, hands-on projects, structured assignments, and guided discussions. This is not a video library — it's a shared learning experience with real accountability."
+        "Senior engineers, designers, and product leaders with 7+ years of experience building production systems at scale. Not bootcamp grads. Not tutorial creators. People currently doing the work at top African tech companies."
     },
     {
-      question: "Are the classes live or recorded?",
+      question: "Are courses live or recorded?",
       answer:
-        "Classes are delivered live to allow for real-time interaction, questions, and deep discussions. Every session is recorded and made available to enrolled students, so you can catch up if you miss a class."
+        "Live sessions with real-time interaction and feedback. Every session is recorded for students who miss a class, but the value is in showing up live—asking questions, getting code reviews, learning with your cohort."
     },
     {
-      question: "Who are the instructors?",
+      question: "How much do courses cost?",
       answer:
-        "Our instructors are senior practitioners actively working in top tech companies and high-growth startups. They are engineers, product leaders, marketers, and designers who build and ship real systems at scale — and teach directly from that experience."
-    },
-    {
-      question: "How practical are the courses?",
-      answer:
-        "Very. Each course is centered around real-world projects, production-level workflows, and decision-making you would face on the job. You will not just learn concepts — you will apply them to realistic problems."
+        "₦200k-300k per course depending on depth and duration. Most courses run 8-12 weeks. We offer payment plans. All courses include a money-back guarantee through Week 2."
     },
     {
       question: "Do you offer certificates?",
       answer:
-        "Not yet. Our focus is on skills, mastery, and real outcomes rather than certificates. However, students complete substantial projects they can showcase in portfolios, interviews, and real work. Certificates may be introduced in the future."
+        "Not yet. We focus on skills and real projects you can show employers—not paper credentials. You'll build production-grade work for your portfolio that proves what you can do."
     },
     {
-      question: "How much time do I need to commit?",
+      question: "Can I take courses if I'm not in Nigeria?",
       answer:
-        "Most courses run for 8–12 weeks, with 1–2 live sessions per week. You should expect to commit 4–6 hours weekly, including live classes, assignments, and project work."  
+        "Yes. Sessions are scheduled for African time zones (WAT), but anyone globally can join. Recordings are available if you're in a conflicting timezone."
     },
     {
-      question: "How is Wholesession different from other online courses?",
+      question: "What if I'm a complete beginner?",
       answer:
-        "Most platforms sell pre-recorded content. Wholesession focuses on live, high-signal learning with small cohorts and elite instructors. We provide highly experienced people the opportunity to teach and mentor. You learn directly from people who are currently doing the work — not from outdated slides."
+        "Our courses are for mid-level professionals (2-7 years experience) looking to reach senior levels. If you're just starting out, we're not the right fit yet. Focus on fundamentals first, then come back."
     },
     {
-      question: "Will this help my career?",
+      question: "How do I know if a course is right for me?",
       answer:
-        "Our goal is to help you think and operate at a higher level. Many of our instructors actively mentor, recommend, and work with top talent. While we cannot promise jobs, we design courses to materially improve how you perform in real roles."
+        "Each course page lists clear prerequisites, target audience, and learning outcomes. If you meet the prerequisites and the outcomes match your goals, you're ready. Still unsure? Email us at support@wholesession.com."
     },
     {
-      question: "How do I enroll?",
+      question: "When do new courses launch?",
       answer:
-        "Enrollment opens per cohort. Once a course is announced, you can apply or register directly through the Wholesession platform. Cohorts are intentionally limited to maintain quality."
+        "We launch new cohorts quarterly. Join our waitlist for specific courses to get notified when enrollment opens and access early-bird pricing."
+    },
+    {
+      question: "Can I teach on Wholesession?",
+      answer:
+        "Yes. We're looking for senior practitioners (8+ years) with production experience and a track record of mentoring. Apply at wholesession.com/teach. We review applications monthly."
     }
   ];  
 
@@ -61,13 +66,13 @@ export function Faq() {
     const [openIndex, setOpenIndex] = useState<number | null>(null);
 
     return (
-        <section className="bg-[#0a0c1b] py-24 sm:py-32 border-t border-white/5">
+        <section className="py-24 sm:py-32 border-t border-white/5 font-body">
             <div className="mx-auto max-w-4xl px-6 lg:px-8">
                 <div className="text-center mb-16">
-                    <h2 className="text-3xl font-serif font-medium tracking-tight text-white sm:text-4xl">
+                    <h2 className="text-4xl font-semibold tracking-tight sm:text-4xl">
                         Frequently Asked Questions
                     </h2>
-                    <p className="mt-4 text-lg text-gray-400">
+                    <p className="mt-4 text-lg text-gray-700">
                         Everything you need to know about Wholesession
                     </p>
                 </div>
@@ -76,18 +81,18 @@ export function Faq() {
                     {faqs.map((faq, index) => (
                         <div
                             key={index}
-                            className="bg-white/5 overflow-hidden transition-colors hover:bg-white/[0.07]"
+                            className="bg-white/5 overflow-hidden transition-colors hover:bg-white/[0.07] font-body"
                         >
                             <button
                                 onClick={() => setOpenIndex(openIndex === index ? null : index)}
                                 className="flex w-full items-center justify-between p-6 text-left cursor-pointer"
                             >
-                                <span className="text-lg font-medium text-white">{faq.question}</span>
+                                <span className="text-2xl font-semibold">{faq.question}</span>
                                 <span className="ml-6">
                                     {openIndex === index ? (
-                                        <Minus className="h-5 w-5 text-[#ccc]" />
+                                        <Minus className="h-5 w-5" />
                                     ) : (
-                                        <Plus className="h-5 w-5 text-[#ccc]" />
+                                        <Plus className="h-5 w-5" />
                                     )}
                                 </span>
                             </button>
@@ -99,7 +104,7 @@ export function Faq() {
                                         exit={{ height: 0, opacity: 0 }}
                                         transition={{ duration: 0.3, ease: "easeInOut" }}
                                     >
-                                        <div className="px-6 pb-6 text-base leading-7 text-[#ccc]">
+                                        <div className="px-6 pb-6 text-base leading-7 text-gray-700 font-body">
                                             {faq.answer}
                                         </div>
                                     </motion.div>

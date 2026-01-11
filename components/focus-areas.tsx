@@ -11,9 +11,9 @@ const categories = [
 
 export function FocusAreas() {
     return (
-        <section className="bg-[#372772] py-24">
+        <section className="font-bold py-24">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 className="text-3xl font-serif text-white mb-12">
+                <h2 className="text-4xl mb-12">
                     Unlock your full potential
                 </h2>
 
@@ -22,19 +22,19 @@ export function FocusAreas() {
                         <Link
                             key={category.name}
                             href={`/category/${category.name.toLowerCase()}`}
-                            className="group relative overflow-hidden rounded-2xl bg-white/5 aspect-square ring-1 ring-white/10 hover:ring-white/20 transition-all"
+                            className="group relative overflow-hidden rounded-2xl bg-white/5 aspect-square ring-1 ring-white/10 hover:ring-white/20 transition-all border border-gray-200"
                         >
                             <div className="absolute inset-0 opacity-[0.03] group-hover:opacity-[0.07] transition-opacity duration-500">
                                 <div
                                     className="h-full w-full"
                                     style={{
-                                        backgroundImage: "repeating-linear-gradient(45deg, transparent, transparent 10px, white 10px, white 11px)"
+                                        backgroundImage: "repeating-linear-gradient(75deg, transparent, transparent 10px, black 10px, black 11px)"
                                     }}
                                 />
                             </div>
 
                             <div className="absolute inset-0 flex flex-col justify-end p-6 z-10">
-                                <span className="text-2xl font-serif text-white group-hover:scale-105 transition-transform duration-300">
+                                <span className="text-3xl font-bold text-black group-hover:scale-105 transition-transform duration-300">
                                     {category.name}
                                 </span>
                             </div>

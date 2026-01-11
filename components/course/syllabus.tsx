@@ -15,10 +15,10 @@ export function Syllabus({ course }: SyllabusProps) {
     if (!course.syllabus || course.syllabus.length === 0) return null;
 
     return (
-        <section className="bg-white" id="syllabus">
+        <section className="bg-white font-body" id="syllabus">
             <div>
                 <div className="mb-16">
-                    <h2 className="text-3xl md:text-4xl font-serif text-[#0a0c1b] mb-4">
+                    <h2 className="text-3xl md:text-4xl font-body text-[#0a0c1b] mb-4">
                         Curriculum Breakdown
                     </h2>
                     <p className="text-lg text-gray-600">
@@ -45,7 +45,7 @@ export function Syllabus({ course }: SyllabusProps) {
                                         {index + 1}
                                     </span>
                                     <div>
-                                        <h3 className={`text-lg font-semibold ${openIndex === index ? "text-[#0a0c1b]" : "text-gray-700"}`}>
+                                        <h3 className={`text-lg font-semibold font-body ${openIndex === index ? "text-[#0a0c1b]" : "text-gray-700"}`}>
                                             {module.title}
                                         </h3>
                                         <p className="text-sm text-gray-500 mt-1">{module.description}</p>
@@ -69,7 +69,7 @@ export function Syllabus({ course }: SyllabusProps) {
                                         <div className="px-6 pb-6 pl-20">
                                             <div className="border-l-2 border-gray-100 pl-6 space-y-4">
                                                 <div>
-                                                    <h4 className="text-sm font-semibold text-gray-900 uppercase tracking-wide mb-3">Topics Covered</h4>
+                                                    <h4 className="text-sm font-semibold font-body text-gray-900 uppercase tracking-wide mb-3">Topics Covered</h4>
                                                     <ul className="grid grid-cols-1 md:grid-cols-2 gap-2">
                                                         {module.topics.map((topic, i) => (
                                                             <li key={i} className="flex items-center gap-2 text-gray-600 text-sm">

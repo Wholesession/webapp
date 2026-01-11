@@ -1,25 +1,15 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Playfair_Display } from "next/font/google";
+import { Inter_Tight } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-const playfair = Playfair_Display({
-  variable: "--font-playfair",
+const interTight = Inter_Tight({
+  variable: "--font-inter-tight",
   subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
-  title: "Wholesession - Master Tech with Industry Giants",
-  description: "Cohort-based learning for Africans, taught by engineers from Moniepoint, Google, and more.",
+  title: "Wholesession - We help juniors become seniors",
+  description: "Cohort-based learning taught by engineers from Moniepoint, Google, and more.",
 };
 
 export default function RootLayout({
@@ -30,7 +20,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${playfair.variable} antialiased`}
+        className={`${interTight.variable} antialiased`}
       >
         {children}
       </body>

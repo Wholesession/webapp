@@ -1,6 +1,8 @@
 import { Navbar } from "@/components/navbar";
 import { Hero } from "@/components/hero";
+import { TrustedBy } from "@/components/trusted-by";
 import { Features } from "@/components/features";
+import { HowItWorks } from "@/components/how-it-works";
 import { CourseSection } from "@/components/course-section";
 // import { Instructors } from "@/components/instructors";
 import { Footer } from "@/components/footer";
@@ -16,10 +18,13 @@ import { Faq } from "@/components/faq";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-white text-black selection:bg-purple-500/30">
+    <main className="min-h-screen bg-white text-black selection:bg-purple-500/30 font-body">
       <Navbar />
       <Hero />
+      <TrustedBy />
       <Features />
+      <HowItWorks />
+      <h2 className="text-4xl font-semibold text-[#0a0c1b] bg-gray-50 w-full mx-auto text-center py-6">Featured courses</h2>
       <CourseSection title="Engineering" courses={engCourses} />
       <CourseSection title="Product" courses={pmCourses} />
       <CourseSection title="Design" courses={designCourses} />
