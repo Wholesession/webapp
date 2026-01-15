@@ -19,27 +19,6 @@ export default async function Home() {
 
   return (
     <main className="min-h-screen bg-white text-black selection:bg-purple-500/30 font-body">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "Organization",
-            name: "Wholesession",
-            url: "https://www.wholesession.com",
-            logo: "https://www.wholesession.com/logo.png", // Ensure this path is valid or update it
-            sameAs: [
-              "https://twitter.com/wholesession",
-              "https://linkedin.com/company/wholesession"
-            ],
-            contactPoint: {
-              "@type": "ContactPoint",
-              telephone: "+234-700-000-0000", // Placeholder
-              contactType: "customer service"
-            }
-          }),
-        }}
-      />
       <Navbar />
       <Hero />
       <TrustedBy />
