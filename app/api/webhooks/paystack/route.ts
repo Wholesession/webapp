@@ -66,7 +66,7 @@ export async function POST(request: Request) {
             const email = event.data.customer.email;
             const name = metadata.fullName || "Student";
 
-            await sendWelcomeEmail(email, name, metadata.courseTitle, metadata.courseSlug);
+            await sendWelcomeEmail(email, name, metadata.courseTitle, metadata.courseSlug, reference);
 
             return NextResponse.json({ message: 'Order processed successfully' });
         }
