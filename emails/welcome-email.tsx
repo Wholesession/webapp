@@ -39,7 +39,7 @@ export const WelcomeEmail = ({
                     {/* Brand Banner */}
                     <Section style={brandBanner}>
                         <Img
-                            src={`${baseUrl}/ws-main.png`}
+                            src={`${baseUrl}/ws-seo.jpg`}
                             width="140"
                             alt="Wholesession"
                             style={logo}
@@ -120,7 +120,7 @@ export const WelcomeEmail = ({
 
                     <Section style={footer}>
                         <Img
-                            src={`${baseUrl}/ws-main.png`}
+                            src={`${baseUrl}/ws-seo.jpg`}
                             width="90"
                             alt="Wholesession"
                             style={{ margin: "0 auto", filter: "grayscale(100%)", opacity: 0.5 }}

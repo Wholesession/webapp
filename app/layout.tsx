@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     template: "%s | Wholesession",
   },
   description: "Cohort-based learning taught by tech practitioners from Moniepoint, Google, and more. Master production-grade skills.",
-  keywords: ["coding bootcamp", "senior engineer", "backend development", "microservices", "system design", "mentorship", "cohort based learning"],
+  keywords: ["coding bootcamp", "senior engineer", "AI development", "Vibe coding", "backend development", "microservices", "system design", "mentorship", "cohort based learning"],
   authors: [{ name: "Wholesession Team" }],
   creator: "Wholesession",
   openGraph: {
@@ -68,6 +68,29 @@ export default function RootLayout({
       <body
         className={`${interTight.variable} antialiased`}
       >
+        {/* Structured Data for Google Sitelinks */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              "url": "https://wholesession.com",
+              "logo": "https://wholesession.com/ws-seo.jpg",
+              "name": "Wholesession",
+              "description": "Cohort-based learning taught by tech practitioners.",
+              "sameAs": [
+                "https://twitter.com/wholesession",
+                "https://linkedin.com/company/wholesession"
+              ],
+              "potentialAction": {
+                "@type": "SearchAction",
+                "target": "https://wholesession.com/courses?search={search_term_string}",
+                "query-input": "required name=search_term_string"
+              }
+            })
+          }}
+        />
         {children}
         <Toaster richColors position="top-center" />
       </body>
