@@ -10,7 +10,8 @@ export async function GET(request: Request) {
     }
 
     const clientId = process.env.DISCORD_CLIENT_ID;
-    const redirectUri = `${process.env.NEXT_PUBLIC_APP_URL}/api/auth/discord/callback`;
+    const baseUrl = (process.env.NEXT_PUBLIC_APP_URL || '').replace(/\/$/, '');
+    const redirectUri = `${baseUrl}/api/auth/discord/callback`;
 
     // The 'state' is our secure receipt. We encode the reference into it.
     // In production, you might want to sign/encrypt this state for extra security.

@@ -7,8 +7,10 @@ export async function GET(request: Request) {
     const code = searchParams.get('code');
     const state = searchParams.get('state');
 
+    const baseUrl = (process.env.NEXT_PUBLIC_APP_URL || '').replace(/\/$/, '');
+
     if (!code || !state) {
-        return NextResponse.redirect(`${process.env.NEXT_PUBLIC_APP_URL}/checkout/success?error=discord_auth_failed`);
+        return NextResponse.redirect(`${baseUrl}/checkout/success?error=discord_auth_failed`);
     }
 
     try {
@@ -27,7 +29,7 @@ export async function GET(request: Request) {
 
         if (orderError || !order || order.status !== 'paid') {
             console.error('Discord Auth: Order not found or not paid', orderError);
-            return NextResponse.redirect(`${process.env.NEXT_PUBLIC_APP_URL}/checkout/success?error=order_not_verified`);
+            return NextResponse.redirect(`${baseUrl}/checkout/success?error=order_not_verified`);
         }
 
         // 3. Exchange Code for Access Token
@@ -38,7 +40,7 @@ export async function GET(request: Request) {
                 client_secret: process.env.DISCORD_CLIENT_SECRET!,
                 grant_type: 'authorization_code',
                 code,
-                redirect_uri: `${process.env.NEXT_PUBLIC_APP_URL}/api/auth/discord/callback`,
+                redirect_uri: `${baseUrl}/api/auth/discord/callback`,
             }),
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         });
@@ -87,10 +89,10 @@ export async function GET(request: Request) {
         }
 
         // 7. Success! Redirect back to success page with success flag
-        return NextResponse.redirect(`${process.env.NEXT_PUBLIC_APP_URL}/checkout/success?reference=${reference}&discord=success`);
+        return NextResponse.redirect(`${baseUrl}/checkout/success?reference=${reference}&discord=success`);
 
     } catch (err) {
         console.error('Discord Callback Error:', err);
-        return NextResponse.redirect(`${process.env.NEXT_PUBLIC_APP_URL}/checkout/success?error=callback_error`);
+        return NextResponse.redirect(`${baseUrl}/checkout/success?error=callback_error`);
     }
 }
