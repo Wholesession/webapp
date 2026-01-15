@@ -51,6 +51,9 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
+  verification: {
+    google: "lckv-8eKlVDbdXisoztAeFw-__fPLOjvocbIcfudtjo",
+  },
 };
 
 import { Toaster } from "sonner";
