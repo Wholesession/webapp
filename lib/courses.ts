@@ -301,7 +301,7 @@ export async function getAllCourses(): Promise<Course[]> {
 
     try {
         const response = await contentfulClient.getEntries({
-            content_type: 'course' // Ensure your Content Type ID in Contentful is 'course'
+            content_type: 'course'
         });
 
         if (!response.items || response.items.length === 0) {
