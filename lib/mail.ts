@@ -3,7 +3,8 @@ import { Resend } from 'resend';
 import { WelcomeEmail } from '@/emails/welcome-email';
 import { render } from '@react-email/render';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const apiKey = process.env.RESEND_API_KEY || '';
+const resend = apiKey ? new Resend(apiKey) : null;
 
 export async function sendWelcomeEmail(email: string, name: string, courseTitle: string, courseSlug: string, reference: string) {
     if (!process.env.RESEND_API_KEY) {
@@ -12,6 +13,11 @@ export async function sendWelcomeEmail(email: string, name: string, courseTitle:
     }
 
     try {
+        if (!resend) {
+            console.error('Resend client not initialized');
+            return { success: false, error: 'Resend not initialized' };
+        }
+
         const emailHtml = await render(WelcomeEmail({
             firstName: name.split(' ')[0],
             courseTitle,
