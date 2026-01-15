@@ -7,14 +7,16 @@ const apiKey = process.env.RESEND_API_KEY || '';
 const resend = apiKey ? new Resend(apiKey) : null;
 
 export async function sendWelcomeEmail(email: string, name: string, courseTitle: string, courseSlug: string, reference: string) {
+    console.log(`📧 Attempting to send email to: ${email} for course: ${courseTitle}`);
+
     if (!process.env.RESEND_API_KEY) {
-        console.log("Resend API Key missing. Skipping email send.");
+        console.error("❌ Resend API Key missing in environment variables.");
         return;
     }
 
     try {
         if (!resend) {
-            console.error('Resend client not initialized');
+            console.error('❌ Resend client not initialized properly.');
             return { success: false, error: 'Resend not initialized' };
         }
 
@@ -33,13 +35,14 @@ export async function sendWelcomeEmail(email: string, name: string, courseTitle:
         });
 
         if (error) {
-            console.error('Email sending failed:', error);
+            console.error('❌ Resend API Error:', error);
             return { success: false, error };
         }
 
+        console.log('✅ Email sent successfully:', data);
         return { success: true, data };
     } catch (error) {
-        console.error('Email sending error:', error);
+        console.error('❌ Critical Email error:', error);
         return { success: false, error };
     }
 }
