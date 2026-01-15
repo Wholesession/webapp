@@ -8,9 +8,52 @@ const interTight = Inter_Tight({
 });
 
 export const metadata: Metadata = {
-  title: "Wholesession - We help juniors become seniors",
-  description: "Cohort-based learning taught by engineers from Moniepoint, Google, and more.",
+  metadataBase: new URL("https://www.wholesession.com"),
+  title: {
+    default: "Wholesession - Level up to senior roles in tech",
+    template: "%s | Wholesession",
+  },
+  description: "Cohort-based learning taught by tech practitioners from Moniepoint, Google, and more. Master production-grade skills.",
+  keywords: ["coding bootcamp", "senior engineer", "backend development", "microservices", "system design", "mentorship", "cohort based learning"],
+  authors: [{ name: "Wholesession Team" }],
+  creator: "Wholesession",
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://www.wholesession.com",
+    title: "Wholesession - Level up to senior roles in tech",
+    description: "Cohort-based learning taught by tech practitioners from Moniepoint, Google, and more.",
+    siteName: "Wholesession",
+    images: [
+      {
+        url: "/ws-seo.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Wholesession - Mastering Tech Skills",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Wholesession - Level up to senior roles in tech",
+    description: "Cohort-based learning taught by tech practitioners from Moniepoint, Google, and more.",
+    images: ["/ws-seo.jpg"],
+    creator: "@wholesession",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
 };
+
+import { Toaster } from "sonner";
 
 export default function RootLayout({
   children,
@@ -23,6 +66,7 @@ export default function RootLayout({
         className={`${interTight.variable} antialiased`}
       >
         {children}
+        <Toaster richColors position="top-center" />
       </body>
     </html>
   );

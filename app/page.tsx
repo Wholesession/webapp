@@ -7,18 +7,39 @@ import { CourseSection } from "@/components/course-section";
 // import { Instructors } from "@/components/instructors";
 import { Footer } from "@/components/footer";
 import { FocusAreas } from "@/components/focus-areas";
-
-import { courses } from "@/lib/courses";
-
-const pmCourses = courses.filter(c => c.category === "Product");
-const designCourses = courses.filter(c => c.category === "Design");
-const engCourses = courses.filter(c => c.category === "Engineering" || c.category === "AI");
-
 import { Faq } from "@/components/faq";
+import { getAllCourses } from "@/lib/courses";
 
-export default function Home() {
+export default async function Home() {
+  const courses = await getAllCourses();
+
+  const pmCourses = courses.filter(c => c.category === "Product");
+  const designCourses = courses.filter(c => c.category === "Design");
+  const engCourses = courses.filter(c => c.category === "Engineering" || c.category === "AI");
+
   return (
     <main className="min-h-screen bg-white text-black selection:bg-purple-500/30 font-body">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            name: "Wholesession",
+            url: "https://www.wholesession.com",
+            logo: "https://www.wholesession.com/logo.png", // Ensure this path is valid or update it
+            sameAs: [
+              "https://twitter.com/wholesession",
+              "https://linkedin.com/company/wholesession"
+            ],
+            contactPoint: {
+              "@type": "ContactPoint",
+              telephone: "+234-700-000-0000", // Placeholder
+              contactType: "customer service"
+            }
+          }),
+        }}
+      />
       <Navbar />
       <Hero />
       <TrustedBy />

@@ -6,8 +6,8 @@ import { Footer } from "@/components/footer";
 export default function PrivacyPolicy() {
     return (
         <main className="min-h-screen bg-white text-gray-900">
-            <Navbar />
-            <div className="container mx-auto px-4 py-24 max-w-4xl">
+            <Navbar theme="light" />
+            <div className="container mx-auto px-4 py-42 max-w-4xl">
                 <h1 className="text-4xl md:text-5xl font-[family-name:var(--font-playfair)] mb-8 text-[#0a0c1b]">
                     Privacy Policy
                 </h1>

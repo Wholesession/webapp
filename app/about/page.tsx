@@ -1,16 +1,23 @@
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
-import { AboutHero } from "@/components/about/about-hero";
-import { OurMission } from "@/components/about/our-mission";
-import { OurValues } from "@/components/about/our-values";
+import { AboutHero } from "@/components/about/hero";
+import { MissionVisionValues } from "@/components/about/mission-section";
+import { WhyChooseUs } from "@/components/about/why-choose-us";
+import { AboutCTA } from "@/components/about/cta-banner";
+
+export const metadata = {
+    title: "About Us | Wholesession",
+    description: "Learn about our mission to revolutionize technical education.",
+};
 
 export default function AboutPage() {
     return (
         <main className="min-h-screen bg-white">
-            <Navbar />
+            <Navbar theme="light"/>
             <AboutHero />
-            <OurMission />
-            <OurValues />
+            <MissionVisionValues />
+            <WhyChooseUs />
+            <AboutCTA />
             <Footer />
         </main>
     );

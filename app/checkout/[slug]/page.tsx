@@ -1,4 +1,4 @@
-import { getCourseBySlug, courses } from "@/lib/courses";
+import { getCourseBySlug, getAllCourses } from "@/lib/courses";
 import { CheckoutForm } from "@/components/checkout/checkout-form";
 import { OrderSummary } from "@/components/checkout/order-summary";
 import { Navbar } from "@/components/navbar";
@@ -12,6 +12,7 @@ interface Props {
 }
 
 export async function generateStaticParams() {
+    const courses = await getAllCourses();
     return courses.map((course) => ({
         slug: course.slug,
     }));
@@ -19,7 +20,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const { slug } = await params;
-    const course = getCourseBySlug(slug);
+    const course = await getCourseBySlug(slug);
 
     if (!course) {
         return {
@@ -34,7 +35,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function CheckoutPage({ params }: Props) {
     const { slug } = await params;
-    const course = getCourseBySlug(slug);
+    const course = await getCourseBySlug(slug);
 
     if (!course) {
         notFound();
@@ -60,7 +61,7 @@ export default async function CheckoutPage({ params }: Props) {
 
                     {/* Footer (Mobile only, hidden on desktop if needed, or just simple copyright) */}
                     <div className="py-6 text-xs text-gray-400 text-center lg:text-left">
-                        &copy; {new Date().getFullYear()} Wholesession Inc.
+                        &copy; {new Date().getFullYear()} Wholesession LLC
                     </div>
                 </div>
 

@@ -5,15 +5,19 @@ import SecLogo from "@/public/ws-main-black.svg";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { Menu, X, ChevronDown } from "lucide-react";
+import { Course } from "@/lib/courses";
 
 const navLinks = [
     { name: "Courses", href: "/courses" },
-    { name: "Teach", href: "/teach" },
     { name: "About", href: "/about" },
     { name: "Blog", href: "/blog" },
 ];
 
-export function CourseHeader() {
+interface CourseHeaderProps {
+    course: Course;
+}
+
+export function CourseHeader({ course }: CourseHeaderProps) {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
     // Prevent body scroll when mobile menu is open
@@ -42,7 +46,7 @@ export function CourseHeader() {
 
                     {/* Nav Links - Right */}
                     <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-gray-600">
-                        <Link href="/login" className="transition-colors bg-[#4F70FF] text-white text-[1rem] font-semibold rounded-lg hover:bg-[#3B5BDB] transition-all duration-300 shadow-lg shadow-[#4F70FF]/20 px-5 py-2.5">
+                        <Link href={`/checkout/${course.slug}`} className="transition-colors bg-[#4F70FF] text-white text-[1rem] font-semibold rounded-lg hover:bg-[#3B5BDB] transition-all duration-300 shadow-lg shadow-[#4F70FF]/20 px-5 py-2.5">
                             Enroll now
                         </Link>
                     </nav>
@@ -105,37 +109,12 @@ export function CourseHeader() {
 
                         {/* Divider */}
                         <div className="my-4 mx-4 border-t border-gray-100" />
-
-                        {/* Additional Links */}
-                        <div className="space-y-1 px-4">
-                            <Link
-                                href="/about"
-                                onClick={() => setIsMobileMenuOpen(false)}
-                                className="flex items-center px-4 py-3 text-gray-500 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors"
-                            >
-                                About Us
-                            </Link>
-                            <Link
-                                href="/faq"
-                                onClick={() => setIsMobileMenuOpen(false)}
-                                className="flex items-center px-4 py-3 text-gray-500 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors"
-                            >
-                                FAQ
-                            </Link>
-                            <Link
-                                href="/contact"
-                                onClick={() => setIsMobileMenuOpen(false)}
-                                className="flex items-center px-4 py-3 text-gray-500 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors"
-                            >
-                                Contact
-                            </Link>
-                        </div>
                     </div>
 
                     {/* Mobile Menu Footer - Enroll CTA */}
                     <div className="p-4 border-t border-gray-100">
                         <Link
-                            href="/login"
+                            href={`/checkout/${course.slug}`}
                             onClick={() => setIsMobileMenuOpen(false)}
                             className="flex items-center justify-center gap-2 w-full px-5 py-3 bg-[#4F70FF] text-white font-semibold rounded-lg hover:bg-[#3B5BDB] transition-all duration-300 shadow-lg shadow-[#4F70FF]/20"
                         >

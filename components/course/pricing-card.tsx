@@ -4,6 +4,8 @@ import { Course } from "@/lib/courses";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Star, ArrowRight, ShieldCheck } from "lucide-react";
+import Link from "next/link";
+import { WaitlistForm } from "./waitlist-form";
 
 interface PricingCardProps {
     course: Course;
@@ -46,9 +48,16 @@ export function PricingCard({ course }: PricingCardProps) {
                 </div>
 
                 {/* Primary CTA */}
-                <Button className="w-full bg-[var(--brand-color)] hover:bg-[var(--brand-color)]/90 text-white text-lg font-semibold py-6 rounded-lg transition-colors cursor-pointer font-body">
-                    Enroll
-                </Button>
+                {/* Primary CTA */}
+                {course.status === "Coming Soon" ? (
+                    <WaitlistForm courseSlug={course.slug} courseTitle={course.title} />
+                ) : (
+                    <Link href={`/checkout/${course.slug}`}>
+                        <Button className="w-full bg-[var(--brand-color)] hover:bg-[var(--brand-color)]/90 text-white text-lg font-semibold py-6 rounded-lg transition-colors cursor-pointer font-body">
+                            Enroll Now
+                        </Button>
+                    </Link>
+                )}
 
                 {/* Email Capture */}
                 {/* <div className="space-y-2 pt-2 font-body">

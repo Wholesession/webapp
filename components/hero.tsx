@@ -255,11 +255,11 @@ export function Hero() {
                     className="mb-8"
                 >
                     <Link
-                        href="/course/building-production-microservices"
+                        href="/course/building-production-grade-microservices"
                         className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#1a1a2e] border border-[#4F70FF]/30 text-sm text-[#4F70FF] hover:bg-[#4F70FF]/10 hover:border-[#4F70FF]/50 transition-all duration-300"
                     >
                         <span className="w-2 h-2 rounded-full bg-[#4F70FF] animate-pulse" />
-                        <span>15% off of our flagship cohort</span>
+                        <span>Get 15% off of our flagship cohort now</span>
                         <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7V17" />
                         </svg>

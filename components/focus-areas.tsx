@@ -21,7 +21,7 @@ export function FocusAreas() {
                     {categories.map((category, index) => (
                         <Link
                             key={category.name}
-                            href={`/category/${category.name.toLowerCase()}`}
+                            href={`/courses?category=${category.name}`}
                             className="group relative overflow-hidden rounded-2xl bg-white/5 aspect-square ring-1 ring-white/10 hover:ring-white/20 transition-all border border-gray-200"
                         >
                             <div className="absolute inset-0 opacity-[0.03] group-hover:opacity-[0.07] transition-opacity duration-500">

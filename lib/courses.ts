@@ -1,38 +1,43 @@
+import { contentfulClient } from "@/lib/contentful";
+
+// --- Types ---
+export interface Instructor {
+    name: string;
+    role: string;
+    company: string;
+    bio?: string;
+    image: string; // URL string
+    linkedin: string;
+    twitter?: string;
+    github?: string;
+    experience?: string;
+    prevCompanies?: string[];
+    achievements?: string[];
+}
+
 export interface Module {
     title: string;
     description: string;
     topics: string[];
 }
 
-export interface Instructor {
-    name: string;
-    role: string;
-    company: string;
-    bio: string;
-    image: string;
-    linkedin?: string;
-    twitter?: string;
-    github?: string;
-    experience?: string;
-    prevCompanies?: string[]; // Top 3/4 previous companies
-    achievements?: string[]; // Key achievements/credentials
+export interface ScheduleSession {
+    date: string;
+    time: string;
 }
 
 export interface Schedule {
     startDate: string;
     days: string[];
-    time: string; // e.g., "5:00 PM—6:00 PM (GMT+1)"
-    sessions: {
-        date: string;
-        time: string;
-    }[];
+    time: string;
+    sessions: ScheduleSession[];
 }
 
 export interface Course {
     slug: string;
     title: string;
     subtitle: string;
-    tagline?: string; // One sentence tagline
+    tagline?: string;
     category: "Engineering" | "Product" | "Design" | "AI";
     price: number;
     startDate: string;
@@ -41,499 +46,301 @@ export interface Course {
     rating: number;
     reviewsCount: number;
     instructors: Instructor[];
-    description: string; // Course Overview
-    outcomes: string[]; // What students will be able to DO
+    description: string;
+    outcomes: string[];
     syllabus: Module[];
-    videoUrl?: string;
-    included: string[];
-    // New fields
-    tools?: string[];
-    materials?: string[];
-    prerequisites?: string[];
-    targetAudience?: string[];
-    logistics?: {
+    tools: string[];
+    materials: string[];
+    prerequisites: string[];
+    targetAudience: string[];
+    logistics: {
         homework: boolean;
         capstone: boolean;
         teachingStyle: string;
-        frequency?: string; // e.g. "Every 2-3 days" for slack
+        frequency: string;
     };
-    schedule?: Schedule;
-    faq?: FAQItem[];
+    schedule: Schedule;
+    included: string[];
+    status: "Open" | "Coming Soon" | "Closed";
+    faq: {
+        question: string;
+        answer: string;
+    }[];
 }
 
-export interface FAQItem {
-    question: string;
-    answer: string;
-}
-
-export const courses: Course[] = [
+// --- STATIC BACKUP DATA (For initial Setup/Migration) ---
+const staticCourses: Course[] = [
     {
-        slug: "building-production-microservices",
-        title: "Building Production-Grade Microservices",
-        subtitle: "Learn how to design, build, and run scalable microservices from a senior engineer who has done it in real production fintech systems.",
-        tagline: "🚀Learn how to build scalable microservices for real-world production",
+        slug: "backend-engineering",
+        status: "Open",
+        title: "Backend Engineering",
+        subtitle: "Build scalable systems that power the world's biggest companies.",
+        tagline: "Go from writing code to architecting systems.",
         category: "Engineering",
-        price: 250000,
+        price: 350000,
         startDate: "Feb 24, 2026",
-        duration: "8 Weeks",
+        duration: "12 Weeks",
         cohortSize: 30,
         rating: 4.9,
-        reviewsCount: 214,
-        instructors: [{
-            name: "Akinkunmi Okunola",
-            role: "Senior Software Engineer & Technical Lead @ ALAT by Wema",
-            company: "ALAT by Wema",
-            bio: `I am a Senior Software Engineer and Technical Lead with over a decade of experience building, scaling, and maintaining production-grade backend systems, primarily in the fintech and financial services space.
-            
-My career has focused on designing resilient microservices architectures that handle high transaction volumes, strict security requirements, and real-world operational complexity. I have worked across multiple organizations including banks and payment companies, where I led the migration of legacy monolithic systems to modern, cloud-native microservices.
-
-My work spans system architecture, API design, message-driven systems, CI/CD automation, performance optimization, and incident response for mission-critical platforms. Beyond writing code, I enjoy mentoring engineers and helping them bridge the gap between theory and real-world engineering. I previously taught programming courses during my university years and have continued to guide engineers professionally through code reviews, architecture sessions, and hands-on project work. 
-
-This course is driven by my belief that backend engineers should not just know frameworks, but understand how to design systems that survive scale, failure, and change in production.`,
-            image: "/akinkumi.jpeg",
-            experience: "10+ years experience",
-            linkedin: "https://www.linkedin.com/in/akinkunmi-okunola/",
-            github: "https://www.github.com/akinkunmio",
-            prevCompanies: ["Interswitch", "Powersoft / Nextekk"],
-            achievements: [
-                "Led migration of large-scale fintech systems from monoliths to microservices serving millions of users",
-                "Designed and implemented highly available payment and wallet systems with 99.9% uptime",
-                "Built and optimized CI/CD pipelines and cloud-native architectures on AWS and Azure"
-            ]
-        }],
-        description: `**Building Production-Grade Microservices** focuses on what it actually takes to build backend systems that work reliably in production.
-
-Instead of toy examples, you will learn how real companies design microservices that scale, fail gracefully, and evolve over time. The course covers architecture, communication patterns, data consistency, security, observability, and deployment strategies used in high-traffic fintech and enterprise systems. You will understand not just **how** to build microservices, but **why** certain architectural decisions are made.
-
-**What makes this course unique is its strong emphasis on:**
-
-✔️Real-world trade-offs
-
-✔️Operational challenges
-
-✔️Production lessons learned from systems serving millions of users
-
-By the end, you will have built a complete microservices-based system and gained the confidence to work on real backend platforms.
-
-🔨**What you'll build**\n
-You will develop your own **capstone project**, a microservices-based system that handles real-world scale and complexity. By the end, you will present it on the demo day to a panel of judges.
-
-🧠**How it works**\n
-Each week follows a 2 hour session:
-- **Tuesdays: 6:00 PM - 8:00 PM**
-- **Thursdays: 6:00 PM - 8:00 PM**
-- **QnA Sessions**
-`,
-        outcomes: [
-            "Design and build production-ready microservices using best practices",
-            "Apply Domain-Driven Design (DDD) to real backend systems",
-            "Implement reliable inter-service communication (REST & messaging)",
-            "Build resilient systems using retries, circuit breakers, and observability",
-            "Deploy, monitor, and operate microservices in real-world environments"
+        reviewsCount: 120,
+        instructors: [
+            {
+                name: "Akinkunmi",
+                role: "Senior Backend Engineer",
+                company: "Moniepoint",
+                bio: "Akinkunmi has architected payment systems handling millions of transactions daily. He specializes in distributed systems and high-concurrency Java applications.",
+                image: "/instructors/akinkunmi.jpg",
+                linkedin: "https://linkedin.com/in/akinkunmi",
+                experience: "8+ Years",
+                prevCompanies: ["Interswitch", "TeamApt"],
+                achievements: ["Built core banking ledger", "Scaled transaction processing to 500 TPS"]
+            }
         ],
-        tools: ["Docker", "Kubernetes", "AWS", "Azure", "Terraform", "Prometheus", "Grafana", "Redis", "Kafka"],
-        materials: ["Code repositories", "Slides", "Practice exercises", "Architecture templates"],
-        prerequisites: ["Basic programming knowledge (Java, C#, Node.js, or similar)", "Familiarity with REST APIs", "Basic understanding of databases (SQL or NoSQL)", "Comfortable using Git and command-line tools"],
-        targetAudience: ["Bootcamp graduates", "Mid-level professionals (3-5 years experience)", "Senior professionals (5+ years experience)", "Junior professionals (1-2 years experience)"],
+        description: `
+**Backend engineering is more than just APIs.** It's about data consistency, system resilience, and scalability. In this course, we don't just teach you syntax; we teach you how to think like a Senior Engineer.
+
+You will build a production-grade **Fintech Core Banking System**. You will handle concurrency, distributed locking, idempotent transactions, and event-driven architecture.
+
+### What you will learn:
+- **Advanced Database Design:** Indexing, partitioning, and query optimization.
+- **Distributed Systems:** Microservices, event sourcing, and CAP theorem in practice.
+- **System Design:** Designing for high availability and fault tolerance.
+- **Infrastructure:** CI/CD pipelines, Docker, and Kubernetes basics.
+        `,
+        outcomes: [
+            "Architect and build a complete microservices-based application",
+            "Understand and implement distributed caching strategies",
+            "Master database optimization and transaction management",
+            "Gain confidence in system design interviews"
+        ],
+        syllabus: [
+            {
+                title: "Module 1: Advanced Database Engineering",
+                description: "Deep dive into RDBMS internals, indexing strategies, and schema design for scale.",
+                topics: ["ACID properties in depth", "B-Tree vs Hash Indexes", "Database Partitioning & Sharding"]
+            },
+            {
+                title: "Module 2: Concurrency & Threading",
+                description: "Handling multiple requests simultaneously without data corruption.",
+                topics: ["Race Conditions", "Deadlocks", "Optimistic vs Pessimistic Locking"]
+            },
+            {
+                title: "Module 3: Distributed Systems Patterns",
+                description: "Building systems that span multiple servers.",
+                topics: ["Service Discovery", "Load Balancing", "Circuit Breakers"]
+            }
+        ],
+        tools: ["Java/Spring Boot", "PostgreSQL", "Redis", "Kafka", "Docker"],
+        materials: ["System Design Cheatsheets", "Production Code Boilerplates"],
+        prerequisites: ["Basic understanding of REST APIs", "Familiarity with any OOP language"],
+        targetAudience: ["Junior/Mid-level developers looking to level up", "Frontend devs transitioning to fullstack"],
         logistics: {
             homework: true,
             capstone: true,
-            teachingStyle: "Mix of lecture and hands-on practice breakdown",
-            frequency: "Daily"
+            teachingStyle: "Live Coding & Architecture Reviews",
+            frequency: "2x Weekly (Weekends)"
         },
-        included: ["Live sessions from Akinkunmi", "Life-time access to the course materials", "Code along sessions", "Reading materials", "Community of peers", "Completion badge", "Eligible for refund through the second week"],
-        syllabus: [
-            {
-                title: "Week 1:  Introduction to Production Microservices",
-                description: "Understanding the principles behind production microservices.",
-                topics: ["Monolith vs microservices", "Real-world architectural challenges"]
-            },
-            {
-                title: "Week 2: Service Design & Domain-Driven Design",
-                description: "Designing microservices that work well in production.",
-                topics: ["Bounded contexts", "Aggregate & domain modelling"]
-            },
-            {
-                title: "Week 3: API Design & Communication",
-                description: "Learn how to design and reason about distributed behavior.",
-                topics: ["REST best practices", "Sync vs async communication"]
-            },
-            {
-                title: "Week 4: Data Management & Consistency",
-                description: "Learn how to manage and maintain data consistency in distributed systems.",
-                topics: ["Database-per-service", "Event-driven patterns"]
-            },
-            {
-                title: "Week 5: Security & Authentication",
-                description: "Learn how to secure microservices and implement authentication.",
-                topics: ["JWT, OAuth concepts", "Securing service-to-service communication"]
-            },
-            {
-                title: "Week 6: Resilience & Observability",
-                description: "Learn how to make microservices resilient and observable.",
-                topics: ["Circuit breakers", "Retries", "Logging, metrics, and tracing"]
-            },
-            {
-                title: "Week 7: CI/CD & Deployment",
-                description: "Learn how to deploy and operate microservices in production.",
-                topics: ["Automated testing", "Deployment strategies"]
-            },
-            {
-                title: "Week 8: Capstone Project & Review",
-                description: "Learn how to deploy and operate microservices in production.",
-                topics: ["Final project demo", "Architectural review and feedback"]
-            }
-        ],
         schedule: {
-            startDate: "Jan 12",
-            days: ["Mon, Jan 12", "Fri, Jan 16", "Fri, Jan 30"],
-            time: "5:00 PM—6:00 PM (GMT+1)",
+            startDate: "Feb 24",
+            days: ["Saturday", "Sunday"],
+            time: "10:00 AM - 1:00 PM (WAT)",
             sessions: [
-                { date: "Tues, Feb 24", time: "6:00 PM—8:00 PM (GMT+1)" },
-                { date: "Thurs, Feb 26", time: "6:00 PM—8:00 PM (GMT+1)" },
-                { date: "Tues, Mar 3", time: "6:00 PM—8:00 PM (GMT+1)" },
-                { date: "Thurs, Mar 5", time: "6:00 PM—8:00 PM (GMT+1)" },
-                { date: "Tues, Mar 10", time: "6:00 PM—8:00 PM (GMT+1)" },
-                { date: "Thurs, Mar 12", time: "6:00 PM—8:00 PM (GMT+1)" },
-                { date: "Tues, Mar 17", time: "6:00 PM—8:00 PM (GMT+1)" },
-                { date: "Thurs, Mar 19", time: "6:00 PM—8:00 PM (GMT+1)" },
-                { date: "Tues, Mar 24", time: "6:00 PM—8:00 PM (GMT+1)" },
-                { date: "Thurs, Mar 26", time: "6:00 PM—8:00 PM (GMT+1)" },
-                { date: "Tues, Mar 31", time: "6:00 PM—8:00 PM (GMT+1)" },
-                { date: "Thurs, Apr 2", time: "6:00 PM—8:00 PM (GMT+1)" },
-                { date: "Tues, Apr 7", time: "6:00 PM—8:00 PM (GMT+1)" },
-                { date: "Thurs, Apr 9", time: "6:00 PM—8:00 PM (GMT+1)" },
-                { date: "Tues, Apr 14", time: "6:00 PM—8:00 PM (GMT+1)" },
-                { date: "Thurs, Apr 16", time: "6:00 PM—8:00 PM (GMT+1)" },
+                { date: "Feb 24", time: "10:00 AM - 1:00 PM" },
+                { date: "Feb 25", time: "10:00 AM - 1:00 PM" }
             ]
         },
+        included: ["Certificate of Completion", "1-on-1 Career Mentorship", "Mock Interview Session"],
         faq: [
             {
-                question: "Who is this course for?",
-                answer: "This course is designed for backend engineers, full-stack developers, and technical leads who want to master microservices. It's ideal if you have some experience building monoliths and want to learn how to architect scalable, distributed systems for production environments."
+                question: "Do I need Java experience?",
+                answer: "Basic familiarity is helpful, but we cover the advanced concepts from scratch."
             },
             {
-                question: "What are the prerequisites for this bootcamp?",
-                answer: "You should have a basic understanding of backend development and proficiency in at least one backend language (like Node.js, Go, Java, or C#). Familiarity with databases and basic command-line usage is also recommended."
-            },
-            {
-                question: "How much time commitment is expected each week?",
-                answer: "Expect to spend about 5-7 hours per week. This includes 4 hours of live sessions (2 hours on Tuesdays and Thursdays) plus 1-3 hours for projects and practice exercises."
-            },
-            {
-                question: "Will sessions be recorded?",
-                answer: "Yes, all live sessions are recorded and uploaded to the course portal within 24 hours. You will have lifetime access to these recordings."
+                question: "Is this suitable for beginners?",
+                answer: "This is an intermediate-to-advanced course. You should have written some code before."
             }
         ]
     },
     {
-        slug: "design-systems-in-production-from-figma-to-code",
-        title: "Design Systems in Production: From Figma to Code",
-        subtitle: "Learn how to design and implement great product design for large scale product",
-        tagline: "🚀Learn how design engineering works",
-        category: "Design",
-        price: 200000,
-        startDate: "Mar 12, 2026",
-        duration: "8 Weeks",
-        cohortSize: 30,
-        rating: 4.9,
-        reviewsCount: 214,
-        instructors: [{
-            name: "Daniel Kingston",
-            role: "Senior Designer @ Andela",
-            company: "Andela",
-            bio: `I am a designer with a passion for creating beautiful and functional user interfaces. I have a strong background in design and a deep understanding of the latest design trends and technologies.`,
-            image: "/akinkumi.jpeg",
-            experience: "10+ years experience",
-            linkedin: "https://www.linkedin.com/in/akinkunmi-okunola/",
-            github: "https://www.github.com/akinkunmio",
-            prevCompanies: ["Interswitch", "Powersoft / Nextekk"],
-            achievements: [
-                "Led migration of large-scale fintech systems from monoliths to microservices serving millions of users",
-                "Designed and implemented highly available payment and wallet systems with 99.9% uptime",
-                "Built and optimized CI/CD pipelines and cloud-native architectures on AWS and Azure"
-            ]
-        }],
-        description: `**Building Production-Grade Microservices** focuses on what it actually takes to build backend systems that work reliably in production.
-
-Instead of toy examples, you will learn how real companies design microservices that scale, fail gracefully, and evolve over time. The course covers architecture, communication patterns, data consistency, security, observability, and deployment strategies used in high-traffic fintech and enterprise systems. You will understand not just **how** to build microservices, but **why** certain architectural decisions are made.
-
-**What makes this course unique is its strong emphasis on:**
-
-✔️Real-world trade-offs
-
-✔️Operational challenges
-
-✔️Production lessons learned from systems serving millions of users
-
-By the end, you will have built a complete microservices-based system and gained the confidence to work on real backend platforms.
-
-🔨**What you'll build**\n
-You will develop your own **capstone project**, a microservices-based system that handles real-world scale and complexity. By the end, you will present it on the demo day to a panel of judges.
-
-🧠**How it works**\n
-Each week follows a 2 hour session:
-- **Tuesdays: 6:00 PM - 8:00 PM**
-- **Thursdays: 6:00 PM - 8:00 PM**
-- **QnA Sessions**
-`,
-        outcomes: [
-            "Design and build production-ready microservices using best practices",
-            "Apply Domain-Driven Design (DDD) to real backend systems",
-            "Implement reliable inter-service communication (REST & messaging)",
-            "Build resilient systems using retries, circuit breakers, and observability",
-            "Deploy, monitor, and operate microservices in real-world environments"
-        ],
-        tools: ["Docker", "Kubernetes", "AWS", "Azure", "Terraform", "Prometheus", "Grafana", "Redis", "Kafka"],
-        materials: ["Code repositories", "Slides", "Practice exercises", "Architecture templates"],
-        prerequisites: ["Basic programming knowledge (Java, C#, Node.js, or similar)", "Familiarity with REST APIs", "Basic understanding of databases (SQL or NoSQL)", "Comfortable using Git and command-line tools"],
-        targetAudience: ["Bootcamp graduates", "Mid-level professionals (3-5 years experience)", "Senior professionals (5+ years experience)", "Junior professionals (1-2 years experience)"],
-        logistics: {
-            homework: true,
-            capstone: true,
-            teachingStyle: "Mix of lecture and hands-on practice breakdown",
-            frequency: "Daily"
-        },
-        included: ["Live sessions from Akinkunmi", "Life-time access to the course materials", "Code along sessions", "Reading materials", "Community of peers", "Completion badge", "Eligible for refund through the second week"],
-        syllabus: [
-            {
-                title: "Week 1:  Introduction to Production Microservices",
-                description: "Understanding the principles behind production microservices.",
-                topics: ["Monolith vs microservices", "Real-world architectural challenges"]
-            },
-            {
-                title: "Week 2: Service Design & Domain-Driven Design",
-                description: "Designing microservices that work well in production.",
-                topics: ["Bounded contexts", "Aggregate & domain modelling"]
-            },
-            {
-                title: "Week 3: API Design & Communication",
-                description: "Learn how to design and reason about distributed behavior.",
-                topics: ["REST best practices", "Sync vs async communication"]
-            },
-            {
-                title: "Week 4: Data Management & Consistency",
-                description: "Learn how to manage and maintain data consistency in distributed systems.",
-                topics: ["Database-per-service", "Event-driven patterns"]
-            },
-            {
-                title: "Week 5: Security & Authentication",
-                description: "Learn how to secure microservices and implement authentication.",
-                topics: ["JWT, OAuth concepts", "Securing service-to-service communication"]
-            },
-            {
-                title: "Week 6: Resilience & Observability",
-                description: "Learn how to make microservices resilient and observable.",
-                topics: ["Circuit breakers", "Retries", "Logging, metrics, and tracing"]
-            },
-            {
-                title: "Week 7: CI/CD & Deployment",
-                description: "Learn how to deploy and operate microservices in production.",
-                topics: ["Automated testing", "Deployment strategies"]
-            },
-            {
-                title: "Week 8: Capstone Project & Review",
-                description: "Learn how to deploy and operate microservices in production.",
-                topics: ["Final project demo", "Architectural review and feedback"]
-            }
-        ],
-        schedule: {
-            startDate: "Jan 12",
-            days: ["Mon, Jan 12", "Fri, Jan 16", "Fri, Jan 30"],
-            time: "5:00 PM—6:00 PM (GMT+1)",
-            sessions: [
-                { date: "Tues, Feb 24", time: "6:00 PM—8:00 PM (GMT+1)" },
-                { date: "Thurs, Feb 26", time: "6:00 PM—8:00 PM (GMT+1)" },
-                { date: "Tues, Mar 3", time: "6:00 PM—8:00 PM (GMT+1)" },
-                { date: "Thurs, Mar 5", time: "6:00 PM—8:00 PM (GMT+1)" },
-                { date: "Tues, Mar 10", time: "6:00 PM—8:00 PM (GMT+1)" },
-                { date: "Thurs, Mar 12", time: "6:00 PM—8:00 PM (GMT+1)" },
-                { date: "Tues, Mar 17", time: "6:00 PM—8:00 PM (GMT+1)" },
-                { date: "Thurs, Mar 19", time: "6:00 PM—8:00 PM (GMT+1)" },
-                { date: "Tues, Mar 24", time: "6:00 PM—8:00 PM (GMT+1)" },
-                { date: "Thurs, Mar 26", time: "6:00 PM—8:00 PM (GMT+1)" },
-                { date: "Tues, Mar 31", time: "6:00 PM—8:00 PM (GMT+1)" },
-                { date: "Thurs, Apr 2", time: "6:00 PM—8:00 PM (GMT+1)" },
-                { date: "Tues, Apr 7", time: "6:00 PM—8:00 PM (GMT+1)" },
-                { date: "Thurs, Apr 9", time: "6:00 PM—8:00 PM (GMT+1)" },
-                { date: "Tues, Apr 14", time: "6:00 PM—8:00 PM (GMT+1)" },
-                { date: "Thurs, Apr 16", time: "6:00 PM—8:00 PM (GMT+1)" },
-            ]
-        },
-        faq: [
-            {
-                question: "Who is this course for?",
-                answer: "This course is designed for backend engineers, full-stack developers, and technical leads who want to master microservices. It's ideal if you have some experience building monoliths and want to learn how to architect scalable, distributed systems for production environments."
-            },
-            {
-                question: "What are the prerequisites for this bootcamp?",
-                answer: "You should have a basic understanding of backend development and proficiency in at least one backend language (like Node.js, Go, Java, or C#). Familiarity with databases and basic command-line usage is also recommended."
-            },
-            {
-                question: "How much time commitment is expected each week?",
-                answer: "Expect to spend about 5-7 hours per week. This includes 4 hours of live sessions (2 hours on Tuesdays and Thursdays) plus 1-3 hours for projects and practice exercises."
-            },
-            {
-                question: "Will sessions be recorded?",
-                answer: "Yes, all live sessions are recorded and uploaded to the course portal within 24 hours. You will have lifetime access to these recordings."
-            }
-        ]
-    },
-    {
-        slug: "vibe-coding-for-product-managers",
-        title: "Vibe Coding for Product Managers",
-        subtitle: "Learn to vibe code prototypes with modern AI tools",
-        tagline: "🚀Learn to vibe code prototypes with modern AI tools",
+        slug: "product-management",
+        status: "Open",
+        title: "Technical Product Management",
+        subtitle: "Bridge the gap between business requirements and technical execution.",
+        tagline: "Lead products that scale.",
         category: "Product",
-        price: 150000,
-        startDate: "Mar 12, 2026",
-        duration: "6 weeks",
-        cohortSize: 20,
-        rating: 4.9,
-        reviewsCount: 214,
-        instructors: [{
-            name: "Coming soon",
-            role: "Coming soon",
-            company: "Coming soon",
-            bio: `Coming soon`,
-            image: "/akinkumi.jpeg",
-            experience: "Coming soon",
-            linkedin: "Coming soon",
-            github: "Coming soon",
-            prevCompanies: ["Coming soon"],
-            achievements: [
-                "Led migration of large-scale fintech systems from monoliths to microservices serving millions of users",
-                "Designed and implemented highly available payment and wallet systems with 99.9% uptime",
-                "Built and optimized CI/CD pipelines and cloud-native architectures on AWS and Azure"
-            ]
-        }],
-        description: `**Building Production-Grade Microservices** focuses on what it actually takes to build backend systems that work reliably in production.
-
-Instead of toy examples, you will learn how real companies design microservices that scale, fail gracefully, and evolve over time. The course covers architecture, communication patterns, data consistency, security, observability, and deployment strategies used in high-traffic fintech and enterprise systems. You will understand not just **how** to build microservices, but **why** certain architectural decisions are made.
-
-**What makes this course unique is its strong emphasis on:**
-
-✔️Real-world trade-offs
-
-✔️Operational challenges
-
-✔️Production lessons learned from systems serving millions of users
-
-By the end, you will have built a complete microservices-based system and gained the confidence to work on real backend platforms.
-
-🔨**What you'll build**\n
-You will develop your own **capstone project**, a microservices-based system that handles real-world scale and complexity. By the end, you will present it on the demo day to a panel of judges.
-
-🧠**How it works**\n
-Each week follows a 2 hour session:
-- **Tuesdays: 6:00 PM - 8:00 PM**
-- **Thursdays: 6:00 PM - 8:00 PM**
-- **QnA Sessions**
-`,
-        outcomes: [
-            "Design and build production-ready microservices using best practices",
-            "Apply Domain-Driven Design (DDD) to real backend systems",
-            "Implement reliable inter-service communication (REST & messaging)",
-            "Build resilient systems using retries, circuit breakers, and observability",
-            "Deploy, monitor, and operate microservices in real-world environments"
+        price: 300000,
+        startDate: "March 10, 2026",
+        duration: "10 Weeks",
+        cohortSize: 25,
+        rating: 4.8,
+        reviewsCount: 85,
+        instructors: [
+            {
+                name: "Chidinma",
+                role: "Senior Product Manager",
+                company: "Google",
+                bio: "Chidinma has led product teams at global tech giants. She excels at data-driven decision making and user-centric design.",
+                image: "/instructors/chidinma.jpg",
+                linkedin: "https://linkedin.com/in/chidinma",
+                experience: "7+ Years",
+                prevCompanies: ["Microsoft", "Andela"],
+                achievements: ["Launched Google Maps feature used by 10M+ users", "Increased retention by 15%"]
+            }
         ],
-        tools: ["Docker", "Kubernetes", "AWS", "Azure", "Terraform", "Prometheus", "Grafana", "Redis", "Kafka"],
-        materials: ["Code repositories", "Slides", "Practice exercises", "Architecture templates"],
-        prerequisites: ["Basic programming knowledge (Java, C#, Node.js, or similar)", "Familiarity with REST APIs", "Basic understanding of databases (SQL or NoSQL)", "Comfortable using Git and command-line tools"],
-        targetAudience: ["Bootcamp graduates", "Mid-level professionals (3-5 years experience)", "Senior professionals (5+ years experience)", "Junior professionals (1-2 years experience)"],
+        description: "Learn to define product vision, manage roadmaps, and communicate effectively with engineering teams.",
+        outcomes: ["Create comprehensive PRDs", "Master agile methodologies", "Conduct effective user research"],
+        syllabus: [
+            {
+                title: "Module 1: Product Strategy",
+                description: "Defining the 'Why' and 'What'.",
+                topics: ["Market Research", "Value Proposition Design", "OKRs"]
+            }
+        ],
+        tools: ["Jira", "Figma", "Amplitude"],
+        materials: ["PRD Templates", "User Interview Scripts"],
+        prerequisites: ["None"],
+        targetAudience: ["Aspiring PMs", "Engineers moving to PM role"],
         logistics: {
             homework: true,
             capstone: true,
-            teachingStyle: "Mix of lecture and hands-on practice breakdown",
-            frequency: "Daily"
+            teachingStyle: "Case Studies & Workshops",
+            frequency: "2x Weekly"
         },
-        included: ["Live sessions from Akinkunmi", "Life-time access to the course materials", "Code along sessions", "Reading materials", "Community of peers", "Completion badge", "Eligible for refund through the second week"],
-        syllabus: [
-            {
-                title: "Week 1:  Introduction to Production Microservices",
-                description: "Understanding the principles behind production microservices.",
-                topics: ["Monolith vs microservices", "Real-world architectural challenges"]
-            },
-            {
-                title: "Week 2: Service Design & Domain-Driven Design",
-                description: "Designing microservices that work well in production.",
-                topics: ["Bounded contexts", "Aggregate & domain modelling"]
-            },
-            {
-                title: "Week 3: API Design & Communication",
-                description: "Learn how to design and reason about distributed behavior.",
-                topics: ["REST best practices", "Sync vs async communication"]
-            },
-            {
-                title: "Week 4: Data Management & Consistency",
-                description: "Learn how to manage and maintain data consistency in distributed systems.",
-                topics: ["Database-per-service", "Event-driven patterns"]
-            },
-            {
-                title: "Week 5: Security & Authentication",
-                description: "Learn how to secure microservices and implement authentication.",
-                topics: ["JWT, OAuth concepts", "Securing service-to-service communication"]
-            },
-            {
-                title: "Week 6: Resilience & Observability",
-                description: "Learn how to make microservices resilient and observable.",
-                topics: ["Circuit breakers", "Retries", "Logging, metrics, and tracing"]
-            },
-            {
-                title: "Week 7: CI/CD & Deployment",
-                description: "Learn how to deploy and operate microservices in production.",
-                topics: ["Automated testing", "Deployment strategies"]
-            },
-            {
-                title: "Week 8: Capstone Project & Review",
-                description: "Learn how to deploy and operate microservices in production.",
-                topics: ["Final project demo", "Architectural review and feedback"]
-            }
-        ],
         schedule: {
-            startDate: "Jan 12",
-            days: ["Mon, Jan 12", "Fri, Jan 16", "Fri, Jan 30"],
-            time: "5:00 PM—6:00 PM (GMT+1)",
-            sessions: [
-                { date: "Tues, Feb 24", time: "6:00 PM—8:00 PM (GMT+1)" },
-                { date: "Thurs, Feb 26", time: "6:00 PM—8:00 PM (GMT+1)" },
-                { date: "Tues, Mar 3", time: "6:00 PM—8:00 PM (GMT+1)" },
-                { date: "Thurs, Mar 5", time: "6:00 PM—8:00 PM (GMT+1)" },
-                { date: "Tues, Mar 10", time: "6:00 PM—8:00 PM (GMT+1)" },
-                { date: "Thurs, Mar 12", time: "6:00 PM—8:00 PM (GMT+1)" },
-                { date: "Tues, Mar 17", time: "6:00 PM—8:00 PM (GMT+1)" },
-                { date: "Thurs, Mar 19", time: "6:00 PM—8:00 PM (GMT+1)" },
-                { date: "Tues, Mar 24", time: "6:00 PM—8:00 PM (GMT+1)" },
-                { date: "Thurs, Mar 26", time: "6:00 PM—8:00 PM (GMT+1)" },
-                { date: "Tues, Mar 31", time: "6:00 PM—8:00 PM (GMT+1)" },
-                { date: "Thurs, Apr 2", time: "6:00 PM—8:00 PM (GMT+1)" },
-                { date: "Tues, Apr 7", time: "6:00 PM—8:00 PM (GMT+1)" },
-                { date: "Thurs, Apr 9", time: "6:00 PM—8:00 PM (GMT+1)" },
-                { date: "Tues, Apr 14", time: "6:00 PM—8:00 PM (GMT+1)" },
-                { date: "Thurs, Apr 16", time: "6:00 PM—8:00 PM (GMT+1)" },
-            ]
+            startDate: "March 10",
+            days: ["Saturday", "Sunday"],
+            time: "2:00 PM - 5:00 PM (WAT)",
+            sessions: []
         },
-        faq: [
-            {
-                question: "Who is this course for?",
-                answer: "This course is designed for backend engineers, full-stack developers, and technical leads who want to master microservices. It's ideal if you have some experience building monoliths and want to learn how to architect scalable, distributed systems for production environments."
-            },
-            {
-                question: "What are the prerequisites for this bootcamp?",
-                answer: "You should have a basic understanding of backend development and proficiency in at least one backend language (like Node.js, Go, Java, or C#). Familiarity with databases and basic command-line usage is also recommended."
-            },
-            {
-                question: "How much time commitment is expected each week?",
-                answer: "Expect to spend about 5-7 hours per week. This includes 4 hours of live sessions (2 hours on Tuesdays and Thursdays) plus 1-3 hours for projects and practice exercises."
-            },
-            {
-                question: "Will sessions be recorded?",
-                answer: "Yes, all live sessions are recorded and uploaded to the course portal within 24 hours. You will have lifetime access to these recordings."
-            }
-        ]
+        included: ["PM Certification", "Portfolio Review"],
+        faq: []
     },
+    {
+        slug: "ai-engineering",
+        status: "Coming Soon",
+        title: "AI Engineering & LLMs",
+        subtitle: "Master the new stack. Build production-ready AI applications.",
+        tagline: "The future is deterministic. Or is it?",
+        category: "AI",
+        price: 400000,
+        startDate: "TBA",
+        duration: "10 Weeks",
+        cohortSize: 20,
+        rating: 0,
+        reviewsCount: 0,
+        instructors: [],
+        description: "Coming Soon...",
+        outcomes: [],
+        syllabus: [],
+        tools: ["Python", "OpenAI API", "LangChain", "Vector DBs"],
+        materials: [],
+        prerequisites: [],
+        targetAudience: [],
+        logistics: { homework: false, capstone: false, teachingStyle: "", frequency: "" },
+        schedule: { startDate: "TBA", days: [], time: "", sessions: [] },
+        included: [],
+        faq: []
+    }
 ];
 
-export function getCourseBySlug(slug: string): Course | undefined {
-    return courses.find((course) => course.slug === slug);
+// --- HYBRID FETCHING LOGIC ---
+
+// Check if Contentful is configured
+const hasContentful = !!process.env.CONTENTFUL_SPACE_ID && !!process.env.CONTENTFUL_ACCESS_TOKEN;
+
+// Helper to map Contentful entry to Course type
+// You will need to implement this based on your exact Contentful model fields.
+const mapContentfulEntryToCourse = (entry: any): Course => {
+    // This is a placeholder mapping. You need to adjust fields to match your Contentful Content Type ID and field names.
+    const fields = entry.fields;
+    return {
+        slug: fields.slug,
+        title: fields.title,
+        subtitle: fields.subtitle,
+        tagline: fields.tagline,
+        status: fields.status || "Open", // Default to Open if not set
+        category: fields.category,
+        price: fields.price,
+        startDate: fields.startDate,
+        duration: fields.duration,
+        cohortSize: fields.cohortSize,
+        rating: fields.rating,
+        reviewsCount: fields.reviewsCount,
+        instructors: fields.instructors ? fields.instructors.map((inst: any) => ({
+            name: inst.fields.name,
+            role: inst.fields.role,
+            company: inst.fields.company,
+            bio: inst.fields.bio,
+            image: inst.fields.image?.fields?.file?.url ? 'https:' + inst.fields.image.fields.file.url : '',
+            linkedin: inst.fields.linkedin,
+            experience: inst.fields.experience,
+        })) : [],
+        description: fields.description,
+        outcomes: fields.outcomes || [],
+        syllabus: fields.syllabus ? fields.syllabus.map((mod: any) => ({
+            title: mod.fields.title,
+            description: mod.fields.description,
+            topics: mod.fields.topics || []
+        })) : [],
+        tools: fields.tools || [],
+        materials: fields.materials || [],
+        prerequisites: fields.prerequisites || [],
+        targetAudience: fields.targetAudience || [],
+        logistics: fields.logistics || { homework: false, capstone: false, teachingStyle: '', frequency: '' },
+        schedule: fields.schedule || { startDate: '', days: [], time: '', sessions: [] },
+        included: fields.included || [],
+        faq: fields.faq ? fields.faq.map((f: any) => ({ question: f.fields.question, answer: f.fields.answer })) : []
+    };
+}
+
+export async function getAllCourses(): Promise<Course[]> {
+    if (!hasContentful) {
+        console.warn("Contentful credentials not found. Serving static courses.");
+        return staticCourses;
+    }
+
+    try {
+        const response = await contentfulClient.getEntries({
+            content_type: 'course' // Ensure your Content Type ID in Contentful is 'course'
+        });
+
+        if (!response.items || response.items.length === 0) {
+            console.warn("Contentful returned no courses. Serving static courses as backup.");
+            return staticCourses;
+        }
+
+        return response.items.map(mapContentfulEntryToCourse);
+    } catch (error) {
+        console.error("Error fetching courses from Contentful:", error);
+        return staticCourses;
+    }
+}
+
+export async function getCourseBySlug(slug: string): Promise<Course | null> {
+    if (!hasContentful) {
+        return staticCourses.find((c) => c.slug === slug) || null;
+    }
+
+    try {
+        const response = await contentfulClient.getEntries({
+            content_type: 'course',
+            'fields.slug': slug,
+            limit: 1
+        });
+
+        if (!response.items || response.items.length === 0) {
+            // Fallback check
+            const staticCourse = staticCourses.find((c) => c.slug === slug);
+            if (staticCourse) {
+                console.warn(`Course ${slug} not found in Contentful. Serving static backup.`);
+                return staticCourse;
+            }
+            return null;
+        }
+
+        return mapContentfulEntryToCourse(response.items[0]);
+    } catch (error) {
+        console.error(`Error fetching course ${slug} from Contentful:`, error);
+        return staticCourses.find((c) => c.slug === slug) || null;
+    }
 }
