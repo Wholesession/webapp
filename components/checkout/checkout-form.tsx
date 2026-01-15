@@ -11,14 +11,17 @@ interface CheckoutFormProps {
     course: Course;
 }
 
-import { ShieldCheck, CheckCircle2 } from "lucide-react";
+import { ShieldCheck, CheckCircle2, AlertCircle } from "lucide-react";
 import { toast } from "sonner";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface CheckoutFormProps {
     course: Course;
 }
 
 type PaymentPlan = "full" | "installment";
+
+import { trackEvent } from "@/lib/analytics";
 
 export function CheckoutForm({ course }: CheckoutFormProps) {
     const [isLoading, setIsLoading] = useState(false);
@@ -28,13 +31,44 @@ export function CheckoutForm({ course }: CheckoutFormProps) {
         email: "",
         phone: ""
     });
+    const [errors, setErrors] = useState<Record<string, string>>({});
 
     const amountToPay = plan === "full" ? course.price : Math.floor(course.price / 2);
 
+    const validate = () => {
+        const newErrors: Record<string, string> = {};
+        if (!formData.name.trim()) newErrors.name = "Full name is required";
+        if (!formData.email.trim()) {
+            newErrors.email = "Email is required";
+        } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+            newErrors.email = "Please enter a valid email address";
+        }
+        if (!formData.phone.trim()) {
+            newErrors.phone = "Phone number is required";
+        } else if (formData.phone.length < 10) {
+            newErrors.phone = "Please enter a valid phone number";
+        }
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    };
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        if (!validate()) {
+            toast.error("Please fix the errors in the form");
+            return;
+        }
+
         setIsLoading(true);
         const toastId = toast.loading("Initializing payment...");
+
+        trackEvent("Checkout Initiated", {
+            email: formData.email,
+            name: formData.name,
+            course: course.title,
+            plan: plan,
+            amount: amountToPay
+        });
 
         try {
             const response = await fetch("/api/payment/initialize", {
@@ -57,6 +91,11 @@ export function CheckoutForm({ course }: CheckoutFormProps) {
             }
 
             if (data.authorizationUrl) {
+                trackEvent("Redirection to Paystack", {
+                    email: formData.email,
+                    course: course.title,
+                    reference: data.reference
+                });
                 toast.success("Redirecting to Paystack...", { id: toastId });
                 window.location.href = data.authorizationUrl;
             } else {
@@ -72,7 +111,7 @@ export function CheckoutForm({ course }: CheckoutFormProps) {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="space-y-8 py-6 lg:py-10 px-4 lg:px-0 max-w-lg font-body">
+        <form onSubmit={handleSubmit} noValidate className="space-y-8 py-6 lg:py-10 px-4 lg:px-0 max-w-lg font-body">
             <div>
                 <h1 className="text-2xl font-medium text-gray-900 mb-2">
                     Complete your enrollment
@@ -121,42 +160,72 @@ export function CheckoutForm({ course }: CheckoutFormProps) {
             </div>
 
             <div className="space-y-6">
-                <div className="grid gap-2">
+                <div className="grid gap-1.5">
                     <Label htmlFor="name" className="text-sm font-semibold text-gray-900">Full Name</Label>
                     <Input
                         id="name"
                         placeholder="e.g. Michael Emmanuel"
-                        required
-                        className="text-gray-900"
+                        className={`h-11 transition-all ${errors.name ? 'border-red-500 bg-red-50/30' : 'border-gray-200'} text-gray-900`}
                         value={formData.name}
-                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                        onChange={(e) => {
+                            setFormData({ ...formData, name: e.target.value });
+                            if (errors.name) setErrors({ ...errors, name: "" });
+                        }}
                     />
+                    <AnimatePresence>
+                        {errors.name && (
+                            <motion.div initial={{ opacity: 0, y: -5 }} animate={{ opacity: 1, y: 0 }} className="flex items-center gap-1.5 text-red-600">
+                                <AlertCircle className="w-3.5 h-3.5" />
+                                <span className="text-xs font-medium">{errors.name}</span>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
                 </div>
 
-                <div className="grid gap-2">
+                <div className="grid gap-1.5">
                     <Label htmlFor="email" className="text-sm font-semibold text-gray-900">Email Address</Label>
                     <Input
                         id="email"
                         type="email"
                         placeholder="name@example.com"
-                        required
-                        className="text-gray-900"
+                        className={`h-11 transition-all ${errors.email ? 'border-red-500 bg-red-50/30' : 'border-gray-200'} text-gray-900`}
                         value={formData.email}
-                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                        onChange={(e) => {
+                            setFormData({ ...formData, email: e.target.value });
+                            if (errors.email) setErrors({ ...errors, email: "" });
+                        }}
                     />
+                    <AnimatePresence>
+                        {errors.email && (
+                            <motion.div initial={{ opacity: 0, y: -5 }} animate={{ opacity: 1, y: 0 }} className="flex items-center gap-1.5 text-red-600">
+                                <AlertCircle className="w-3.5 h-3.5" />
+                                <span className="text-xs font-medium">{errors.email}</span>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
                 </div>
 
-                <div className="grid gap-2">
+                <div className="grid gap-1.5">
                     <Label htmlFor="phone" className="text-sm font-semibold text-gray-900">Phone Number</Label>
                     <Input
                         id="phone"
                         type="tel"
                         placeholder="+234..."
-                        required
-                        className="text-gray-900"
+                        className={`h-11 transition-all ${errors.phone ? 'border-red-500 bg-red-50/30' : 'border-gray-200'} text-gray-900`}
                         value={formData.phone}
-                        onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                        onChange={(e) => {
+                            setFormData({ ...formData, phone: e.target.value });
+                            if (errors.phone) setErrors({ ...errors, phone: "" });
+                        }}
                     />
+                    <AnimatePresence>
+                        {errors.phone && (
+                            <motion.div initial={{ opacity: 0, y: -5 }} animate={{ opacity: 1, y: 0 }} className="flex items-center gap-1.5 text-red-600">
+                                <AlertCircle className="w-3.5 h-3.5" />
+                                <span className="text-xs font-medium">{errors.phone}</span>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
                 </div>
             </div>
 
@@ -164,7 +233,7 @@ export function CheckoutForm({ course }: CheckoutFormProps) {
                 <Button
                     type="submit"
                     size="lg"
-                    className="w-full h-14 text-lg bg-[var(--brand-color)] hover:bg-[var(--brand-color)]/90 text-white cursor-pointer relative overflow-hidden"
+                    className="w-full h-14 text-lg bg-[var(--brand-color)] hover:bg-[var(--brand-color)]/90 text-white cursor-pointer relative overflow-hidden shadow-lg active:scale-[0.98] transition-transform"
                     disabled={isLoading}
                 >
                     {isLoading ? (

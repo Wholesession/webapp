@@ -79,7 +79,7 @@ export default function CoursesPage({ courses }: { courses: Course[] }) {
                         <button
                             key={cat}
                             onClick={() => setSelectedCategory(cat)}
-                            className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 ${selectedCategory === cat
+                            className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all cursor-pointer duration-300 ${selectedCategory === cat
                                 ? "bg-[#0a0c1b] text-white shadow-lg scale-105"
                                 : "bg-gray-100 text-gray-600 hover:bg-gray-200"
                                 }`}

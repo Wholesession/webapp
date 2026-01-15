@@ -13,7 +13,7 @@ export async function POST(request: Request) {
         // 1. IDEMPOTENCY CHECK: Check if order exists and is already paid
         const { data: existingOrder } = await supabase
             .from('orders')
-            .select('*')
+            .select('*, users!inner(*)')
             .eq('paystack_reference', reference)
             .single();
 
@@ -54,7 +54,7 @@ export async function POST(request: Request) {
             .from('orders')
             .update({ status: 'paid', updated_at: new Date() })
             .eq('paystack_reference', reference) // Match by reference
-            .select() // Select returns the updated row
+            .select('*, users!inner(*)') // Select returns the updated row with user data
             .single();
 
         if (error) {
@@ -69,7 +69,7 @@ export async function POST(request: Request) {
         const name = metadata.fullName || "Student";
 
         if (email && metadata.courseTitle) {
-            await sendWelcomeEmail(email, name, metadata.courseTitle, metadata.courseSlug);
+            await sendWelcomeEmail(email, name, metadata.courseTitle, metadata.courseSlug, reference);
         }
 
         return NextResponse.json({

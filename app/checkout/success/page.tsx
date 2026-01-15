@@ -2,15 +2,19 @@
 
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { CheckCircle2, ArrowRight, Download, Loader2, XCircle } from "lucide-react";
+import { CheckCircle2, ArrowRight, Download, Loader2, XCircle, MessageSquare } from "lucide-react";
 import { motion } from "framer-motion";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState, Suspense } from "react";
 
+import { trackEvent, identifyUser } from "@/lib/analytics";
+
 function SuccessContent() {
     const searchParams = useSearchParams();
     const reference = searchParams.get('reference');
+    const discordStatus = searchParams.get('discord');
     const [status, setStatus] = useState<'verifying' | 'success' | 'error'>('verifying');
+    const [orderData, setOrderData] = useState<any>(null);
 
     useEffect(() => {
         if (!reference) {
@@ -27,7 +31,20 @@ function SuccessContent() {
                 });
 
                 if (res.ok) {
+                    const data = await res.json();
+                    setOrderData(data.order);
                     setStatus('success');
+
+                    // Track Success with Mixpanel
+                    if (data.order && data.order.users) {
+                        const user = data.order.users;
+                        identifyUser(user.id, user.email, user.full_name);
+                        trackEvent("Payment Success", {
+                            course: data.order.course_slug,
+                            amount: data.order.amount_paid,
+                            reference: reference
+                        });
+                    }
                 } else {
                     setStatus('error');
                 }
@@ -38,7 +55,11 @@ function SuccessContent() {
         }
 
         verifyPayment();
-    }, [reference]);
+
+        if (discordStatus === 'success') {
+            trackEvent("Discord Verified", { reference });
+        }
+    }, [reference, discordStatus]);
 
     if (status === 'verifying') {
         return (
@@ -52,15 +73,15 @@ function SuccessContent() {
 
     if (status === 'error') {
         return (
-            <div className="pt-14 pb-10 px-8">
+            <div className="pt-14 pb-10 px-8 text-center items-center flex flex-col">
                 <div className="mx-auto w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mb-6">
                     <XCircle className="w-8 h-8 text-red-600" />
                 </div>
                 <h1 className="text-2xl font-bold text-gray-900 mb-2">Verification Failed</h1>
-                <p className="text-gray-500 mb-8">
+                <p className="text-gray-500 mb-8 max-w-[280px]">
                     We couldn't verify your payment reference. If you were debited, please contact support.
                 </p>
-                <Link href="/">
+                <Link href="/" className="w-full">
                     <Button variant="outline" className="w-full h-12 rounded-xl">
                         Return Home
                     </Button>
@@ -70,28 +91,72 @@ function SuccessContent() {
     }
 
     return (
-        <div className="pt-14 pb-10 px-8">
-            <h1 className="text-2xl font-bold text-gray-900 mb-2">Payment Successful!</h1>
-            <p className="text-gray-500 mb-8">
-                You've successfully secured your spot. A confirmation email with onboarding details has been sent to your inbox.
+        <div className="pt-10 pb-10 px-8 text-center flex flex-col items-center">
+            <div className="w-20 h-20 bg-green-50 rounded-full flex items-center justify-center mb-6">
+                <CheckCircle2 className="w-10 h-10 text-green-500" />
+            </div>
+            <h1 className="text-2xl font-bold text-gray-900 mb-2">Enrollment Successful!</h1>
+            <p className="text-gray-500 mb-8 text-sm">
+                Welcome to the cohort! We've sent a detailed confirmation email to your inbox.
             </p>
 
-            <div className="space-y-3">
-                <div className="bg-gray-50 rounded-xl p-4 text-left flex items-start gap-3 border border-gray-100">
-                    <div className="bg-white p-2 rounded-full border border-gray-100 shadow-sm">
-                        <Download className="w-4 h-4 text-[#372772]" />
+            <div className="space-y-4 w-full">
+                {/* Discord Section */}
+                {discordStatus === 'success' ? (
+                    <div className="bg-indigo-50 border border-indigo-100 rounded-2xl p-5 text-left flex items-start gap-4 shadow-sm">
+                        <div className="bg-indigo-500 p-2.5 rounded-xl shadow-md ring-4 ring-indigo-50">
+                            <MessageSquare className="w-5 h-5 text-white" />
+                        </div>
+                        <div>
+                            <h3 className="font-bold text-indigo-900 text-sm">Discord Access Granted</h3>
+                            <p className="text-xs text-indigo-700/80 mt-1 leading-relaxed">
+                                You've been added to the server and assigned your Student role. Check your Discord!
+                            </p>
+                        </div>
+                    </div>
+                ) : (
+                    <div className="bg-[#5865F2]/5 border border-[#5865F2]/10 rounded-2xl p-5 text-left flex flex-col gap-4 shadow-sm">
+                        <div className="flex items-start gap-4">
+                            <div className="bg-[#5865F2] p-2.5 rounded-xl shadow-md ring-4 ring-[#5865F2]/10">
+                                <MessageSquare className="w-5 h-5 text-white" />
+                            </div>
+                            <div>
+                                <h3 className="font-bold text-gray-900 text-sm">Unlock Private Channels</h3>
+                                <p className="text-xs text-gray-500 mt-1 leading-relaxed">
+                                    Connect your Discord to join the student-only lounge and get your role instantly.
+                                </p>
+                            </div>
+                        </div>
+                        <Link href={`/api/auth/discord/login?reference=${reference}`} className="w-full">
+                            <Button className="w-full h-11 bg-[#5865F2] hover:bg-[#4752C4] text-white rounded-xl font-bold flex items-center justify-center gap-2 group transition-all active:scale-[0.98] font-body cursor-pointer">
+                                <MessageSquare className="w-4 h-4" />
+                                Claim Discord Access
+                            </Button>
+                        </Link>
+                    </div>
+                )}
+
+                {/* Download Section */}
+                <a
+                    href={orderData?.course_slug ? `/syllabus/${orderData.course_slug}.pdf` : '#'}
+                    download
+                    className="block bg-gray-50 rounded-2xl p-5 text-left flex items-start gap-4 border border-gray-100 hover:border-gray-200 transition-all group"
+                >
+                    <div className="bg-white p-2.5 rounded-xl border border-gray-100 shadow-sm group-hover:bg-purple-50 transition-colors">
+                        <Download className="w-5 h-5 text-[#372772]" />
                     </div>
                     <div>
-                        <h3 className="font-semibold text-gray-900 text-sm">Download Syllabus</h3>
-                        <p className="text-xs text-gray-500">Get a head start on the curriculum.</p>
+                        <h3 className="font-bold text-gray-900 text-sm">Course Design</h3>
+                        <p className="text-xs text-gray-500 mt-1 leading-relaxed">Download your curriculum and community guidelines.</p>
                     </div>
-                </div>
+                </a>
             </div>
 
-            <div className="mt-8">
-                <Link href="/">
-                    <Button className="w-full h-12 bg-[#0a0c1b] hover:bg-[#0a0c1b]/90 text-white rounded-xl font-medium">
-                        Return to Home <ArrowRight className="w-4 h-4 ml-2" />
+            <div className="mt-10 w-full">
+                <Link href="/" className="w-full text-center">
+                    <Button className="w-full h-14 bg-[#5865F2] hover:bg-[#4752C4] text-white rounded-2xl font-bold text-[1.2rem] shadow-xl shadow-gray-200 uppercase tracking-wide group font-body cursor-pointer">
+                        Go to Home
+                        <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
                     </Button>
                 </Link>
             </div>

@@ -5,14 +5,19 @@ import { render } from '@react-email/render';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-export async function sendWelcomeEmail(email: string, name: string, courseTitle: string, courseSlug: string) {
+export async function sendWelcomeEmail(email: string, name: string, courseTitle: string, courseSlug: string, reference: string) {
     if (!process.env.RESEND_API_KEY) {
         console.log("Resend API Key missing. Skipping email send.");
         return;
     }
 
     try {
-        const emailHtml = await render(WelcomeEmail({ firstName: name.split(' ')[0], courseTitle, courseSlug }));
+        const emailHtml = await render(WelcomeEmail({
+            firstName: name.split(' ')[0],
+            courseTitle,
+            courseSlug,
+            reference
+        }));
 
         const { data, error } = await resend.emails.send({
             from: 'Wholesession <onboarding@wholesession.com>',
