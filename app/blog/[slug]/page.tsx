@@ -121,7 +121,7 @@ export default async function BlogPostPage({ params }: Props) {
                     </Link>
 
                     <div className="flex items-center gap-3 text-sm text-gray-500 mb-6">
-                        <span className="bg-purple-50 text-[#372772] px-3 py-1 rounded-full font-medium text-xs uppercase tracking-wide border border-purple-100">
+                        <span className="text-gray-600 px-3 py-1 rounded-full font-medium text-xs uppercase tracking-wide border border-gray-200">
                             {post.category}
                         </span>
                         <span className="flex items-center gap-1">
@@ -139,7 +139,7 @@ export default async function BlogPostPage({ params }: Props) {
                             {post.author.avatar ? (
                                 <Image src={post.author.avatar} alt={post.author.name} fill className="object-cover" />
                             ) : (
-                                <div className="h-full w-full flex items-center justify-center bg-purple-100 text-[#372772]">
+                                <div className="h-full w-full flex items-center justify-center bg-gray-100 text-gray-600">
                                     <User className="w-6 h-6" />
                                 </div>
                             )}
