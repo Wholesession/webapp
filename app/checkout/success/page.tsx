@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState, Suspense } from "react";
 
-import { trackEvent, identifyUser } from "@/lib/analytics";
+import { trackEvent, identifyUser, trackPurchaseSuccess } from "@/lib/analytics";
 
 function SuccessContent() {
     const searchParams = useSearchParams();
@@ -35,14 +35,14 @@ function SuccessContent() {
                     setOrderData(data.order);
                     setStatus('success');
 
-                    // Track Success with Mixpanel
+                    // Track Success with Analytics Hub
                     if (data.order && data.order.users) {
                         const user = data.order.users;
                         identifyUser(user.id, user.email, user.full_name);
-                        trackEvent("Payment Success", {
+                        trackPurchaseSuccess({
                             course: data.order.course_slug,
-                            amount: data.order.amount_paid,
-                            reference: reference
+                            amount: data.order.amount_paid / 100, // Convert Kobo to Naira for tracking
+                            reference: reference as string
                         });
                     }
                 } else {

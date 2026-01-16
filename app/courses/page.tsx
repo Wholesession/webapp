@@ -1,5 +1,6 @@
 
 import { getAllCourses } from "@/lib/courses";
+export const revalidate = 0;
 import CoursesPageContent from "@/components/courses-page-content";
 import { Metadata } from "next";
 

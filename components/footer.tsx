@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { FaTwitter, FaTiktok, FaLinkedin, FaInstagram, FaWhatsapp } from "react-icons/fa"
 import Image from "next/image";
+import { WHATSAPP_NUMBER, SUPPORT_EMAIL, WHATSAPP_MESSAGE } from "@/lib/constants";
 
 const footerLinks = {
     Explore: [
@@ -41,7 +42,7 @@ export function Footer() {
                             <Link href="https://www.tiktok.com/@usewholesession" className="text-gray-400 hover:text-white transition-colors">
                                 <FaTiktok className="h-5 w-5 text-[1rem]" />
                             </Link>
-                            <Link href="/" className="text-gray-400 hover:text-white transition-colors">
+                            <Link href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`} className="text-gray-400 hover:text-white transition-colors">
                                 <FaWhatsapp className="h-5 w-5 text-[1rem]" />
                             </Link>
                         </div>
@@ -74,7 +75,7 @@ export function Footer() {
                     </p>
                     <div className="flex gap-6">
                         <p className="text-[1rem] text-white">
-                            Contact support: <a href="mailto:support@wholesession.com">support@wholesession.com</a>
+                            Contact support: <a href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a>
                         </p>
                     </div>
                 </div>

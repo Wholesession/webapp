@@ -32,3 +32,45 @@ export const identifyUser = (userId: string, email: string, name: string) => {
         });
     }
 };
+
+/**
+ * Enhanced Conversion Tracking for Marketing (Meta Pixel + Mixpanel)
+ */
+
+export const trackLead = (props: { email: string; name: string; course: string; slug: string }) => {
+    trackEvent("Waitlist Joined", props);
+
+    if (typeof window !== 'undefined' && window.fbq) {
+        window.fbq('track', 'Lead', {
+            content_name: props.course,
+            content_category: 'Course Waitlist',
+            value: 0,
+            currency: 'NGN'
+        });
+    }
+};
+
+export const trackPurchaseInit = (props: { course: string; amount: number; plan: string }) => {
+    trackEvent("Checkout Initiated", props);
+
+    if (typeof window !== 'undefined' && window.fbq) {
+        window.fbq('track', 'InitiateCheckout', {
+            content_name: props.course,
+            value: props.amount,
+            currency: 'NGN'
+        });
+    }
+};
+
+export const trackPurchaseSuccess = (props: { course: string; amount: number; reference: string }) => {
+    trackEvent("Course Purchased", props);
+
+    if (typeof window !== 'undefined' && window.fbq) {
+        window.fbq('track', 'Purchase', {
+            content_name: props.course,
+            value: props.amount,
+            currency: 'NGN',
+            content_type: 'product'
+        });
+    }
+};

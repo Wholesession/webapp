@@ -19,7 +19,7 @@ export default async function Home() {
 
   return (
     <main className="min-h-screen bg-white text-black selection:bg-purple-500/30 font-body">
-      <Navbar />
+      <Navbar theme="light"/>
       <Hero />
       <TrustedBy />
       <Features />

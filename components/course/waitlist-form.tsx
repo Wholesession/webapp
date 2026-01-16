@@ -13,7 +13,7 @@ interface WaitlistFormProps {
     courseTitle: string;
 }
 
-import { trackEvent } from "@/lib/analytics";
+import { trackEvent, trackLead } from "@/lib/analytics";
 
 export function WaitlistForm({ courseSlug, courseTitle }: WaitlistFormProps) {
     const [email, setEmail] = useState("");
@@ -53,7 +53,7 @@ export function WaitlistForm({ courseSlug, courseTitle }: WaitlistFormProps) {
                 throw new Error(data.error || "Failed to join waitlist");
             }
 
-            trackEvent("Waitlist Joined", {
+            trackLead({
                 email,
                 name,
                 course: courseTitle,

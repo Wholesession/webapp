@@ -4,8 +4,11 @@
 import { MessageCircle } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { WHATSAPP_NUMBER, WHATSAPP_MESSAGE } from "@/lib/constants";
 
 export function SupportBubble() {
+    const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`;
+
     return (
         <motion.div
             initial={{ scale: 0, opacity: 0 }}
@@ -14,7 +17,7 @@ export function SupportBubble() {
             className="fixed bottom-8 right-8 z-50"
         >
             <Link
-                href="https://wa.me/2347000000000" // Replace with actual number
+                href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-3 bg-green-500 text-white px-4 py-3 rounded-full shadow-2xl hover:bg-green-600 transition-all hover:-translate-y-1 group"

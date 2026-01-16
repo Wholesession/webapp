@@ -1,4 +1,5 @@
 import { getCourseBySlug, getAllCourses } from "@/lib/courses";
+export const revalidate = 0;
 import { Footer } from "@/components/footer";
 import { CourseHeader } from "@/components/course/course-header";
 import { CourseHero } from "@/components/course/course-hero";
@@ -12,8 +13,13 @@ import { Button } from "@/components/ui/button";
 import ReactMarkdown from "react-markdown";
 import { Included } from "@/components/course/included";
 import { Schedule } from "@/components/course/schedule";
+import { ReferralSection } from "@/components/course/referral-section";
 import { FAQ } from "@/components/course/faq";
 import { Metadata } from "next";
+import { ExitIntentPopup } from "@/components/exit-intent-popup";
+import { InterestPulse } from "@/components/interest-pulse";
+import { ResonanceSection } from "@/components/course/resonance-section";
+import { MobileStickyCTA } from "@/components/mobile-sticky-cta";
 
 export async function generateStaticParams() {
     const courses = await getAllCourses();
@@ -101,9 +107,14 @@ export default async function CoursePage({ params }: { params: Promise<{ slug: s
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
             />
+            <ExitIntentPopup courseTitle={course.title} courseSlug={course.slug} />
+            <InterestPulse courseSlug={course.slug} cohortSize={course.cohortSize} />
             <CourseHeader course={course} />
 
             <CourseHero course={course} />
+
+            <ResonanceSection course={course} />
+            <MobileStickyCTA course={course} />
 
             <div className="container mx-auto px-4 lg:px-8 py-12 relative font-body">
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
@@ -142,6 +153,7 @@ export default async function CoursePage({ params }: { params: Promise<{ slug: s
                                 <Included course={course} />
                                 <Syllabus course={course} />
                                 <Schedule course={course} />
+                                <ReferralSection />
                                 <FAQ course={course} />
                                 <Instructors course={course} />
                             </>

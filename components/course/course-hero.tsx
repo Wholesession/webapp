@@ -67,8 +67,10 @@ export function CourseHero({ course }: CourseHeroProps) {
                                         <Flame className="w-5 h-5 text-orange-500" />
                                     </div>
                                     <div className="text-sm">
-                                        <p className="font-body font-semibold text-gray-900">This course is popular.</p>
-                                        <p className="text-gray-500">20 people enrolled last week.</p>
+                                        <p className="font-body font-semibold text-gray-900">This course is in high demand.</p>
+                                        <p className="text-gray-500">
+                                            {Math.floor(course.cohortSize * 0.82)} professionals interested recently.
+                                        </p>
                                     </div>
                                 </div>
                             </div>

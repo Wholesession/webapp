@@ -35,22 +35,15 @@ export function Navbar({ theme = "dark" }: { theme?: "dark" | "light" }) {
         };
     }, [isMobileMenuOpen]);
 
-    // Determine effective text color based on scroll state and theme
-    // Default (dark theme): transparent bg -> white text. Scrolled -> dark bg, white text.
-    // Light theme: transparent bg -> black text. Scrolled -> white bg, black text.
-
-    // Actually, following the existing logic:
-    // Existing: Scrolled -> bg-black/95 text-white. Unscrolled -> bg-transparent text-gray-300/white.
-    // New Requirement: On white background (About page), we need text to be black when unscrolled.
 
     const isDarkText = theme === "light" && !isScrolled;
 
     return (
         <>
             <nav
-                className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
+                className={`sticky top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
                     ? (theme === "light" ? "bg-black/95 backdrop-blur-md shadow-lg py-3" : "bg-black/95 backdrop-blur-md shadow-lg py-3")
-                    : "bg-transparent py-4"
+                    : "bg-transparent py-4 mx-auto"
                     }`}
             >
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -63,7 +56,7 @@ export function Navbar({ theme = "dark" }: { theme?: "dark" | "light" }) {
                                 alt="Wholesession Logo"
                                 width={220}
                                 height={40}
-                                className="w-[200px]"
+                                className="w-auto h-10"
                                 priority
                             />
                         </Link>
@@ -77,8 +70,8 @@ export function Navbar({ theme = "dark" }: { theme?: "dark" | "light" }) {
                                         key={link.name}
                                         href={link.href}
                                         className={`px-4 py-2 text-sm font-medium rounded-full transition-all duration-200 ${isDarkText
-                                                ? "text-gray-900 hover:text-gray-600 hover:bg-black/5"
-                                                : "text-gray-800 hover:bg-black/5"
+                                            ? "text-gray-900 hover:text-gray-600 hover:bg-black/5"
+                                            : "text-gray-800 hover:bg-black/5"
                                             }`}
                                     >
                                         {link.name}

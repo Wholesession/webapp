@@ -65,10 +65,23 @@ function CourseCardContent({ course, statusLabel, isComingSoon }: { course: Cour
                 </h3>
 
                 <div className="flex items-start gap-2 text-sm text-gray-500 font-medium mb-8 flex-col ">
-                    <span className="text-gray-700 block">₦{course.price.toLocaleString()}/{course.duration}</span>
-                    <span className={`font-semibold ${isComingSoon ? 'text-orange-600 bg-orange-50 px-2 py-0.5 rounded-full text-xs w-fit' : 'text-gray-700'}`}>
-                        {statusLabel}
-                    </span>
+                    <div className="flex items-center gap-2">
+                        <span className="text-gray-900 font-bold block">₦{Number(course.price).toLocaleString()}</span>
+                        {course.originalPrice && Number(course.originalPrice) > Number(course.price) && (
+                            <span className="text-gray-400 line-through text-xs italic">₦{Number(course.originalPrice).toLocaleString()}</span>
+                        )}
+                        <span className="text-gray-400 text-xs">/ {course.duration}</span>
+                    </div>
+                    <div className="flex items-center gap-2 flex-wrap">
+                        <span className={`font-semibold ${isComingSoon ? 'text-orange-600 bg-orange-50 px-2 py-0.5 rounded-full text-xs w-fit' : 'text-gray-700'}`}>
+                            {statusLabel}
+                        </span>
+                        {course.originalPrice && Number(course.originalPrice) > Number(course.price) && (
+                            <span className="bg-green-100 text-green-700 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase">
+                                Save {Math.round(((Number(course.originalPrice) - Number(course.price)) / Number(course.originalPrice)) * 100)}%
+                            </span>
+                        )}
+                    </div>
                 </div>
             </div>
 

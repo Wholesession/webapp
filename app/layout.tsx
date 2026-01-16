@@ -58,6 +58,8 @@ export const metadata: Metadata = {
 
 import { Toaster } from "sonner";
 import { SupportBubble } from "@/components/support-bubble";
+import { AnnouncementBar } from "@/components/announcement-bar";
+import { MetaPixel } from "@/components/meta-pixel";
 
 export default function RootLayout({
   children,
@@ -69,6 +71,8 @@ export default function RootLayout({
       <body
         className={`${interTight.variable} antialiased`}
       >
+        <MetaPixel />
+        <AnnouncementBar />
         {/* Structured Data for Google Sitelinks */}
         <script
           type="application/ld+json"

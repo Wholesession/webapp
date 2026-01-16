@@ -21,7 +21,7 @@ interface CheckoutFormProps {
 
 type PaymentPlan = "full" | "installment";
 
-import { trackEvent } from "@/lib/analytics";
+import { trackEvent, trackPurchaseInit } from "@/lib/analytics";
 
 export function CheckoutForm({ course }: CheckoutFormProps) {
     const [isLoading, setIsLoading] = useState(false);
@@ -62,12 +62,10 @@ export function CheckoutForm({ course }: CheckoutFormProps) {
         setIsLoading(true);
         const toastId = toast.loading("Initializing payment...");
 
-        trackEvent("Checkout Initiated", {
-            email: formData.email,
-            name: formData.name,
+        trackPurchaseInit({
             course: course.title,
-            plan: plan,
-            amount: amountToPay
+            amount: amountToPay,
+            plan: plan
         });
 
         try {

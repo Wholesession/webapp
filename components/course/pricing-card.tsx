@@ -3,7 +3,7 @@
 import { Course } from "@/lib/courses";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Star, ArrowRight, ShieldCheck } from "lucide-react";
+import { Star, ArrowRight, ShieldCheck, Flame } from "lucide-react";
 import Link from "next/link";
 import { WaitlistForm } from "./waitlist-form";
 
@@ -22,20 +22,35 @@ export function PricingCard({ course }: PricingCardProps) {
         <div className="sticky top-24 bg-white shadow-lg border border-gray-100 font-body relative rounded-2xl">
             <div className="p-6 space-y-6">
                 {/* Header: Price & Rating */}
-                <div className="flex items-center justify-between">
-                    <div>
-                        <span className="text-2xl font-bold font-body text-gray-900">₦{(course.price).toLocaleString()}</span>
+                <div className="flex flex-col gap-1">
+                    <div className="flex items-center gap-2">
+                        <span className="text-3xl font-bold font-body text-gray-900">₦{Number(course.price).toLocaleString()}</span>
+                        {course.originalPrice && Number(course.originalPrice) > Number(course.price) && (
+                            <span className="text-gray-400 line-through text-sm font-medium italic">₦{Number(course.originalPrice).toLocaleString()}</span>
+                        )}
                     </div>
+                    {course.originalPrice && Number(course.originalPrice) > Number(course.price) && (
+                        <span className="text-green-600 text-xs font-bold uppercase tracking-wider">Save ₦{(Number(course.originalPrice) - Number(course.price)).toLocaleString()} today</span>
+                    )}
                 </div>
 
-                {/* Cohort Info */}
                 <div>
                     <h4 className="text-xs font-bold font-body text-gray-400 uppercase tracking-wider mb-2">Next Cohort</h4>
-                    <div className="flex items-center gap-2 flex-wrap">
-                        <span className="text-gray-900 font-semibold">{course.startDate} — {course.duration}</span>
-                        <span className="bg-yellow-100 text-yellow-800 text-xs font-medium px-2 py-0.5 rounded">
-                            {Math.ceil((new Date(course.startDate).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24))} days left to enroll
-                        </span>
+                    <div className="flex flex-col gap-2">
+                        <div className="flex items-center gap-2 flex-wrap">
+                            <span className="text-gray-900 font-semibold">{course.startDate} — {course.duration}</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                            {course.status !== "Coming Soon" && (
+                                <span className="bg-orange-100 text-orange-800 text-[10px] font-bold px-2 py-0.5 rounded uppercase flex items-center gap-1">
+                                    <Flame className="w-3 h-3" />
+                                    Only {Math.floor(Math.random() * 3) + 2} spots left
+                                </span>
+                            )}
+                            <span className="bg-yellow-100 text-yellow-800 text-[10px] font-bold px-2 py-0.5 rounded uppercase">
+                                Closing Soon
+                            </span>
+                        </div>
                     </div>
                 </div>
 
