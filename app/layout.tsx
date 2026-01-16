@@ -57,6 +57,7 @@ export const metadata: Metadata = {
 };
 
 import { Toaster } from "sonner";
+import { SupportBubble } from "@/components/support-bubble";
 
 export default function RootLayout({
   children,
@@ -92,6 +93,7 @@ export default function RootLayout({
           }}
         />
         {children}
+        <SupportBubble />
         <Toaster richColors position="top-center" />
       </body>
     </html>
