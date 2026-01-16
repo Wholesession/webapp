@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { supabase } from "@/lib/supabase/client";
+import { sendWaitlistConfirmationEmail } from "@/lib/mail";
 
 export async function POST(request: Request) {
     try {
@@ -13,7 +14,6 @@ export async function POST(request: Request) {
         }
 
         // Use the service role key to bypass RLS (if configured in client.ts)
-        // Since we are using the standard client.ts, we need to ensure the DB allows this or use a server-side only client.
         const { data, error } = await supabase
             .from("waitlist")
             .insert([{
@@ -25,7 +25,6 @@ export async function POST(request: Request) {
 
         if (error) {
             console.error("Supabase error (Waitlist):", error);
-            // Handle duplicate entries (if unique constraint on email+course_slug)
             if (error.code === '23505') {
                 return NextResponse.json(
                     { message: "You are already on the waitlist for this course!" },
@@ -37,6 +36,9 @@ export async function POST(request: Request) {
                 { status: 500 }
             );
         }
+
+        // Trigger welcome email (non-blocking)
+        sendWaitlistConfirmationEmail(email, name, courseTitle).catch(console.error);
 
         return NextResponse.json(
             { message: "Successfully joined the waitlist" },
