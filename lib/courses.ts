@@ -80,39 +80,39 @@ import { CAMPAIGN_DISCOUNT, CAMPAIGN_END_DATE } from "./constants";
 const hasContentful = !!process.env.CONTENTFUL_SPACE_ID && !!process.env.CONTENTFUL_ACCESS_TOKEN;
 
 // Helper to map Contentful entry to Course type
-// You will need to implement this based on your exact Contentful model fields.
 const mapContentfulEntryToCourse = (entry: any): Course => {
-    // This is a placeholder mapping. You need to adjust fields to match your Contentful Content Type ID and field names.
     const fields = entry.fields;
-    return {
+    const price = fields.price || 0;
+
+    // Core mapping
+    const course: Course = {
         slug: fields.slug,
         title: fields.title,
         subtitle: fields.subtitle,
         tagline: fields.tagline,
-        status: fields.status || "Open", // Default to Open if not set
+        status: fields.status || "Open",
         category: fields.category,
-        price: fields.price,
-        // Fallback: If originalPrice is missing in Contentful, calculate it based on CAMPAIGN_DISCOUNT
-        originalPrice: fields.originalPrice || Math.round(fields.price / (1 - CAMPAIGN_DISCOUNT)),
+        price: price,
+        originalPrice: fields.originalPrice || Math.round(price / (1 - CAMPAIGN_DISCOUNT)),
         startDate: fields.startDate,
         duration: fields.duration,
-        cohortSize: fields.cohortSize,
-        rating: fields.rating,
-        reviewsCount: fields.reviewsCount,
+        cohortSize: fields.cohortSize || 0,
+        rating: fields.rating || 5,
+        reviewsCount: fields.reviewsCount || 0,
         instructors: fields.instructors ? fields.instructors.map((inst: any) => ({
             name: inst.fields.name,
             role: inst.fields.role,
             company: inst.fields.company,
             bio: inst.fields.bio,
-            image: inst.fields.image?.fields?.file?.url ? 'https:' + inst.fields.image.fields.file.url : '',
-            linkedin: inst.fields.linkedin,
-            experience: inst.fields.experience,
+            image: inst.fields.image?.fields?.file?.url ? 'https:' + inst.fields.image.fields.file.url : '/placeholder-profile.png',
+            linkedin: inst.fields.linkedin || '#',
+            experience: inst.fields.experience || '',
         })) : [],
-        description: fields.description,
+        description: fields.description || '',
         outcomes: fields.outcomes || [],
         syllabus: fields.syllabus ? fields.syllabus.map((mod: any) => ({
-            title: mod.fields.title,
-            description: mod.fields.description,
+            title: mod.fields.title || '',
+            description: mod.fields.description || '',
             topics: mod.fields.topics || []
         })) : [],
         tools: fields.tools || [],
@@ -120,11 +120,16 @@ const mapContentfulEntryToCourse = (entry: any): Course => {
         prerequisites: fields.prerequisites || [],
         targetAudience: fields.targetAudience || [],
         notForYou: fields.notForYou || [],
-        logistics: fields.logistics || { homework: false, capstone: false, teachingStyle: '', frequency: '' },
-        schedule: fields.schedule || { startDate: '', days: [], time: '', sessions: [] },
+        logistics: fields.logistics || { homework: false, capstone: false, teachingStyle: 'Live Sessions', frequency: 'Twice a week' },
+        schedule: fields.schedule || { startDate: fields.startDate || '', days: [], time: '', sessions: [] },
         included: fields.included || [],
-        faq: fields.faq ? fields.faq.map((f: any) => ({ question: f.fields.question, answer: f.fields.answer })) : []
+        faq: fields.faq ? fields.faq.map((f: any) => ({
+            question: f.fields.question || '',
+            answer: f.fields.answer || ''
+        })) : []
     };
+
+    return course;
 }
 
 export async function getAllCourses(): Promise<Course[]> {
@@ -138,14 +143,8 @@ export async function getAllCourses(): Promise<Course[]> {
             content_type: 'course'
         });
 
-        if (!response.items || response.items.length === 0) {
-            return [];
-        }
-
-        return response.items.map(mapContentfulEntryToCourse).map((course: Course) => ({
-            ...course,
-            originalPrice: course.originalPrice || Math.round(course.price / (1 - CAMPAIGN_DISCOUNT))
-        }));
+        if (!response.items) return [];
+        return response.items.map(mapContentfulEntryToCourse);
     } catch (error) {
         console.error("Error fetching courses from Contentful:", error);
         return [];
@@ -153,9 +152,7 @@ export async function getAllCourses(): Promise<Course[]> {
 }
 
 export async function getCourseBySlug(slug: string): Promise<Course | null> {
-    if (!hasContentful) {
-        return null;
-    }
+    if (!hasContentful) return null;
 
     try {
         const response = await contentfulClient.getEntries({
@@ -164,15 +161,8 @@ export async function getCourseBySlug(slug: string): Promise<Course | null> {
             limit: 1
         });
 
-        if (!response.items || response.items.length === 0) {
-            return null;
-        }
-
-        const course = mapContentfulEntryToCourse(response.items[0]);
-        return {
-            ...course,
-            originalPrice: course.originalPrice || Math.round(course.price / (1 - CAMPAIGN_DISCOUNT))
-        };
+        if (!response.items || response.items.length === 0) return null;
+        return mapContentfulEntryToCourse(response.items[0]);
     } catch (error) {
         console.error(`Error fetching course ${slug} from Contentful:`, error);
         return null;

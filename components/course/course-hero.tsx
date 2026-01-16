@@ -10,7 +10,13 @@ interface CourseHeroProps {
     course: Course;
 }
 
+import { useEffect } from "react";
+
 export function CourseHero({ course }: CourseHeroProps) {
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+
     const primaryInstructor = course.instructors.length > 0 ? course.instructors[0] : null;
 
     return (

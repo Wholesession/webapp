@@ -6,6 +6,7 @@ import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import Link from "next/link";
 import { ChevronLeft } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 interface Props {
     params: Promise<{ slug: string }>;
@@ -39,6 +40,20 @@ export default async function CheckoutPage({ params }: Props) {
 
     if (!course) {
         notFound();
+    }
+
+    if (course.status === "Coming Soon") {
+        return (
+            <div className="min-h-screen flex flex-col items-center justify-center p-4 text-center font-body bg-white">
+                <h1 className="text-3xl font-bold text-black mb-4">Enrollment not open</h1>
+                <p className="text-gray-700 mb-8 max-w-md">This cohort is not accepting enrollments yet. Join the waitlist on the course page to be notified when doors open.</p>
+                <Link href={`/course/${course.slug}`}>
+                    <Button className="bg-[var(--brand-color)] hover:bg-[var(--brand-color)]/90 text-white px-8 py-6 rounded-xl font-bold cursor-pointer">
+                        Return to Course Details
+                    </Button>
+                </Link>
+            </div>
+        );
     }
 
     return (

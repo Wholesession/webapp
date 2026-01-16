@@ -22,17 +22,19 @@ export function PricingCard({ course }: PricingCardProps) {
         <div className="sticky top-24 bg-white shadow-lg border border-gray-100 font-body relative rounded-2xl">
             <div className="p-6 space-y-6">
                 {/* Header: Price & Rating */}
-                <div className="flex flex-col gap-1">
-                    <div className="flex items-center gap-2">
-                        <span className="text-3xl font-bold font-body text-gray-900">₦{Number(course.price).toLocaleString()}</span>
+                {course.status !== "Coming Soon" && (
+                    <div className="flex flex-col gap-1">
+                        <div className="flex items-center gap-2">
+                            <span className="text-3xl font-bold font-body text-gray-900">₦{Number(course.price).toLocaleString()}</span>
+                            {course.originalPrice && Number(course.originalPrice) > Number(course.price) && (
+                                <span className="text-gray-400 line-through text-sm font-medium italic">₦{Number(course.originalPrice).toLocaleString()}</span>
+                            )}
+                        </div>
                         {course.originalPrice && Number(course.originalPrice) > Number(course.price) && (
-                            <span className="text-gray-400 line-through text-sm font-medium italic">₦{Number(course.originalPrice).toLocaleString()}</span>
+                            <span className="text-green-600 text-xs font-bold uppercase tracking-wider">Save ₦{(Number(course.originalPrice) - Number(course.price)).toLocaleString()} today</span>
                         )}
                     </div>
-                    {course.originalPrice && Number(course.originalPrice) > Number(course.price) && (
-                        <span className="text-green-600 text-xs font-bold uppercase tracking-wider">Save ₦{(Number(course.originalPrice) - Number(course.price)).toLocaleString()} today</span>
-                    )}
-                </div>
+                )}
 
                 <div>
                     <h4 className="text-xs font-bold font-body text-gray-400 uppercase tracking-wider mb-2">Next Cohort</h4>

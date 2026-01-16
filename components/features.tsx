@@ -7,19 +7,19 @@ const features = [
     {
         name: "Stop learning alone",
         description:
-            "Self-paced courses collect dust. Join 30 learners with live sessions, weekly deadlines, and real accountability.",
+            "Self-paced courses collect dust. Join hundreds of learners with live sessions, weekly deadlines, and real accountability.",
         icon: Users,
     },
     {
-        name: "Learn from seniors",
+        name: "Learn from seniors who have shipped",
         description:
-            "Learn from seniors who have been in the industry for years. Get real-world experience and build a portfolio that will land you a job.",
+            "Learn from builders with 10+ years experience building systems for millions. Not theory—what actually survives production.",
         icon: Trophy,
     },
     {
-        name: "Build real projects",
+        name: "Build real projects that gets you hired",
         description:
-            "No more todo apps. Build projects that makes you build senior level capacity and get a job.",
+            "No more todo apps. Build production systems that makes hiring managers call you back.",
         icon: Target,
     },
     {

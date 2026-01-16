@@ -8,7 +8,7 @@ import { useState, useMemo, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useSearchParams } from "next/navigation";
 
-const CATEGORIES = ["All", "Engineering", "Product", "Design", "AI/ML", "Business", "Marketing"];
+const CATEGORIES = ["All", "Engineering", "Product", "Design", "AI", "Business", "Marketing"];
 
 export default function CoursesPage({ courses }: { courses: Course[] }) {
     const searchParams = useSearchParams();
@@ -21,6 +21,7 @@ export default function CoursesPage({ courses }: { courses: Course[] }) {
 
     // Update state if URL changes (e.g. back button)
     useEffect(() => {
+        window.scrollTo(0, 0);
         if (initialCategory && CATEGORIES.includes(initialCategory)) {
             setSelectedCategory(initialCategory);
         } else {
@@ -30,7 +31,6 @@ export default function CoursesPage({ courses }: { courses: Course[] }) {
 
     const filteredCourses = useMemo(() => {
         if (selectedCategory === "All") return courses;
-        if (selectedCategory === "AI") return courses.filter(c => c.category === "AI" || c.title.includes("AI"));
         return courses.filter(c => c.category === selectedCategory);
     }, [courses, selectedCategory]);
 

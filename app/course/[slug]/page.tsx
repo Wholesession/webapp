@@ -16,7 +16,6 @@ import { Schedule } from "@/components/course/schedule";
 import { ReferralSection } from "@/components/course/referral-section";
 import { FAQ } from "@/components/course/faq";
 import { Metadata } from "next";
-import { ExitIntentPopup } from "@/components/exit-intent-popup";
 import { InterestPulse } from "@/components/interest-pulse";
 import { ResonanceSection } from "@/components/course/resonance-section";
 import { MobileStickyCTA } from "@/components/mobile-sticky-cta";
@@ -107,7 +106,6 @@ export default async function CoursePage({ params }: { params: Promise<{ slug: s
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
             />
-            <ExitIntentPopup courseTitle={course.title} courseSlug={course.slug} />
             <InterestPulse courseSlug={course.slug} cohortSize={course.cohortSize} />
             <CourseHeader course={course} />
 

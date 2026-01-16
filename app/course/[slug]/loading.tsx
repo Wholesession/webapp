@@ -18,7 +18,7 @@ export default function CourseLoading() {
             </div>
 
             {/* Hero Skeleton */}
-            <div className="bg-[#0a0c1b] py-24">
+            <div className="bg-gray-200 py-24">
                 <div className="container mx-auto px-4 lg:px-8">
                     <Skeleton className="h-6 w-32 mb-6 opacity-20" />
                     <Skeleton className="h-16 w-3/4 mb-6 opacity-20" />

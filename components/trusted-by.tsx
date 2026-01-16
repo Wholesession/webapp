@@ -6,14 +6,9 @@ import { motion } from "framer-motion";
 const companies = [
     { name: "ALAT by Wema", logo: "ALAT" },
     { name: "Moniepoint", logo: "Moniepoint" },
-    { name: "Paystack", logo: "Paystack" },
     { name: "Flutterwave", logo: "Flutterwave" },
     { name: "Andela", logo: "Andela" },
-    { name: "Kuda", logo: "Kuda" },
-    { name: "Piggyvest", logo: "Piggyvest" },
-    { name: "Cowrywise", logo: "Cowrywise" },
-    { name: "Interswitch", logo: "Interswitch" },
-    { name: "Carbon", logo: "Carbon" },
+    { name: "Paystack", logo: "Paystack" },
 ];
 
 export function TrustedBy() {
@@ -29,10 +24,7 @@ export function TrustedBy() {
                     className="text-center mb-12"
                 >
                     <p className="text-lg sm:text-xl leading-relaxed max-w-2xl mx-auto">
-                        Our instructors have shipped at{" "}
-                        <span className="font-medium">Africa&apos;s leading</span>{" "}
-                        fintech, SaaS, and{" "}
-                        <span className="font-medium">Enterprise companies.</span>
+                        Our instructors have built systems at{" "}
                     </p>
                 </motion.div>
 

@@ -9,9 +9,9 @@ export default function NotFound() {
         <main className="min-h-screen bg-white font-body selection:bg-purple-100">
             <Navbar theme="light" />
 
-            <div className="flex flex-col items-center justify-center pt-48 pb-32 px-4 text-center">
+            <div className="flex flex-col items-center justify-center pt-20 pb-32 px-4 text-center">
                 <div className="mb-8">
-                    <span className="text-[#4F70FF] font-black text-9xl opacity-10">404</span>
+                    <span className="text-black text-9xl font-semibold">404</span>
                 </div>
 
                 <h1 className="text-4xl md:text-5xl font-medium text-black mb-6">
@@ -26,7 +26,7 @@ export default function NotFound() {
                 <div className="flex flex-col sm:flex-row gap-4 items-center justify-center">
                     <Link
                         href="/"
-                        className="inline-flex items-center gap-2 px-8 py-4 bg-[#0a0c1b] text-white rounded-xl font-medium hover:bg-black transition-all shadow-lg hover:shadow-xl active:scale-[0.98]"
+                        className="inline-flex items-center gap-2 px-8 py-4 bg-[var(--brand-color)] text-white rounded-xl font-medium hover:bg-[var(--brand-color)] transition-all shadow-lg hover:shadow-xl active:scale-[0.98]"
                     >
                         <Home className="w-5 h-5" />
                         Go Home

@@ -39,12 +39,14 @@ export function OrderSummary({ course }: OrderSummaryProps) {
                 </div>
             </div>
 
-            <div className="border-t border-gray-200 pt-6 mb-8">
-                <div className="flex items-center justify-between mb-2">
-                    <span className="text-base text-gray-600 font-body">Total</span>
-                    <span className="text-2xl font-bold text-gray-900 font-body">₦{course.price.toLocaleString()}</span>
+            {course.status !== "Coming Soon" && (
+                <div className="border-t border-gray-200 pt-6 mb-8">
+                    <div className="flex items-center justify-between mb-2">
+                        <span className="text-base text-gray-600 font-body">Total</span>
+                        <span className="text-2xl font-bold text-gray-900 font-body">₦{course.price.toLocaleString()}</span>
+                    </div>
                 </div>
-            </div>
+            )}
 
             <div className="flex items-start gap-3 p-4 rounded-lg border border-gray-200 font-body">
                 <ShieldCheck className="h-5 w-5 text-green-600 shrink-0 mt-0.5" />

@@ -27,6 +27,8 @@ export function MobileStickyCTA({ course }: MobileStickyCTAProps) {
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
+    if (course.status === "Coming Soon") return null;
+
     return (
         <AnimatePresence>
             {isVisible && (

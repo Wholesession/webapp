@@ -48,7 +48,7 @@ export function Hero() {
     ];
 
     return (
-        <section className="relative flex h-[100vh] items-center justify-center bg-[#000] pt-24 pb-16 overflow-hidden font-body">
+        <section className="relative flex h-[100vh] items-center justify-center bg-[#000] pt-14 pb-16 overflow-hidden font-body">
             {/* CSS Animations */}
             <style jsx>{`
                 @keyframes orbitClockwise {
@@ -255,7 +255,7 @@ export function Hero() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.2 }}
                 >
-                    Level up to senior roles in tech
+                    Build production skills for senior roles
                 </motion.h1>
 
                 {/* Subheading */}
@@ -265,7 +265,7 @@ export function Hero() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.4 }}
                 >
-                    Master production-grade skills through live cohorts taught by senior practitioners from ALAT, Moniepoint, Andela, and top tech companies. Build real systems. Compete globally.
+                    Live cohorts taught by senior practitioners from ALAT, Moniepoint, and Andela. Build production systems, not toy tutorials. Compete globally
                 </motion.p>
 
                 {/* CTA Buttons */}
