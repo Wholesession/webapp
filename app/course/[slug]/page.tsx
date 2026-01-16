@@ -32,6 +32,11 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
         };
     }
 
+    const ogUrl = new URL(`${process.env.NEXT_PUBLIC_APP_URL || 'https://wholesession.com'}/api/og`);
+    ogUrl.searchParams.set('title', course.title);
+    ogUrl.searchParams.set('subtitle', course.subtitle);
+    ogUrl.searchParams.set('category', course.category);
+
     return {
         title: course.title,
         description: course.tagline || course.subtitle,
@@ -42,7 +47,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
             type: "article",
             images: [
                 {
-                    url: `/api/og?title=${encodeURIComponent(course.title)}`, // Proposing dynamic OG generation later or fallback
+                    url: ogUrl.toString(),
                     width: 1200,
                     height: 630,
                     alt: course.title,

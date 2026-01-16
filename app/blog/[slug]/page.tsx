@@ -29,11 +29,26 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         return { title: "Article Not Found" };
     }
 
+    const ogUrl = new URL(`${process.env.NEXT_PUBLIC_APP_URL || 'https://wholesession.com'}/api/og`);
+    ogUrl.searchParams.set('title', post.title);
+    ogUrl.searchParams.set('subtitle', post.excerpt);
+    ogUrl.searchParams.set('category', 'Blog');
+
     return {
         title: `${post.title} | Wholesession Blog`,
         description: post.excerpt,
         openGraph: {
-            images: [post.coverImage.url],
+            title: post.title,
+            description: post.excerpt,
+            type: "article",
+            images: [
+                {
+                    url: ogUrl.toString(),
+                    width: 1200,
+                    height: 630,
+                    alt: post.title,
+                },
+            ],
         },
     };
 }
