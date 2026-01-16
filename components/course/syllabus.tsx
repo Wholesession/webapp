@@ -79,17 +79,6 @@ export function Syllabus({ course }: SyllabusProps) {
                                                         ))}
                                                     </ul>
                                                 </div>
-
-                                                {/* <div className="flex gap-4 pt-4 border-t border-gray-100">
-                                                    <div className="flex items-center gap-2 text-xs font-medium text-gray-500">
-                                                        <Video className="w-4 h-4 text-gray-400" />
-                                                        2.5h Video
-                                                    </div>
-                                                    <div className="flex items-center gap-2 text-xs font-medium text-gray-500">
-                                                        <FileCode className="w-4 h-4 text-gray-400" />
-                                                        1 Lab
-                                                    </div>
-                                                </div> */}
                                             </div>
                                         </div>
                                     </motion.div>

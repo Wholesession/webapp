@@ -18,6 +18,7 @@ export function ExitIntentPopup({ courseTitle, courseSlug }: ExitIntentPopupProp
     const [email, setEmail] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [isSubmitted, setIsSubmitted] = useState(false);
+    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         // Only show if not already dismissed or submitted in this session
@@ -39,13 +40,26 @@ export function ExitIntentPopup({ courseTitle, courseSlug }: ExitIntentPopupProp
         return () => document.removeEventListener("mouseleave", handleMouseLeave);
     }, [courseTitle]);
 
+    const validateEmail = (email: string) => {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    };
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (!email) return;
+        setError(null);
+
+        if (!email) {
+            setError("We need your email to send the curriculum.");
+            return;
+        }
+
+        if (!validateEmail(email)) {
+            setError("That email doesn't look quite right. Try again?");
+            return;
+        }
 
         setIsLoading(true);
         try {
-            // We'll reuse the waitlist API or create a specific one
             const response = await fetch("/api/waitlist", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -57,14 +71,22 @@ export function ExitIntentPopup({ courseTitle, courseSlug }: ExitIntentPopupProp
                 }),
             });
 
-            if (!response.ok) throw new Error("Failed to submit");
+            const data = await response.json();
+
+            if (!response.ok) {
+                if (data.message?.includes("already exists")) {
+                    setError("You're already on our list! Check your inbox.");
+                    setIsLoading(false);
+                    return;
+                }
+                throw new Error("Failed to submit");
+            }
 
             setIsSubmitted(true);
             localStorage.setItem("lead-magnet-downloaded", "true");
             trackEvent("Lead Magnet Submitted", { email, course: courseTitle });
             toast.success("Sending the curriculum to your inbox!");
 
-            // Trigger actual download if slug exists
             if (courseSlug) {
                 const link = document.createElement('a');
                 link.href = `/syllabus/${courseSlug}.pdf`;
@@ -72,7 +94,7 @@ export function ExitIntentPopup({ courseTitle, courseSlug }: ExitIntentPopupProp
                 link.click();
             }
         } catch (error) {
-            toast.error("Something went wrong. Please try again.");
+            setError("Something went wrong on our end. Please try again.");
         } finally {
             setIsLoading(false);
         }
@@ -80,6 +102,7 @@ export function ExitIntentPopup({ courseTitle, courseSlug }: ExitIntentPopupProp
 
     const closePopup = () => {
         setIsVisible(false);
+        setError(null);
     };
 
     return (
@@ -117,7 +140,7 @@ export function ExitIntentPopup({ courseTitle, courseSlug }: ExitIntentPopupProp
                             </div>
                             <button
                                 onClick={closePopup}
-                                className="absolute top-4 right-4 p-2 text-white/80 hover:text-white hover:bg-white/10 rounded-full transition-colors"
+                                className="absolute top-4 right-4 p-2 text-white/80 hover:text-white hover:bg-white/10 rounded-full transition-colors cursor-pointer"
                             >
                                 <X className="w-5 h-5" />
                             </button>
@@ -135,17 +158,34 @@ export function ExitIntentPopup({ courseTitle, courseSlug }: ExitIntentPopupProp
                                             : "Get our comprehensive tech career roadmap and curriculum guide for free."}
                                     </p>
 
-                                    <form onSubmit={handleSubmit} className="space-y-4">
-                                        <div className="relative">
-                                            <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                                            <Input
-                                                type="email"
-                                                placeholder="Enter your email"
-                                                required
-                                                className="pl-12 h-14 rounded-xl border-gray-200 focus:ring-[#4F70FF] text-black"
-                                                value={email}
-                                                onChange={(e) => setEmail(e.target.value)}
-                                            />
+                                    <form onSubmit={handleSubmit} className="space-y-4 text-left">
+                                        <div className="space-y-2">
+                                            <div className="relative">
+                                                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                                                <Input
+                                                    type="email"
+                                                    placeholder="Enter your email"
+                                                    className={`pl-12 h-14 rounded-xl border-gray-200 focus:ring-[#4F70FF] text-black ${error ? "border-red-500 bg-red-50/10" : "border-gray-200"}`}
+                                                    value={email}
+                                                    onChange={(e) => {
+                                                        setEmail(e.target.value);
+                                                        if (error) setError(null);
+                                                    }}
+                                                />
+                                            </div>
+                                            <AnimatePresence>
+                                                {error && (
+                                                    <motion.p
+                                                        initial={{ opacity: 0, height: 0 }}
+                                                        animate={{ opacity: 1, height: 'auto' }}
+                                                        exit={{ opacity: 0, height: 0 }}
+                                                        className="text-red-500 text-xs font-medium pl-1 flex items-center gap-1.5"
+                                                    >
+                                                        <span className="w-1 h-1 rounded-full bg-red-500" />
+                                                        {error}
+                                                    </motion.p>
+                                                )}
+                                            </AnimatePresence>
                                         </div>
                                         <Button
                                             type="submit"
