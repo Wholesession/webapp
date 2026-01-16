@@ -37,8 +37,9 @@ export async function POST(request: Request) {
             );
         }
 
-        // Trigger welcome email (non-blocking)
-        sendWaitlistConfirmationEmail(email, name, courseTitle).catch(console.error);
+        // Trigger welcome email
+        const emailResult = await sendWaitlistConfirmationEmail(email, name, courseTitle);
+        console.log("Waitlist email trigger result:", emailResult);
 
         return NextResponse.json(
             { message: "Successfully joined the waitlist" },
