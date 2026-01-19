@@ -82,35 +82,62 @@ export function CourseHero({ course }: CourseHeroProps) {
                             </div>
                         </motion.div>
 
-                        {/* Right Image - Instructor Cutout Style */}
-                        <div className="lg:col-span-5 relative h-[500px] lg:block">
-                            <div className="absolute bottom-0 right-0 w-full h-full flex items-end justify-center">
-                                {/* We use a mask for a softer bottom edge if needed, otherwise just the image */}
-                                <div className="relative w-full h-[90%] grayscale hover:grayscale-0 transition-all duration-500">
-                                    {primaryInstructor ? (
-                                        <Image
-                                            src={primaryInstructor.image}
-                                            alt={primaryInstructor.name}
-                                            fill
-                                            className="object-cover object-top drop-shadow-2xl mask-image-b-gradient"
-                                            style={{
-                                                maskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)'
-                                            }}
-                                        />
-                                    ) : (
-                                        <div className="w-full h-full bg-gray-100 flex items-center justify-center text-gray-400">
-                                            {/* Placeholder or empty state */}
-                                            <Image
-                                                src="/ws-logo-black.svg" // Fallback to logo or generic image
-                                                alt="Course"
-                                                width={200}
-                                                height={200}
-                                                className="opacity-20"
-                                            />
-                                        </div>
-                                    )}
+                        <div className="lg:col-span-5 relative h-[500px] lg:flex items-center justify-center">
+                            {primaryInstructor && primaryInstructor.image ? (
+                                <div className="absolute bottom-0 right-0 w-full h-[90%] grayscale hover:grayscale-0 transition-all duration-500">
+                                    <Image
+                                        src={primaryInstructor.image}
+                                        alt={primaryInstructor.name}
+                                        fill
+                                        className="object-cover object-top drop-shadow-2xl"
+                                        style={{
+                                            maskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)'
+                                        }}
+                                    />
                                 </div>
-                            </div>
+                            ) : (
+                                <motion.div
+                                    initial={{ opacity: 0, scale: 0.9 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    className="bg-[#0a0c1b] p-8 rounded-3xl border border-white/10 shadow-2xl relative overflow-hidden group w-full"
+                                >
+                                    <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                                        <Image src="/ws-main-white.svg" alt="logo" width={120} height={120} />
+                                    </div>
+
+                                    <div className="relative z-10">
+                                        <div className="inline-flex items-center gap-2 bg-purple-500/20 text-purple-200 px-3 py-1 rounded-full text-xs font-bold mb-6 border border-purple-500/30">
+                                            <Star className="w-3 h-3 fill-purple-300" /> TOP RATED COHORT
+                                        </div>
+
+                                        <h3 className="text-2xl font-bold text-white mb-4">What you'll master</h3>
+                                        <ul className="space-y-4">
+                                            {course.outcomes.slice(0, 4).map((outcome, i) => (
+                                                <li key={i} className="flex gap-3 text-gray-300 text-sm">
+                                                    <div className="w-5 h-5 rounded-full bg-green-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                                        <div className="w-1.5 h-1.5 rounded-full bg-green-400" />
+                                                    </div>
+                                                    {outcome}
+                                                </li>
+                                            ))}
+                                        </ul>
+
+                                        <div className="mt-8 pt-8 border-t border-white/10 flex items-center justify-between">
+                                            <div className="flex -space-x-2">
+                                                {[1, 2, 3, 4].map(i => (
+                                                    <div key={i} className="w-8 h-8 rounded-full border-2 border-[#0a0c1b] bg-gray-800 flex items-center justify-center text-[10px] text-gray-400 font-bold">
+                                                        {String.fromCharCode(64 + i)}
+                                                    </div>
+                                                ))}
+                                                <div className="w-8 h-8 rounded-full border-2 border-[#0a0c1b] bg-purple-600 flex items-center justify-center text-[10px] text-white font-bold">
+                                                    +82
+                                                </div>
+                                            </div>
+                                            <span className="text-xs text-gray-400">Pros already joined</span>
+                                        </div>
+                                    </div>
+                                </motion.div>
+                            )}
                         </div>
                     </div>
                 </div>

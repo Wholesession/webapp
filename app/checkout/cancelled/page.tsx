@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { Navbar } from '@/components/navbar';
 import { Footer } from '@/components/footer';
 import { RefreshCcw, MessageCircle, ArrowLeft } from 'lucide-react';
+import { SUPPORT_EMAIL } from '@/lib/constants';
 
 export default function PaymentCancelled() {
     return (
@@ -33,7 +34,7 @@ export default function PaymentCancelled() {
                     </Link>
 
                     <Link
-                        href="https://wa.me/2347000000000" // Replace with actual WhatsApp link
+                        href={`mailto:${SUPPORT_EMAIL}`}
                         target="_blank"
                         className="inline-flex items-center gap-2 px-8 py-4 bg-green-50 text-green-700 border border-green-100 rounded-xl font-medium hover:bg-green-100 transition-all active:scale-[0.98]"
                     >

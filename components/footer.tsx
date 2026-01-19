@@ -33,7 +33,7 @@ export function Footer() {
                             Master your craft with guidance from the industry's best.
                         </p>
                         <div className="flex gap-4 mt-6">
-                            <Link href="https://x.com/usewholesession" className="text-gray-400 hover:text-white transition-colors">
+                            <Link href="https://x.com/wholesession" className="text-gray-400 hover:text-white transition-colors">
                                 <FaTwitter className="h-5 w-5 text-[1rem]" />
                             </Link>
                             <Link href="https://www.linkedin.com/company/wholesession" className="text-gray-400 hover:text-white transition-colors">
@@ -42,9 +42,9 @@ export function Footer() {
                             <Link href="https://www.tiktok.com/@usewholesession" className="text-gray-400 hover:text-white transition-colors">
                                 <FaTiktok className="h-5 w-5 text-[1rem]" />
                             </Link>
-                            <Link href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`} className="text-gray-400 hover:text-white transition-colors">
+                            {/* <Link href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`} className="text-gray-400 hover:text-white transition-colors">
                                 <FaWhatsapp className="h-5 w-5 text-[1rem]" />
-                            </Link>
+                            </Link> */}
                         </div>
                     </div>
 
@@ -75,7 +75,7 @@ export function Footer() {
                     </p>
                     <div className="flex gap-6">
                         <p className="text-[1rem] text-white">
-                            Contact support: <a href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a>
+                            Contact support: <a className="underline" href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a>
                         </p>
                     </div>
                 </div>

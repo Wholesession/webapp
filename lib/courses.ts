@@ -106,6 +106,8 @@ const mapContentfulEntryToCourse = (entry: any): Course => {
             bio: inst.fields.bio,
             image: inst.fields.image?.fields?.file?.url ? 'https:' + inst.fields.image.fields.file.url : '/placeholder-profile.png',
             linkedin: inst.fields.linkedin || '#',
+            twitter: inst.fields.twitter,
+            github: inst.fields.github,
             experience: inst.fields.experience || '',
         })) : [],
         description: fields.description || '',

@@ -60,7 +60,6 @@ export function Navbar({ theme = "dark" }: { theme?: "dark" | "light" }) {
                                 priority
                             />
                         </Link>
-
                         {/* Center Navigation - Desktop */}
                         <div className="hidden lg:flex items-center justify-center flex-1 mx-8">
                             <div className={`flex items-center gap-1 px-2 py-2 rounded-full backdrop-blur-sm border ${isDarkText ? "bg-black/5 border-black/5" : "bg-[#fff] text-black border-[#aaa]"
@@ -69,7 +68,7 @@ export function Navbar({ theme = "dark" }: { theme?: "dark" | "light" }) {
                                     <Link
                                         key={link.name}
                                         href={link.href}
-                                        className={`px-4 py-2 text-sm font-medium rounded-full transition-all duration-200 ${isDarkText
+                                        className={`px-4 py-2 text-sm font-semibold rounded-full transition-all duration-200 ${isDarkText
                                             ? "text-gray-900 hover:text-gray-600 hover:bg-black/5"
                                             : "text-gray-800 hover:bg-black/5"
                                             }`}

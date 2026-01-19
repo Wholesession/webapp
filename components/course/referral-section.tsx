@@ -1,9 +1,8 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { Users, Gift, ArrowRight, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { WHATSAPP_NUMBER } from "@/lib/constants";
+import { WHATSAPP_NUMBER, SUPPORT_EMAIL } from "@/lib/constants";
 
 export function ReferralSection() {
     const referralMessage = "Hi! I want to enroll in a Wholesession course with a friend. How do we get the buddy discount?";
@@ -20,7 +19,7 @@ export function ReferralSection() {
                     </div>
 
                     <h2 className="text-3xl font-bold leading-tight text-gray-600 max-w-[700px]">
-                        Enroll with a colleague and <span className="text-[var(--brand-color)]">Save ₦25,000 each.</span>
+                        Enroll with a colleague and <span className="text-[var(--brand-color)]">save an additional ₦10,000 each.</span>
                     </h2>
 
                     <p className="text-gray-600 text-lg leading-relaxed max-w-[600px]">
@@ -29,7 +28,7 @@ export function ReferralSection() {
 
                     <div className="flex flex-wrap gap-4 pt-4">
                         <a
-                            href={whatsappUrl}
+                            href={`mailto:${SUPPORT_EMAIL}`}
                             target="_blank"
                             rel="noopener noreferrer"
                         >

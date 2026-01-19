@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import { Inter_Tight } from "next/font/google";
 import "./globals.css";
+import { Toaster } from "sonner";
+// import { SupportBubble } from "@/components/support-bubble";
+import { AnnouncementBar } from "@/components/announcement-bar";
+import { MetaPixel } from "@/components/meta-pixel";
 
 const interTight = Inter_Tight({
   variable: "--font-inter-tight",
@@ -56,11 +60,6 @@ export const metadata: Metadata = {
   },
 };
 
-import { Toaster } from "sonner";
-import { SupportBubble } from "@/components/support-bubble";
-import { AnnouncementBar } from "@/components/announcement-bar";
-import { MetaPixel } from "@/components/meta-pixel";
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -97,7 +96,7 @@ export default function RootLayout({
           }}
         />
         {children}
-        <SupportBubble />
+        {/* <SupportBubble /> */}
         <Toaster richColors position="top-center" />
       </body>
     </html>

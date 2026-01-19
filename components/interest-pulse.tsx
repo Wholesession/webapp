@@ -18,8 +18,8 @@ export function InterestPulse({ courseSlug, cohortSize }: InterestPulseProps) {
         const timer = setTimeout(() => {
             // Smart Simulation: Calculate a number between 70% and 94% of cohort size
             // This creates the "Almost Full" feeling without exceeding the real limit
-            const min = Math.floor(cohortSize * 0.7);
-            const max = Math.floor(cohortSize * 0.94);
+            const min = Math.floor(cohortSize * 0.2);
+            const max = Math.floor(cohortSize * 0.5);
             const simulatedCount = Math.floor(Math.random() * (max - min + 1)) + min;
 
             setCount(simulatedCount);

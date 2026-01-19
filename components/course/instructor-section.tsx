@@ -23,13 +23,19 @@ export function Instructors({ course }: InstructorsProps) {
                         <div key={index} className="bg-white rounded-2xl p-8 md:p-12 shadow-sm border border-gray-100">
                             <div className="flex flex-col gap-8 items-start">
                                 <div className="w-full flex flex-col items-center text-center">
-                                    <div className="relative w-48 h-48 rounded-full overflow-hidden mb-6 border-4 border-white shadow-xl">
-                                        <Image
-                                            src={instructor.image}
-                                            alt={instructor.name}
-                                            fill
-                                            className="object-cover"
-                                        />
+                                    <div className="relative w-48 h-48 rounded-full overflow-hidden mb-6 border-4 border-white shadow-xl bg-gray-50 flex items-center justify-center">
+                                        {instructor.image ? (
+                                            <Image
+                                                src={instructor.image}
+                                                alt={instructor.name}
+                                                fill
+                                                className="object-cover"
+                                            />
+                                        ) : (
+                                            <div className="flex items-center justify-center w-full h-full bg-[#372772] text-white text-4xl font-bold">
+                                                {instructor.name.split(' ').map(n => n[0]).join('')}
+                                            </div>
+                                        )}
                                     </div>
                                     <h3 className="text-2xl font-bold text-[#0a0c1b] mb-1">{instructor.name}</h3>
                                     <p className="text-gray-700 font-medium mb-4">{instructor.role}</p>
@@ -78,7 +84,6 @@ export function Instructors({ course }: InstructorsProps) {
                                             </div>
                                         </div>
                                     )}
-
                                     {instructor.achievements && instructor.achievements.length > 0 && (
                                         <div>
                                             <h4 className="text-sm font-bold text-gray-900 uppercase tracking-wide mb-4 flex items-center gap-2">

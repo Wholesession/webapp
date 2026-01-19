@@ -7,7 +7,7 @@ export default function TermsOfService() {
     return (
         <main className="min-h-screen bg-white text-gray-900">
             <Navbar theme="light"/>
-            <div className="container mx-auto px-4 py-42 max-w-4xl">
+            <div className="container mx-auto px-4 py-32 max-w-4xl">
                 <h1 className="text-4xl md:text-5xl font-[family-name:var(--font-playfair)] mb-8 text-[#0a0c1b]">
                     Terms of Service
                 </h1>

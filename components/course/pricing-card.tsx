@@ -62,7 +62,7 @@ export function PricingCard({ course }: PricingCardProps) {
                 ) : (
                     <Link href={`/checkout/${course.slug}`}>
                         <Button className="w-full bg-[var(--brand-color)] hover:bg-[var(--brand-color)]/90 text-white text-lg font-semibold py-6 rounded-lg transition-colors cursor-pointer font-body">
-                            Enroll Now
+                            Pay & Enroll
                         </Button>
                     </Link>
                 )}
@@ -111,7 +111,7 @@ export function PricingCard({ course }: PricingCardProps) {
                                 <h3 className="font-bold text-gray-900 mb-2">The WholeSession Guarantee</h3>
                                 <div className="space-y-3">
                                     <p className="text-sm text-gray-600 leading-relaxed">
-                                        We are committed to your growth. If you are not satisfied with the course quality, we offer a <span className="font-semibold text-gray-900">100% money-back guarantee</span>.
+                                        We are committed to your growth. If you are not satisfied with the course quality within the first two weeks of the cohort, we offer a <span className="font-semibold text-gray-900">100% money-back guarantee</span>.
                                     </p>
                                     <div className="bg-gray-50 rounded-lg p-3 border border-gray-100 italic text-[11px] text-gray-500">
                                         "Simply request a refund within the first 7 days of the cohort start date if the sessions don't meet your expectations."

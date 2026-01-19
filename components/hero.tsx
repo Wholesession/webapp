@@ -265,7 +265,7 @@ export function Hero() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.4 }}
                 >
-                    Live cohorts taught by senior practitioners from ALAT, Moniepoint, and Andela. Build production systems, not toy tutorials. Compete globally
+                    Live cohorts taught by senior practitioners from Moniepoint, Interswitch, Andela, and other top companies. Build production systems, not toy tutorials. Compete globally.
                 </motion.p>
 
                 {/* CTA Buttons */}

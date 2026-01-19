@@ -29,7 +29,7 @@ export function FAQ({ course }: FAQProps) {
                         >
                             <button
                                 onClick={() => setOpenIndex(openIndex === index ? null : index)}
-                                className="flex w-full items-center justify-between p-6 text-left hover:bg-gray-50 transition-colors"
+                                className="flex w-full items-center justify-between p-6 text-left hover:bg-gray-50 transition-colors cursor-pointer"
                             >
                                 <span className="text-lg font-body text-[#0a0c1b] pr-8">
                                     {item.question}

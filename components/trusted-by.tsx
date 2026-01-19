@@ -4,11 +4,11 @@ import { motion } from "framer-motion";
 
 // Company logos where instructors have worked/shipped
 const companies = [
-    { name: "ALAT by Wema", logo: "ALAT" },
     { name: "Moniepoint", logo: "Moniepoint" },
     { name: "Flutterwave", logo: "Flutterwave" },
     { name: "Andela", logo: "Andela" },
     { name: "Paystack", logo: "Paystack" },
+    { name: "Interswitch", logo: "Interswitch"}
 ];
 
 export function TrustedBy() {
@@ -24,7 +24,7 @@ export function TrustedBy() {
                     className="text-center mb-12"
                 >
                     <p className="text-lg sm:text-xl leading-relaxed max-w-2xl mx-auto">
-                        Our instructors have built systems at{" "}
+                        Our instructors have <strong>built systems</strong> at{" "}
                     </p>
                 </motion.div>
 

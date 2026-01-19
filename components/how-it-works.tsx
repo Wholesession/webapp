@@ -16,7 +16,7 @@ const steps = [
         number: "02",
         title: "Learn live with\nsenior practitioners",
         description:
-            "8 weeks of live sessions with practitioners from ALAT, Moniepoint, and top companies. Build up senior level thinking and skills.",
+            "8 weeks of live sessions with practitioners from Interswitch, Moniepoint, and top companies. Build up senior level thinking and skills.",
         bgColor: "bg-[#22C55E]",
         textColor: "text-gray-900",
     },
@@ -42,7 +42,7 @@ export function HowItWorks() {
                     transition={{ duration: 0.6 }}
                     className="mb-16"
                 >
-                    <h2 className="text-3xl sm:text-4xl md:text-5xl font-body font-medium text-gray-900 max-w-3xl leading-tight">
+                    <h2 className="text-3xl sm:text-4xl md:text-5xl font-body font-medium text-gray-900 max-w-4xl leading-tight">
                         FROM CURIOUS TO CONFIDENT —<br />
                         <span className="text-gray-600 font-body">YOUR PATH TO SENIOR.</span>
                     </h2>

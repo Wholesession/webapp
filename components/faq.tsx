@@ -8,7 +8,7 @@ const faqs = [
     {
       question: "What makes Wholesession different from other platforms?",
       answer:
-        "Most platforms sell you pre-recorded videos you'll never finish. We run live, cohort-based courses taught by senior practitioners actively shipping at companies like ALAT, Moniepoint, Andela, and Interswitch. Small cohorts (30 max), real accountability, production-focused projects. You actually finish and build real skills."
+        "Most platforms sell you pre-recorded videos you'll never finish. We run live, cohort-based courses taught by senior practitioners actively shipping at companies like ALAT, Moniepoint, Andela, and Interswitch. Small cohorts (30 max), real accountability, production-focused projects. You actually finish and build real and relevant skills."
     },
     {
         question: "Why not just use Udemy or Coursera?",
@@ -21,6 +21,11 @@ const faqs = [
         "Senior engineers, designers, and product leaders with 7+ years of experience building production systems at scale. Not bootcamp grads. Not tutorial creators. People currently doing the work at top African tech companies."
     },
     {
+        question: "AI can do the work, so why do I need to learn?",
+        answer:
+         "Yes, AI can spin up a PRD, generate a design, and build you an app. But, you need to know how to think in system to properly use AI to build great product. And, this is one of our core focus—to take you from junior/mid-level to a senior role, a place where you really understand how things work and why they work the way they do."
+    },
+    {
       question: "Are courses live or recorded?",
       answer:
         "Live sessions with real-time interaction and feedback. Every session is recorded for students who miss a class, but the value is in showing up live—asking questions, getting code reviews, learning with your cohort."
@@ -28,7 +33,7 @@ const faqs = [
     {
       question: "How much do courses cost?",
       answer:
-        "₦200k-300k per course depending on depth and duration. Most courses run 8-12 weeks. We offer payment plans. All courses include a money-back guarantee through Week 2."
+        "₦200k-300k per course depending on depth and duration. Most courses run 6-10 weeks. We offer payment plans. All courses include a money-back guarantee through Week 2."
     },
     {
       question: "Do you offer certificates?",
@@ -43,7 +48,7 @@ const faqs = [
     {
       question: "What if I'm a complete beginner?",
       answer:
-        "Our courses are for mid-level professionals (2-7 years experience) looking to reach senior levels. If you're just starting out, we're not the right fit yet. Focus on fundamentals first, then come back."
+        "Our courses are for junior/mid-level professionals (2-7 years experience) looking to reach senior levels. If you're just starting out, we're not the right fit yet. Focus on fundamentals first, then come back."
     },
     {
       question: "How do I know if a course is right for me?",
@@ -58,7 +63,7 @@ const faqs = [
     {
       question: "Can I teach on Wholesession?",
       answer:
-        "Yes. We're looking for senior practitioners (8+ years) with production experience and a track record of mentoring. Apply at wholesession.com/teach. We review applications monthly."
+        "Yes. We're looking for senior practitioners (8+ years) with production experience and a track record of mentoring. Although, we do not open applications for mentorship, rather we find the top 5% ourselves and bring them in. But, if you are here and you believe you are qualified enough to teach, you can shoot us an email at support@wholesession.com"
     }
   ];  
 

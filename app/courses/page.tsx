@@ -15,7 +15,7 @@ export default async function Page() {
     const courses = await getAllCourses();
 
     return (
-        <Suspense fallback={<div>Loading courses...</div>}>
+        <Suspense fallback={<div className="flex justify-center item-center">Loading courses...</div>}>
             <CoursesPageContent courses={courses} />
         </Suspense>
     );

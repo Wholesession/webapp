@@ -53,7 +53,7 @@ export function OrderSummary({ course }: OrderSummaryProps) {
                 <div>
                     <h4 className="text-sm font-medium text-green-900 font-body">Secure Checkout</h4>
                     <p className="text-xs mt-1 text-gray-500 font-body">
-                        Your payment is secured with 256-bit SSL encryption. We offer a 30-day money-back guarantee.
+                        Your payment is secured with Paystack. We offer full refund after the first two weeks of the course if you are not satisfied with the course.
                     </p>
                 </div>
             </div>
