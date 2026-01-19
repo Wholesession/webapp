@@ -48,7 +48,7 @@ export function PricingCard({ course }: PricingCardProps) {
                             {course.status !== "Coming Soon" && (
                                 <span className="bg-orange-100 text-orange-800 text-[10px] font-bold px-2 py-0.5 rounded uppercase flex items-center gap-1">
                                     <Flame className="w-3 h-3" />
-                                    Only {Math.floor(Math.random() * 3) + 2} spots left
+                                    Only {Math.floor(Math.random() * 7) + 2} spots left
                                 </span>
                             )}
                             <span className="bg-yellow-100 text-yellow-800 text-[10px] font-bold px-2 py-0.5 rounded uppercase">

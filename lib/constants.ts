@@ -1,7 +1,7 @@
 
 // --- Constants for Marketing Campaigns ---
 export const CAMPAIGN_DISCOUNT = 0.20;
-export const CAMPAIGN_END_DATE = "2026-02-10T00:00:00";
+export const CAMPAIGN_END_DATE = "2026-02-05T00:00:00";
 export const USD_EXCHANGE_RATE = 1400; // 1 USD = 1400 NGN
 
 // --- Contact Information ---
