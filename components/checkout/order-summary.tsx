@@ -2,6 +2,7 @@
 
 import { Course } from "@/lib/courses";
 import { ShieldCheck, Clock, Calendar } from "lucide-react";
+import { formatUSD } from "@/lib/utils";
 
 interface OrderSummaryProps {
     course: Course;
@@ -43,7 +44,10 @@ export function OrderSummary({ course }: OrderSummaryProps) {
                 <div className="border-t border-gray-200 pt-6 mb-8">
                     <div className="flex items-center justify-between mb-2">
                         <span className="text-base text-gray-600 font-body">Total</span>
-                        <span className="text-2xl font-bold text-gray-900 font-body">₦{course.price.toLocaleString()}</span>
+                        <div className="text-right">
+                            <span className="text-2xl font-bold text-gray-900 font-body">₦{course.price.toLocaleString()}</span>
+                            <span className="text-sm text-gray-500 ml-2">({formatUSD(course.price)})</span>
+                        </div>
                     </div>
                 </div>
             )}

@@ -3,6 +3,7 @@
 import { Course } from "@/lib/courses";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { formatUSD } from "@/lib/utils";
 
 interface CourseCardProps {
     course: Course;
@@ -68,6 +69,7 @@ function CourseCardContent({ course, statusLabel, isComingSoon }: { course: Cour
                     {!isComingSoon ? (
                         <div className="flex items-center gap-2">
                             <span className="text-gray-900 font-bold block">₦{Number(course.price).toLocaleString()}</span>
+                            <span className="text-gray-500 text-xs">({formatUSD(course.price)})</span>
                             {course.originalPrice && Number(course.originalPrice) > Number(course.price) && (
                                 <span className="text-gray-400 line-through text-xs italic">₦{Number(course.originalPrice).toLocaleString()}</span>
                             )}

@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { formatUSD } from "@/lib/utils";
 
 interface MobileStickyCTAProps {
     course: Course;
@@ -42,6 +43,7 @@ export function MobileStickyCTA({ course }: MobileStickyCTAProps) {
                         <span className="text-[10px] uppercase tracking-wider text-gray-400 font-bold">Limited Enrollment</span>
                         <div className="flex items-center gap-2">
                             <span className="text-xl font-bold text-gray-900">₦{Number(course.price).toLocaleString()}</span>
+                            <span className="text-xs text-gray-500">({formatUSD(course.price)})</span>
                             {course.originalPrice && (
                                 <span className="text-xs text-gray-400 line-through">₦{Number(course.originalPrice).toLocaleString()}</span>
                             )}

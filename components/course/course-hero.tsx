@@ -3,7 +3,7 @@
 import { Course } from "@/lib/courses";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-import { Star, Flame } from "lucide-react";
+import { Star, Flame, Users } from "lucide-react";
 import Image from "next/image";
 
 interface CourseHeroProps {
@@ -68,14 +68,14 @@ export function CourseHero({ course }: CourseHeroProps) {
                                     View Syllabus
                                 </Button>
 
-                                <div className="flex items-center gap-3 bg-orange-50 px-4 py-3 rounded-lg border border-orange-100 max-[640px]:w-full">
-                                    <div className="p-1.5 bg-orange-100 rounded-full">
-                                        <Flame className="w-5 h-5 text-orange-500" />
+                                <div className="flex items-center gap-3 bg-gray-100 px-4 py-3 rounded-lg border border-gray-200 max-[640px]:w-full">
+                                    <div className="p-1.5 bg-gray-200 rounded-full">
+                                        <Users className="w-5 h-5 text-[var(--brand-color)]" />
                                     </div>
                                     <div className="text-sm">
-                                        <p className="font-body font-semibold text-gray-900">This course is in high demand.</p>
+                                        <p className="font-body font-semibold text-gray-900">Limited to {course.cohortSize} students</p>
                                         <p className="text-gray-500">
-                                            {Math.floor(course.cohortSize * 0.82)} professionals interested recently.
+                                            Small cohort for personalized feedback.
                                         </p>
                                     </div>
                                 </div>

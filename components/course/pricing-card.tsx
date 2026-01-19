@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Star, ArrowRight, ShieldCheck, Flame } from "lucide-react";
 import Link from "next/link";
 import { WaitlistForm } from "./waitlist-form";
+import { formatUSD } from "@/lib/utils";
 
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
@@ -26,6 +27,7 @@ export function PricingCard({ course }: PricingCardProps) {
                     <div className="flex flex-col gap-1">
                         <div className="flex items-center gap-2">
                             <span className="text-3xl font-bold font-body text-gray-900">₦{Number(course.price).toLocaleString()}</span>
+                            <span className="text-sm text-gray-500">({formatUSD(course.price)})</span>
                             {course.originalPrice && Number(course.originalPrice) > Number(course.price) && (
                                 <span className="text-gray-400 line-through text-sm font-medium italic">₦{Number(course.originalPrice).toLocaleString()}</span>
                             )}

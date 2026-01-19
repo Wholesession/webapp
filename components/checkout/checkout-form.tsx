@@ -22,6 +22,7 @@ interface CheckoutFormProps {
 type PaymentPlan = "full" | "installment";
 
 import { trackEvent, trackPurchaseInit } from "@/lib/analytics";
+import { formatUSD } from "@/lib/utils";
 
 export function CheckoutForm({ course }: CheckoutFormProps) {
     const [isLoading, setIsLoading] = useState(false);
@@ -132,7 +133,7 @@ export function CheckoutForm({ course }: CheckoutFormProps) {
                             <span className="font-semibold text-gray-900">One-time Payment</span>
                             {plan === "full" && <CheckCircle2 className="w-5 h-5 text-[#372772]" />}
                         </div>
-                        <div className="text-2xl font-bold text-gray-900">₦{course.price.toLocaleString()}</div>
+                        <div className="text-2xl font-bold text-gray-900">₦{course.price.toLocaleString()} <span className="text-sm font-normal text-gray-500">({formatUSD(course.price)})</span></div>
                         <p className="text-xs text-gray-500 mt-1">Best value. No future payments.</p>
                     </div>
 
@@ -146,7 +147,7 @@ export function CheckoutForm({ course }: CheckoutFormProps) {
                             {plan === "installment" && <CheckCircle2 className="w-5 h-5 text-[#372772]" />}
                         </div>
                         <div className="flex items-baseline gap-2">
-                            <div className="text-2xl font-bold text-gray-900">₦{Math.floor(course.price / 2).toLocaleString()}</div>
+                            <div className="text-2xl font-bold text-gray-900">₦{Math.floor(course.price / 2).toLocaleString()} <span className="text-sm font-normal text-gray-500">({formatUSD(Math.floor(course.price / 2))})</span></div>
                             <span className="text-sm text-gray-500">today</span>
                         </div>
                         <p className="text-xs text-gray-500 mt-1">Pay the balance halfway through the course.</p>
@@ -241,7 +242,7 @@ export function CheckoutForm({ course }: CheckoutFormProps) {
                         </div>
                     ) : (
                         <span className="flex items-center gap-2">
-                            <Lock className="h-4 w-4" /> Pay ₦{amountToPay.toLocaleString()}
+                            <Lock className="h-4 w-4" /> Pay ₦{amountToPay.toLocaleString()} ({formatUSD(amountToPay)})
                         </span>
                     )}
                 </Button>
