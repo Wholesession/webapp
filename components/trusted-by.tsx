@@ -1,14 +1,15 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 // Company logos where instructors have worked/shipped
 const companies = [
-    { name: "Moniepoint", logo: "Moniepoint" },
-    { name: "Flutterwave", logo: "Flutterwave" },
-    { name: "Andela", logo: "Andela" },
-    { name: "Paystack", logo: "Paystack" },
-    { name: "Interswitch", logo: "Interswitch"}
+    { name: "Andela", src: "./andela.svg" },
+    { name: "Interswitch", src: "./interswitch.svg" },
+    { name: "Access Bank", src: "./access_bank.svg" },
+    { name: "Alat", src: "./alat.svg" },
+    { name: "Verve", src: "./verve.svg" },
 ];
 
 export function TrustedBy() {
@@ -60,7 +61,7 @@ export function TrustedBy() {
 
                                 {/* Logo Text (placeholder - replace with actual logos) */}
                                 <span className="text-gray-900 font-semibold text-lg tracking-wide transition-colors">
-                                    {company.logo}
+                                    <Image src={company.src} alt={company.name} width={100} height={100} />
                                 </span>
                             </div>
                         ))}
