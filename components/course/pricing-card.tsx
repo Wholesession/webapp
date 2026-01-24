@@ -45,12 +45,6 @@ export function PricingCard({ course }: PricingCardProps) {
                             <span className="text-gray-900 font-semibold">{course.startDate} — {course.duration}</span>
                         </div>
                         <div className="flex items-center gap-2">
-                            {course.status !== "Coming Soon" && (
-                                <span className="bg-orange-100 text-orange-800 text-[10px] font-bold px-2 py-0.5 rounded uppercase flex items-center gap-1">
-                                    <Flame className="w-3 h-3" />
-                                    Only {Math.floor(Math.random() * 7) + 2} spots left
-                                </span>
-                            )}
                             <span className="bg-yellow-100 text-yellow-800 text-[10px] font-bold px-2 py-0.5 rounded uppercase">
                                 Closing Soon
                             </span>
